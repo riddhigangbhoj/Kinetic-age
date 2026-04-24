@@ -1,0 +1,3894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KineticAge Nutritionist App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f5f0e8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .phone-frame {
+      width: 393px;
+      height: 852px;
+      background: #faf7f2;
+      border-radius: 50px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.15), 0 0 0 2px #1a1a1a, 0 0 0 6px #333;
+    }
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-bottom: 90px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .screen::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Status Bar */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 28px 0;
+      height: 54px;
+      position: sticky;
+      top: 0;
+      background: #faf7f2;
+      z-index: 100;
+    }
+
+    .status-time {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .dynamic-island {
+      width: 126px;
+      height: 36px;
+      background: #000;
+      border-radius: 20px;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .status-icons svg {
+      height: 12px;
+    }
+
+    /* Date Header */
+    .date-header {
+      padding: 8px 20px 10px;
+      font-size: 15px;
+      color: #6b6b6b;
+      font-weight: 400;
+    }
+
+    /* Clock In Bar */
+    .clock-wrapper {
+      margin: 0 16px 12px;
+    }
+
+    .clock-bar {
+      background: #eef3ee;
+      border-radius: 16px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: background 0.3s;
+    }
+
+    .clock-bar.clocked-out {
+      background: #fef2f0;
+    }
+
+    .clock-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .clock-dot {
+      width: 10px;
+      height: 10px;
+      background: #4a7c59;
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+
+    .clock-bar.clocked-out .clock-dot {
+      background: #ccc;
+    }
+
+    .clock-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d2d2d;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .clock-time-info {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d2d2d;
+      white-space: nowrap;
+    }
+
+    .clock-time-info .period {
+      font-size: 11px;
+      color: #888;
+      font-weight: 500;
+      margin-left: 2px;
+    }
+
+    .clock-time-info .time-separator {
+      color: #aaa;
+      margin: 0 1px;
+    }
+
+    .clock-bar.clocked-out .clock-label {
+      color: #999;
+    }
+
+    .clock-bar.clocked-out .clock-time-info {
+      color: #999;
+      font-size: 12px;
+    }
+
+    .clock-bar.clocked-out .clock-duration {
+      color: #c0392b;
+      font-weight: 700;
+    }
+
+    .clock-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .clock-duration {
+      font-size: 13px;
+      font-weight: 600;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    .clock-toggle-btn {
+      background: #fff;
+      border: 1.5px solid #ccc;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d2d2d;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .clock-toggle-btn:hover {
+      background: #f0f0f0;
+    }
+
+    .clock-toggle-btn.clock-in {
+      background: #4a7c59;
+      border-color: #4a7c59;
+      color: white;
+    }
+
+    .clock-toggle-btn.clock-in:hover {
+      background: #3d6a4b;
+    }
+
+    /* Warning bar */
+    .clock-warning {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      padding: 7px 14px;
+      background: #fef2f0;
+      border-radius: 10px;
+      border: 1px solid #f5d0cc;
+    }
+
+    .clock-warning.visible {
+      display: flex;
+    }
+
+    .warning-bar-track {
+      flex: 1;
+      height: 5px;
+      background: #f0ddd9;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .warning-bar-fill {
+      height: 100%;
+      background: #c0392b;
+      border-radius: 3px;
+      transition: width 0.5s ease;
+    }
+
+    .warning-text {
+      font-size: 11px;
+      font-weight: 600;
+      color: #c0392b;
+      white-space: nowrap;
+    }
+
+    /* New Client Card */
+    .new-client-card {
+      margin: 0 16px 12px;
+      background: linear-gradient(135deg, #7b6b9e 0%, #9585b5 50%, #a899c7 100%);
+      border-radius: 16px;
+      padding: 14px 16px;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .new-client-card:active {
+      transform: scale(0.98);
+    }
+
+    .new-client-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .new-client-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .new-client-dot {
+      width: 7px;
+      height: 7px;
+      background: #7bc67b;
+      border-radius: 50%;
+    }
+
+    .new-client-time {
+      font-size: 12px;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .new-client-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .new-client-schedule {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 12px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 8px 12px;
+    }
+
+    .new-client-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-view-client {
+      flex: 1;
+      background: rgba(255,255,255,0.95);
+      color: #5a4a7a;
+      border: none;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-view-client:hover {
+      background: #fff;
+    }
+
+    .btn-reschedule {
+      flex: 1;
+      background: rgba(255,255,255,0.18);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-reschedule:hover {
+      background: rgba(255,255,255,0.28);
+    }
+
+    /* Today/Week Toggle */
+    .view-toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 20px 14px;
+    }
+
+    .view-toggle {
+      display: flex;
+      background: #f0ebe3;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #e0d9cf;
+    }
+
+    .toggle-btn {
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .toggle-btn.active {
+      background: #2d2d2d;
+      color: white;
+      border-radius: 8px;
+    }
+
+    .view-date {
+      font-size: 13px;
+      font-weight: 600;
+      color: #999;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* Schedule Timeline */
+    .schedule {
+      padding: 0 12px;
+      overflow: hidden;
+    }
+
+    .schedule-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .schedule-time-col {
+      width: 52px;
+      flex-shrink: 0;
+      text-align: right;
+      padding-right: 8px;
+      padding-top: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0;
+    }
+
+    .time-start {
+      display: flex;
+      align-items: baseline;
+      gap: 1px;
+    }
+
+    .time-end {
+      display: flex;
+      align-items: baseline;
+      gap: 1px;
+      margin-top: 1px;
+    }
+
+    .schedule-time {
+      font-size: 12px;
+      font-weight: 700;
+      color: #2d2d2d;
+      line-height: 1;
+    }
+
+    .schedule-period {
+      font-size: 8px;
+      font-weight: 600;
+      color: #999;
+      text-transform: uppercase;
+    }
+
+    .time-end .schedule-time {
+      font-size: 10px;
+      font-weight: 600;
+      color: #b0a898;
+    }
+
+    .time-end .schedule-period {
+      font-size: 7px;
+      color: #b0a898;
+    }
+
+    .timeline-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 22px;
+      flex-shrink: 0;
+      padding-top: 16px;
+    }
+
+    .timeline-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+      background: #faf7f2;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+
+    .timeline-dot.done {
+      border-color: #4a7c59;
+      background: #4a7c59;
+      position: relative;
+    }
+
+    .timeline-dot.done::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 6px;
+      height: 3px;
+      border-left: 2px solid white;
+      border-bottom: 2px solid white;
+      transform: rotate(-45deg);
+    }
+
+    .timeline-line {
+      width: 2px;
+      flex-grow: 1;
+      background: #e0dbd3;
+      min-height: 30px;
+    }
+
+    .schedule-card {
+      flex: 1;
+      min-width: 0;
+      background: white;
+      border-radius: 14px;
+      padding: 10px 10px;
+      margin-left: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      border: 1px solid #f0ebe3;
+      cursor: pointer;
+      transition: all 0.2s;
+      overflow: hidden;
+    }
+
+    .schedule-card:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transform: translateY(-1px);
+    }
+
+    .schedule-card:active {
+      transform: scale(0.98);
+    }
+
+    .client-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .avatar-green { background: #4a7c59; }
+    .avatar-brown { background: #a08870; }
+    .avatar-purple { background: #7b6b9e; }
+
+    .client-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .client-name-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 3px;
+    }
+
+    .client-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #2d2d2d;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .status-badge {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .client-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .client-meta {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 9px;
+      color: #888;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .meta-separator {
+      color: #ccc;
+    }
+
+    .week-pill {
+      background: #f0ebe3;
+      color: #8a7d6b;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
+    .badge-done {
+      background: #4a7c59;
+      color: white;
+    }
+
+    .badge-active {
+      background: #f0e6ef;
+      color: #8b5e83;
+    }
+
+    .badge-upcoming {
+      background: #f0ebe3;
+      color: #a09080;
+    }
+
+    .badge-missed {
+      background: #c0392b;
+      color: white;
+    }
+
+    /* Missed card styling */
+    .schedule-card.missed {
+      border: 1.5px solid #f0c4bf;
+      background: #fef8f7;
+    }
+
+    .timeline-dot.missed {
+      border-color: #c0392b;
+      background: #c0392b;
+    }
+
+    .timeline-dot.missed::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 5px;
+      width: 2px;
+      height: 6px;
+      background: white;
+      border-radius: 1px;
+    }
+
+    .btn-reschedule-small {
+      background: none;
+      border: 1px solid #d4a09a;
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-size: 8px;
+      font-weight: 600;
+      color: #c0392b;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-reschedule-small:hover {
+      background: #c0392b;
+      color: white;
+    }
+
+    /* Done card styling */
+    .schedule-card.done-card {
+      border: 1.5px solid #d4e8d9;
+      background: #f7fbf8;
+    }
+
+    /* Lunch Break Block */
+    .lunch-break-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .lunch-break-card {
+      flex: 1;
+      background: #fef9ef;
+      border: 1.5px dashed #e0c88a;
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-left: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lunch-info {
+      flex: 1;
+    }
+
+    .lunch-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #8b6914;
+    }
+
+    .lunch-break-item .time-end .schedule-time,
+    .lunch-break-item .time-end .schedule-period {
+      color: #b89a4a;
+    }
+
+    /* Week View */
+    .week-view {
+      display: none;
+      padding: 0 12px;
+    }
+
+    .week-view.active {
+      display: block;
+    }
+
+    .week-day-section {
+      margin-bottom: 12px;
+    }
+
+    .week-day-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      margin-bottom: 4px;
+    }
+
+    .week-day-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #2d2d2d;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .week-day-date {
+      font-size: 11px;
+      font-weight: 500;
+      color: #999;
+    }
+
+    .week-day-today {
+      background: #2d2d2d;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .week-day-line {
+      flex: 1;
+      height: 1px;
+      background: #e8e3db;
+    }
+
+    .week-client-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: white;
+      border-radius: 10px;
+      margin-bottom: 4px;
+      border: 1px solid #f0ebe3;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .week-client-row:active {
+      transform: scale(0.98);
+      opacity: 0.8;
+    }
+
+    .week-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .week-client-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #2d2d2d;
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .week-client-type {
+      font-size: 9px;
+      font-weight: 600;
+      color: #888;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .week-no-clients {
+      font-size: 11px;
+      color: #bbb;
+      font-style: italic;
+      padding: 6px 10px;
+    }
+
+    .timeline-dot.lunch {
+      border-color: #e0c88a;
+      background: #f5e6c4;
+    }
+
+    .timeline-line.lunch {
+      background: #e0c88a;
+    }
+
+    /* Current Time Indicator */
+    .current-time-indicator {
+      display: flex;
+      align-items: center;
+      padding: 8px 0;
+      margin-left: 52px;
+      position: relative;
+    }
+
+    .current-time-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #c0392b;
+      margin-right: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .current-time-dot {
+      width: 12px;
+      height: 12px;
+      background: #c0392b;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-left: 12px;
+    }
+
+    .current-time-line {
+      flex: 1;
+      height: 2px;
+      background: #c0392b;
+      margin-left: 0;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 88px;
+      background: #faf7f2;
+      border-top: 1px solid #e8e3db;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      padding-top: 10px;
+      z-index: 100;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      padding: 4px 12px;
+      transition: all 0.2s;
+    }
+
+    .nav-item:active {
+      transform: scale(0.92);
+    }
+
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: #aaa;
+    }
+
+    .nav-item.active .nav-label {
+      color: #2d5a3a;
+      font-weight: 600;
+    }
+
+    .nav-item.active .nav-icon svg {
+      stroke: #2d5a3a;
+    }
+
+    /* Responsive - show without phone frame on mobile */
+    @media (max-width: 420px) {
+      body {
+        background: #faf7f2;
+      }
+      .phone-frame {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+
+    /* Click feedback */
+    .clickable {
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .clickable:active {
+      opacity: 0.7;
+      transform: scale(0.97);
+    }
+
+    /* ===== TRACKING SCREEN ===== */
+    .screen-tracking {
+      display: none;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-bottom: 90px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .screen-tracking::-webkit-scrollbar { display: none; }
+
+    .screen-tracking.active { display: block; }
+
+    .tracking-header {
+      padding: 8px 20px 4px;
+    }
+
+    .tracking-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: #2d2d2d;
+    }
+
+    .tracking-subtitle {
+      font-size: 12px;
+      color: #999;
+      margin-top: 2px;
+    }
+
+    .tracking-actions-bar {
+      display: flex;
+      gap: 8px;
+      padding: 6px 14px 4px;
+    }
+
+    .tracking-action-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 9px 6px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 700;
+      transition: all 0.15s;
+      line-height: 1.2;
+    }
+
+    .tracking-action-btn:active {
+      transform: scale(0.96);
+      opacity: 0.85;
+    }
+
+    .tracking-action-btn svg {
+      flex-shrink: 0;
+    }
+
+    .tracking-action-btn.btn-pull {
+      background: #25D366;
+      color: white;
+    }
+
+    .tracking-action-btn.btn-send {
+      background: white;
+      color: #25D366;
+      border: 1.5px solid #25D366;
+    }
+
+    .tracking-sync-info {
+      padding: 0 14px 6px;
+      display: flex;
+      gap: 12px;
+      font-size: 9px;
+      color: #aaa;
+      font-weight: 500;
+    }
+
+    .tracking-sync-info span {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .sync-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .sync-dot.green { background: #25D366; }
+    .sync-dot.blue { background: #5b9bd5; }
+
+    /* Send Message Modal */
+    .send-msg-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 350;
+      display: none;
+    }
+
+    .send-msg-overlay.open { display: flex; }
+
+    .send-msg-backdrop {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.35);
+    }
+
+    .send-msg-sheet {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: #faf7f2;
+      border-radius: 20px 20px 0 0;
+      padding: 20px 18px 28px;
+      animation: slideUp 0.25s ease;
+    }
+
+    .send-msg-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .send-msg-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2d2d2d;
+    }
+
+    .send-msg-close {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid #e0dbd3;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #999;
+    }
+
+    .send-msg-textarea {
+      width: 100%;
+      border: 1.5px solid #e0dbd3;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 13px;
+      font-family: inherit;
+      resize: none;
+      height: 90px;
+      outline: none;
+      background: white;
+      color: #2d2d2d;
+      line-height: 1.4;
+    }
+
+    .send-msg-textarea:focus {
+      border-color: #25D366;
+    }
+
+    .send-msg-textarea::placeholder {
+      color: #bbb;
+    }
+
+    .send-msg-meta {
+      font-size: 9px;
+      color: #aaa;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+
+    .send-msg-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      background: #25D366;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+
+    .send-msg-btn:active {
+      transform: scale(0.97);
+      opacity: 0.85;
+    }
+
+    .tracking-list {
+      padding: 10px 14px;
+    }
+
+    /* Tracking Card */
+    .track-card {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid #f0ebe3;
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .track-card-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+    }
+
+    .track-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .track-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #2d2d2d;
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .meal-legends {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .meal-dot {
+      width: 26px;
+      height: 18px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+    }
+
+    .meal-dot.unreviewed {
+      background: #e0dbd3;
+      color: #8a7d6b;
+    }
+
+    .meal-dot.future {
+      background: #e8ddf5;
+      color: #7b6b9e;
+    }
+
+    .meal-dot.marked-green {
+      background: #d4e8d9;
+      color: #4a7c59;
+    }
+
+    .meal-dot.marked-orange {
+      background: #fef0e2;
+      color: #d35400;
+    }
+
+    .meal-dot.marked-red {
+      background: #fce4e1;
+      color: #c0392b;
+    }
+
+    .track-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn-track-view {
+      background: #f0ebe3;
+      border: none;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 9px;
+      font-weight: 700;
+      color: #6b5e4f;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      transition: all 0.2s;
+    }
+
+    .btn-track-view:hover { background: #e6dfd5; }
+
+    .btn-track-view:active {
+      background: #2d2d2d;
+      color: white;
+    }
+
+    .btn-wa {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #25D366;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-wa:hover { background: #1fb855; }
+
+    .btn-wa svg {
+      width: 15px;
+      height: 15px;
+      fill: white;
+    }
+
+    /* Expanded Meal Detail */
+    .track-expanded {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .track-expanded.open {
+      max-height: 700px;
+    }
+
+    .track-meals-detail {
+      display: flex;
+      gap: 5px;
+      padding: 0 10px 10px;
+    }
+
+    .meal-block {
+      flex: 1;
+      border-radius: 8px;
+      padding: 6px;
+      min-width: 0;
+    }
+
+    .meal-block.b-block { background: #f0f7f1; border: 1px solid #d4e8d9; }
+    .meal-block.l-block { background: #fef9ef; border: 1px solid #f0e0b8; }
+    .meal-block.d-block { background: #f5f0fa; border: 1px solid #ddd0ee; }
+
+    .meal-block-header {
+      font-size: 7px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .b-block .meal-block-header { color: #4a7c59; }
+    .l-block .meal-block-header { color: #b8860b; }
+    .d-block .meal-block-header { color: #7b6b9e; }
+
+    .meal-row {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 2px;
+      align-items: flex-start;
+    }
+
+    .meal-row-label {
+      font-size: 7px;
+      font-weight: 700;
+      color: #aaa;
+      text-transform: uppercase;
+      width: 26px;
+      flex-shrink: 0;
+      padding-top: 1px;
+    }
+
+    .meal-row-value {
+      font-size: 8px;
+      font-weight: 500;
+      color: #555;
+      line-height: 1.25;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .meal-row-value .meal-time {
+      color: #999;
+      font-size: 7px;
+    }
+
+    .meal-row-value.not-logged {
+      color: #c0392b;
+      font-style: italic;
+      font-size: 7px;
+    }
+
+    .meal-wa-msg {
+      font-size: 7px;
+      color: #666;
+      font-style: italic;
+      background: rgba(0,0,0,0.04);
+      border-radius: 4px;
+      padding: 3px 4px;
+      margin-top: 3px;
+      line-height: 1.2;
+      display: flex;
+      align-items: flex-start;
+      gap: 2px;
+    }
+
+    .meal-wa-msg .wa-icon-sm {
+      width: 8px;
+      height: 8px;
+      fill: #25D366;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .meal-voice-note {
+      font-size: 7px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      margin-top: 2px;
+      background: rgba(0,0,0,0.03);
+      border-radius: 4px;
+      padding: 2px 4px;
+    }
+
+    .meal-voice-note svg {
+      flex-shrink: 0;
+    }
+
+    .meal-future-label {
+      font-size: 7px;
+      color: #7b6b9e;
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    .mark-buttons {
+      display: flex;
+      gap: 4px;
+      margin-top: 5px;
+      justify-content: center;
+      padding-top: 4px;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .mark-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      background: white;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 0;
+    }
+
+    .mark-btn:hover {
+      transform: scale(1.15);
+    }
+
+    .mark-btn.btn-green {
+      border-color: #4a7c59;
+      color: #4a7c59;
+    }
+    .mark-btn.btn-green:hover, .mark-btn.btn-green.active {
+      background: #4a7c59;
+      color: white;
+    }
+
+    .mark-btn.btn-orange {
+      border-color: #d35400;
+      color: #d35400;
+    }
+    .mark-btn.btn-orange:hover, .mark-btn.btn-orange.active {
+      background: #d35400;
+      color: white;
+    }
+
+    .mark-btn.btn-red {
+      border-color: #c0392b;
+      color: #c0392b;
+    }
+    .mark-btn.btn-red:hover, .mark-btn.btn-red.active {
+      background: #c0392b;
+      color: white;
+    }
+
+    /* ===== MEAL DETAIL OVERLAY ===== */
+    .meal-detail-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 300;
+      display: none;
+    }
+
+    .meal-detail-overlay.open {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .md-backdrop {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .md-sheet {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 92%;
+      background: #faf7f2;
+      border-radius: 20px 20px 0 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .md-header {
+      display: flex;
+      align-items: center;
+      padding: 16px 18px 10px;
+      gap: 10px;
+    }
+
+    .md-back {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #e0dbd3;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #2d2d2d;
+      flex-shrink: 0;
+    }
+
+    .md-header-text {
+      flex: 1;
+      text-align: center;
+    }
+
+    .md-header-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #999;
+    }
+
+    .md-header-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2d2d2d;
+    }
+
+    .md-more {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #e0dbd3;
+      background: white;
+      cursor: pointer;
+      font-size: 16px;
+      color: #999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .md-client-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 18px 12px;
+      border-bottom: 1px solid #e8e3db;
+    }
+
+    .md-client-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .md-client-info {
+      flex: 1;
+    }
+
+    .md-client-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #2d2d2d;
+    }
+
+    .md-client-meta {
+      font-size: 11px;
+      color: #999;
+      font-weight: 500;
+    }
+
+    .md-client-bar .btn-wa {
+      width: 36px;
+      height: 36px;
+    }
+
+    .md-client-bar .btn-wa svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Meal Tabs */
+    .md-meal-tabs {
+      display: flex;
+      gap: 0;
+      padding: 12px 18px 0;
+    }
+
+    .md-tab {
+      flex: 1;
+      padding: 8px 4px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      text-align: center;
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+
+    .md-tab-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #999;
+      display: block;
+    }
+
+    .md-tab-time {
+      font-size: 10px;
+      font-weight: 500;
+      color: #bbb;
+      display: block;
+      margin-top: 1px;
+    }
+
+    .md-tab.active {
+      background: #2d2d2d;
+      border-radius: 10px;
+    }
+
+    .md-tab.active .md-tab-name {
+      color: white;
+    }
+
+    .md-tab.active .md-tab-time {
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* Scrollable Content */
+    .md-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 18px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .md-scroll::-webkit-scrollbar { display: none; }
+
+    /* Plan Comparison */
+    .md-plan-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .md-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .md-status-badge.on-plan {
+      background: #d4e8d9;
+      color: #4a7c59;
+    }
+
+    .md-status-badge.off-plan {
+      background: #fef0e2;
+      color: #d35400;
+    }
+
+    .md-status-badge.not-logged-meal {
+      background: #fce4e1;
+      color: #c0392b;
+    }
+
+    .md-status-badge.not-logged {
+      background: #e8e3db;
+      color: #8a7d6b;
+    }
+
+    .md-status-badge.future {
+      background: #e8ddf5;
+      color: #7b6b9e;
+    }
+
+    .md-status-badge .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .md-logged-time {
+      font-size: 11px;
+      color: #999;
+      font-weight: 500;
+    }
+
+    .md-plan-compare {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .md-plan-box {
+      flex: 1;
+      background: #edf5ef;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .md-plan-box-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #4a7c59;
+      margin-bottom: 5px;
+    }
+
+    .md-plan-box-text {
+      font-size: 13px;
+      color: #2d2d2d;
+      line-height: 1.35;
+    }
+
+    /* Mark Buttons Row */
+    .md-mark-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .md-mark-btn {
+      flex: 1;
+      padding: 8px;
+      border-radius: 10px;
+      border: 1.5px solid;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      background: white;
+      transition: all 0.2s;
+    }
+
+    .md-mark-btn:active { transform: scale(0.95); }
+
+    .md-mark-btn.mg {
+      border-color: #4a7c59;
+      color: #4a7c59;
+    }
+    .md-mark-btn.mg:hover, .md-mark-btn.mg.active {
+      background: #4a7c59;
+      color: white;
+    }
+
+    .md-mark-btn.mo {
+      border-color: #d35400;
+      color: #d35400;
+    }
+    .md-mark-btn.mo:hover, .md-mark-btn.mo.active {
+      background: #d35400;
+      color: white;
+    }
+
+    .md-mark-btn.mr {
+      border-color: #c0392b;
+      color: #c0392b;
+    }
+    .md-mark-btn.mr:hover, .md-mark-btn.mr.active {
+      background: #c0392b;
+      color: white;
+    }
+
+    /* Section Labels */
+    .md-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* WhatsApp Message Card */
+    .md-wa-card {
+      background: white;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      border: 1px solid #e8e3db;
+    }
+
+    .md-wa-from {
+      font-size: 10px;
+      color: #999;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .md-wa-from svg {
+      width: 12px;
+      height: 12px;
+      fill: #25D366;
+    }
+
+    .md-wa-text {
+      font-size: 14px;
+      color: #2d2d2d;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+
+    .md-wa-time {
+      font-size: 10px;
+      color: #bbb;
+    }
+
+    /* Voice Note Card */
+    .md-voice-card {
+      background: white;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 16px;
+      border: 1px solid #e8e3db;
+    }
+
+    .md-voice-player {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      background: #edf5ef;
+      border-radius: 24px;
+      padding: 6px 12px;
+    }
+
+    .md-play-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #4a7c59;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: white;
+      font-size: 11px;
+    }
+
+    .md-waveform {
+      flex: 1;
+      font-size: 14px;
+      color: #4a7c59;
+      letter-spacing: -1px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .md-voice-times {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      color: #999;
+      padding: 0 4px;
+    }
+
+    .md-transcript-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #999;
+      margin: 8px 0 4px;
+      border-top: 1px dashed #e0dbd3;
+      padding-top: 8px;
+    }
+
+    .md-transcript {
+      font-size: 13px;
+      color: #555;
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    /* Photo Card */
+    .md-photo-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      border: 1px solid #e8e3db;
+    }
+
+    .md-photo-img {
+      width: 100%;
+      height: 160px;
+      background: linear-gradient(135deg, #d4a574 0%, #c98b6a 40%, #b87b5e 100%);
+      position: relative;
+    }
+
+    .md-photo-location {
+      position: absolute;
+      bottom: 8px;
+      left: 10px;
+      font-size: 10px;
+      color: white;
+      background: rgba(0,0,0,0.35);
+      padding: 3px 8px;
+      border-radius: 4px;
+      backdrop-filter: blur(4px);
+    }
+
+    .md-photo-meta {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 12px;
+      font-size: 10px;
+      color: #999;
+    }
+
+    .md-photo-meta a {
+      color: #4a7c59;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* No data state */
+    .md-empty {
+      text-align: center;
+      padding: 30px;
+      color: #bbb;
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    /* Bottom Bar */
+    .md-bottom {
+      border-top: 1px solid #e8e3db;
+      background: #faf7f2;
+      padding: 8px 14px 20px;
+      flex-shrink: 0;
+    }
+
+    .md-quick-chips {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .md-quick-chips::-webkit-scrollbar { display: none; }
+
+    .md-chip {
+      padding: 6px 12px;
+      border-radius: 18px;
+      border: 1px solid #e0dbd3;
+      background: white;
+      font-size: 11px;
+      font-weight: 500;
+      color: #555;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .md-chip:active {
+      background: #f0ebe3;
+      transform: scale(0.95);
+    }
+
+    .md-reply-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .md-reply-wa-icon {
+      width: 20px;
+      height: 20px;
+      fill: #25D366;
+      flex-shrink: 0;
+    }
+
+    .md-reply-input {
+      flex: 1;
+      border: 1px solid #e0dbd3;
+      border-radius: 20px;
+      padding: 8px 14px;
+      font-size: 12px;
+      background: white;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .md-reply-input:focus {
+      border-color: #4a7c59;
+    }
+
+    .md-reply-send {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #4a7c59;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .md-reply-send svg {
+      width: 16px;
+      height: 16px;
+      fill: white;
+    }
+
+    /* ===== CLIENTS SCREEN ===== */
+    .screen-clients {
+      display: none;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-bottom: 90px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .screen-clients::-webkit-scrollbar { display: none; }
+    .screen-clients.active { display: block; }
+
+    .clients-header {
+      padding: 8px 20px 12px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .clients-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: #2d2d2d;
+    }
+    .clients-count {
+      font-size: 12px;
+      color: #999;
+      font-weight: 500;
+    }
+    .clients-list { padding: 0 14px; }
+
+    .client-list-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 6px;
+      border: 1px solid #f0ebe3;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .client-list-item:active {
+      transform: scale(0.98);
+      opacity: 0.85;
+    }
+    .cl-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+    .cl-info { flex: 1; min-width: 0; }
+    .cl-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #2d2d2d;
+      margin-bottom: 2px;
+    }
+    .cl-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #888;
+      font-weight: 500;
+    }
+    .cl-condition {
+      background: #f0ebe3;
+      color: #8a7d6b;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .cl-week {
+      background: #edf5ef;
+      color: #4a7c59;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-size: 9px;
+      font-weight: 700;
+    }
+    .cl-needs-upload {
+      background: #fef0e2;
+      color: #d35400;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .cl-needs-upload .warn-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #d35400;
+      flex-shrink: 0;
+    }
+    .client-list-item.has-warning {
+      border-color: #f5e0cc;
+    }
+    .sched-upload-warn {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: #fef0e2;
+      color: #d35400;
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      margin-left: 4px;
+    }
+    .sched-upload-warn svg {
+      flex-shrink: 0;
+    }
+    .cl-chevron {
+      color: #ccc;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ===== CLIENT PROFILE OVERLAY ===== */
+    .client-profile-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 300;
+      display: none;
+    }
+    .client-profile-overlay.open {
+      display: flex;
+      flex-direction: column;
+    }
+    .cp-backdrop {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.3);
+    }
+    .cp-sheet {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 92%;
+      background: #faf7f2;
+      border-radius: 20px 20px 0 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: slideUp 0.3s ease;
+    }
+    .cp-header {
+      display: flex;
+      align-items: center;
+      padding: 16px 18px 10px;
+      gap: 10px;
+    }
+    .cp-back {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #e0dbd3;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .cp-header-title {
+      flex: 1;
+      font-size: 15px;
+      font-weight: 700;
+      color: #2d2d2d;
+      text-align: center;
+    }
+    .cp-edit-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #e0dbd3;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cp-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 18px 20px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cp-scroll::-webkit-scrollbar { display: none; }
+
+    .cp-info-card {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid #f0ebe3;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .cp-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+    .cp-client-details { flex: 1; min-width: 0; }
+    .cp-client-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      color: #2d2d2d;
+      margin-bottom: 4px;
+    }
+    .cp-client-meta {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .cp-client-condition {
+      font-size: 11px;
+      color: #555;
+      line-height: 1.3;
+    }
+    .cp-edit-info {
+      background: #f0ebe3;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #6b5e4f;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-family: inherit;
+    }
+    .cp-edit-info:active { background: #e6dfd5; }
+
+    .cp-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 10px;
+    }
+    .doc-card {
+      background: white;
+      border-radius: 12px;
+      padding: 12px 14px;
+      border: 1px solid #f0ebe3;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .doc-card:active {
+      background: #f8f5f0;
+      transform: scale(0.98);
+    }
+    .doc-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #edf5ef;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .doc-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: #4a7c59;
+    }
+    .doc-info { flex: 1; min-width: 0; }
+    .doc-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d2d2d;
+      margin-bottom: 2px;
+    }
+    .doc-date {
+      font-size: 10px;
+      color: #999;
+    }
+    .doc-chevron {
+      color: #ccc;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .cp-system-tag {
+      font-size: 9px;
+      font-weight: 500;
+      color: #bbb;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .cp-upload-card {
+      background: white;
+      border-radius: 12px;
+      padding: 12px 14px;
+      border: 1.5px dashed #d8d3cb;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .cp-upload-card:active {
+      background: #f8f5f0;
+      transform: scale(0.98);
+    }
+    .cp-upload-card.uploaded {
+      border: 1px solid #d4e8d9;
+      border-style: solid;
+      background: #f9fcf9;
+    }
+    .cp-upload-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .cp-upload-icon.empty { background: #f0ebe3; }
+    .cp-upload-icon.filled { background: #edf5ef; }
+    .cp-upload-info { flex: 1; min-width: 0; }
+    .cp-upload-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d2d2d;
+    }
+    .cp-upload-status {
+      font-size: 10px;
+      color: #999;
+      margin-top: 1px;
+    }
+    .cp-upload-action {
+      font-size: 11px;
+      font-weight: 600;
+      color: #4a7c59;
+      flex-shrink: 0;
+    }
+    .cp-upload-action.pending { color: #999; }
+
+    /* ===== EDIT DESCRIPTION MODAL ===== */
+    .edit-desc-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 350;
+      display: none;
+    }
+    .edit-desc-overlay.open { display: flex; }
+    .edit-desc-backdrop {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.35);
+    }
+    .edit-desc-sheet {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: #faf7f2;
+      border-radius: 20px 20px 0 0;
+      padding: 20px 18px 28px;
+      animation: slideUp 0.25s ease;
+    }
+    .edit-desc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .edit-desc-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2d2d2d;
+    }
+    .edit-desc-close {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid #e0dbd3;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #999;
+    }
+    .edit-desc-input {
+      width: 100%;
+      border: 1.5px solid #e0dbd3;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 13px;
+      font-family: inherit;
+      resize: none;
+      height: 80px;
+      outline: none;
+      background: white;
+      color: #2d2d2d;
+      line-height: 1.4;
+    }
+    .edit-desc-input:focus { border-color: #4a7c59; }
+    .edit-desc-save {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      background: #4a7c59;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: all 0.15s;
+    }
+    .edit-desc-save:active {
+      transform: scale(0.97);
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+
+<div class="phone-frame">
+  <div class="screen" id="screen-schedule">
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <div class="dynamic-island"></div>
+      <div class="status-icons">
+        <svg viewBox="0 0 18 12" fill="none">
+          <path d="M1 9h1.5V3H1v6zm4 2h1.5V1H5v10zm4-3h1.5V4H9v4zm4 1h1.5V2H13v7z" fill="#1a1a1a"/>
+        </svg>
+        <svg viewBox="0 0 16 12" fill="none">
+          <path d="M8 2.4C5.6 2.4 3.5 3.3 2 4.8l1.2 1.2C4.4 4.8 6.1 4 8 4s3.6.8 4.8 2l1.2-1.2C12.5 3.3 10.4 2.4 8 2.4zM8 6c-1.4 0-2.6.5-3.6 1.4L5.6 8.6C6.3 7.9 7.1 7.6 8 7.6s1.7.3 2.4 1l1.2-1.2C10.6 6.5 9.4 6 8 6zm0 3.6c-.6 0-1 .4-1 1s.4 1 1 1 1-.4 1-1-.4-1-1-1z" fill="#1a1a1a"/>
+        </svg>
+        <svg viewBox="0 0 28 14" fill="none">
+          <rect x="0.5" y="0.5" width="22" height="13" rx="3" stroke="#1a1a1a" stroke-opacity="0.35"/>
+          <rect x="2" y="2" width="18" height="10" rx="1.5" fill="#1a1a1a"/>
+          <path d="M24 5v4a2.5 2.5 0 000-4z" fill="#1a1a1a" fill-opacity="0.4"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Date -->
+    <div class="date-header">Wed · 22 Apr</div>
+
+    <!-- Clock In/Out Bar -->
+    <div class="clock-wrapper">
+      <div class="clock-bar" id="clock-bar">
+        <div class="clock-left">
+          <div class="clock-dot"></div>
+          <span class="clock-label" id="clock-label">Clocked in</span>
+          <span class="clock-time-info" id="clock-time-info">8:00<span class="period">AM</span></span>
+        </div>
+        <div class="clock-right">
+          <span class="clock-duration" id="clock-duration">1h 41m</span>
+          <button class="clock-toggle-btn clickable" id="btn-clock-toggle">
+            <svg id="clock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            <span id="clock-btn-text">Clock out</span>
+          </button>
+        </div>
+      </div>
+      <div class="clock-warning" id="clock-warning">
+        <div class="warning-bar-track">
+          <div class="warning-bar-fill" id="warning-bar-fill" style="width: 0%"></div>
+        </div>
+        <span class="warning-text" id="warning-text"></span>
+      </div>
+    </div>
+
+    <!-- New Client Card -->
+    <div class="new-client-card clickable" id="card-new-client">
+      <div class="new-client-top">
+        <div class="new-client-badge">
+          <div class="new-client-dot"></div>
+          NEW CLIENT
+        </div>
+        <span class="new-client-time">2 min ago</span>
+      </div>
+      <div class="new-client-name">Prakash Desai</div>
+      <div class="new-client-schedule">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        Today · 11:00 AM → 12:00 PM
+      </div>
+      <div class="new-client-actions">
+        <button class="btn-view-client clickable" id="btn-view-client">View client →</button>
+        <button class="btn-reschedule clickable" id="btn-reschedule">Reschedule</button>
+      </div>
+    </div>
+
+    <!-- Today/Week Toggle -->
+    <div class="view-toggle-row">
+      <div class="view-toggle">
+        <button class="toggle-btn active" id="toggle-today">Today</button>
+        <button class="toggle-btn clickable" id="toggle-week">Week</button>
+      </div>
+      <span class="view-date">WED · 22.04</span>
+    </div>
+
+    <!-- Schedule Timeline -->
+    <div class="schedule">
+
+      <!-- 8:30 AM - Rukmini Shah - COMPLETED -->
+      <div class="schedule-item">
+        <div class="schedule-time-col">
+          <div class="time-start"><span class="schedule-time">8:30</span><span class="schedule-period">AM</span></div>
+          <div class="time-end"><span class="schedule-time">9:00</span><span class="schedule-period">AM</span></div>
+        </div>
+        <div class="timeline-col">
+          <div class="timeline-dot done"></div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="schedule-card done-card clickable" data-client="rukmini-shah">
+          <div class="client-avatar avatar-green">RS</div>
+          <div class="client-info">
+            <div class="client-name-row">
+              <div class="client-name">Rukmini Shah</div>
+              <div class="status-badge badge-done">DONE</div>
+            </div>
+            <div class="client-meta-row">
+              <div class="client-meta">
+                <span>WEEKLY REVIEW</span>
+                <span class="week-pill">Week 6</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9:00 AM - Anita Kulkarni - MISSED -->
+      <div class="schedule-item">
+        <div class="schedule-time-col">
+          <div class="time-start"><span class="schedule-time">9:00</span><span class="schedule-period">AM</span></div>
+          <div class="time-end"><span class="schedule-time">9:30</span><span class="schedule-period">AM</span></div>
+        </div>
+        <div class="timeline-col">
+          <div class="timeline-dot missed" style="position:relative"></div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="schedule-card missed clickable" data-client="anita-kulkarni">
+          <div class="client-avatar avatar-purple">AK</div>
+          <div class="client-info">
+            <div class="client-name-row">
+              <div class="client-name">Anita Kulkarni</div>
+              <div class="status-badge badge-missed">MISSED</div>
+            </div>
+            <div class="client-meta-row">
+              <div class="client-meta">
+                <span>WEEKLY REVIEW</span>
+                <span class="week-pill">Week 3</span>
+              </div>
+              <button class="btn-reschedule-small clickable">Reschedule</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current Time Indicator -->
+      <div class="current-time-indicator">
+        <span class="current-time-label">9:41</span>
+        <div class="current-time-dot"></div>
+        <div class="current-time-line"></div>
+      </div>
+
+      <!-- 11:00 AM - Prakash Desai -->
+      <div class="schedule-item">
+        <div class="schedule-time-col">
+          <div class="time-start"><span class="schedule-time">11:00</span><span class="schedule-period">AM</span></div>
+          <div class="time-end"><span class="schedule-time">12:00</span><span class="schedule-period">PM</span></div>
+        </div>
+        <div class="timeline-col">
+          <div class="timeline-dot"></div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="schedule-card clickable" data-client="prakash-desai">
+          <div class="client-avatar avatar-brown">PD</div>
+          <div class="client-info">
+            <div class="client-name-row">
+              <div class="client-name">Prakash Desai</div>
+            </div>
+            <div class="client-meta">
+              <span>MEAL PLAN</span>
+              <span class="meta-separator">·</span>
+              <span>1ST</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12:30 PM - Meera Iyer -->
+      <div class="schedule-item">
+        <div class="schedule-time-col">
+          <div class="time-start"><span class="schedule-time">12:30</span><span class="schedule-period">PM</span></div>
+          <div class="time-end"><span class="schedule-time">1:00</span><span class="schedule-period">PM</span></div>
+        </div>
+        <div class="timeline-col">
+          <div class="timeline-dot"></div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="schedule-card clickable" data-client="meera-iyer">
+          <div class="client-avatar avatar-green">MI</div>
+          <div class="client-info">
+            <div class="client-name-row">
+              <div class="client-name">Meera Iyer</div>
+            </div>
+            <div class="client-meta">
+              <span>WEEKLY REVIEW</span>
+              <span class="week-pill">Week 4</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1:00 PM - Lunch Break -->
+      <div class="lunch-break-item">
+        <div class="schedule-time-col">
+          <div class="time-start"><span class="schedule-time">1:00</span><span class="schedule-period">PM</span></div>
+          <div class="time-end"><span class="schedule-time">2:00</span><span class="schedule-period">PM</span></div>
+        </div>
+        <div class="timeline-col">
+          <div class="timeline-dot lunch"></div>
+          <div class="timeline-line lunch"></div>
+        </div>
+        <div class="lunch-break-card">
+          <div class="lunch-info">
+            <div class="lunch-title">Lunch Break</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2:00 PM - Sudha Narayanan -->
+      <div class="schedule-item">
+        <div class="schedule-time-col">
+          <div class="time-start"><span class="schedule-time">2:00</span><span class="schedule-period">PM</span></div>
+          <div class="time-end"><span class="schedule-time">3:00</span><span class="schedule-period">PM</span></div>
+        </div>
+        <div class="timeline-col">
+          <div class="timeline-dot"></div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="schedule-card clickable" data-client="sudha-narayanan">
+          <div class="client-avatar avatar-brown">SN</div>
+          <div class="client-info">
+            <div class="client-name-row">
+              <div class="client-name">Sudha Narayanan</div>
+            </div>
+            <div class="client-meta">
+              <span>WEEKLY REVIEW</span>
+              <span class="week-pill">Week 10</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3:30 PM - Vijay Mehta -->
+      <div class="schedule-item">
+        <div class="schedule-time-col">
+          <div class="time-start"><span class="schedule-time">3:30</span><span class="schedule-period">PM</span></div>
+          <div class="time-end"><span class="schedule-time">4:30</span><span class="schedule-period">PM</span></div>
+        </div>
+        <div class="timeline-col">
+          <div class="timeline-dot"></div>
+          <div class="timeline-line" style="background:transparent"></div>
+        </div>
+        <div class="schedule-card clickable" data-client="vijay-mehta">
+          <div class="client-avatar avatar-brown">VM</div>
+          <div class="client-info">
+            <div class="client-name-row">
+              <div class="client-name">Vijay Mehta</div>
+            </div>
+            <div class="client-meta">
+              <span>MEAL PLAN</span>
+              <span class="meta-separator">·</span>
+              <span>2ND</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Week View -->
+    <div class="week-view" id="week-view">
+
+      <!-- Monday 20 Apr -->
+      <div class="week-day-section">
+        <div class="week-day-header">
+          <span class="week-day-name">Mon</span>
+          <span class="week-day-date">20 Apr</span>
+          <div class="week-day-line"></div>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-green">RS</div>
+          <div class="week-client-name">Rukmini Shah</div>
+          <span class="week-client-type">Weekly Review</span>
+          <span class="week-pill">Week 5</span>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-brown">AM</div>
+          <div class="week-client-name">Arjun Malhotra</div>
+          <span class="week-client-type">Meal Plan</span>
+        </div>
+      </div>
+
+      <!-- Tuesday 21 Apr -->
+      <div class="week-day-section">
+        <div class="week-day-header">
+          <span class="week-day-name">Tue</span>
+          <span class="week-day-date">21 Apr</span>
+          <div class="week-day-line"></div>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-purple">AK</div>
+          <div class="week-client-name">Anita Kulkarni</div>
+          <span class="week-client-type">Weekly Review</span>
+          <span class="week-pill">Week 3</span>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-green">NR</div>
+          <div class="week-client-name">Neha Rao</div>
+          <span class="week-client-type">Meal Plan</span>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-brown">KP</div>
+          <div class="week-client-name">Kavita Patel</div>
+          <span class="week-client-type">Weekly Review</span>
+          <span class="week-pill">Week 8</span>
+        </div>
+      </div>
+
+      <!-- Wednesday 22 Apr (Today) -->
+      <div class="week-day-section">
+        <div class="week-day-header">
+          <span class="week-day-name">Wed</span>
+          <span class="week-day-date">22 Apr</span>
+          <span class="week-day-today">TODAY</span>
+          <div class="week-day-line"></div>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-green">RS</div>
+          <div class="week-client-name">Rukmini Shah</div>
+          <span class="week-client-type">Weekly Review</span>
+          <span class="week-pill">Week 6</span>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-brown">PD</div>
+          <div class="week-client-name">Prakash Desai</div>
+          <span class="week-client-type">Meal Plan</span>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-green">MI</div>
+          <div class="week-client-name">Meera Iyer</div>
+          <span class="week-client-type">Weekly Review</span>
+          <span class="week-pill">Week 4</span>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-brown">SN</div>
+          <div class="week-client-name">Sudha Narayanan</div>
+          <span class="week-client-type">Weekly Review</span>
+          <span class="week-pill">Week 10</span>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-brown">VM</div>
+          <div class="week-client-name">Vijay Mehta</div>
+          <span class="week-client-type">Meal Plan</span>
+        </div>
+      </div>
+
+      <!-- Thursday 23 Apr -->
+      <div class="week-day-section">
+        <div class="week-day-header">
+          <span class="week-day-name">Thu</span>
+          <span class="week-day-date">23 Apr</span>
+          <div class="week-day-line"></div>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-purple">DG</div>
+          <div class="week-client-name">Deepa Gupta</div>
+          <span class="week-client-type">Weekly Review</span>
+          <span class="week-pill">Week 2</span>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-green">RJ</div>
+          <div class="week-client-name">Rahul Joshi</div>
+          <span class="week-client-type">Meal Plan</span>
+        </div>
+      </div>
+
+      <!-- Friday 24 Apr -->
+      <div class="week-day-section">
+        <div class="week-day-header">
+          <span class="week-day-name">Fri</span>
+          <span class="week-day-date">24 Apr</span>
+          <div class="week-day-line"></div>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-brown">SP</div>
+          <div class="week-client-name">Sanjay Patil</div>
+          <span class="week-client-type">Weekly Review</span>
+          <span class="week-pill">Week 7</span>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-green">PT</div>
+          <div class="week-client-name">Priya Thakur</div>
+          <span class="week-client-type">Weekly Review</span>
+          <span class="week-pill">Week 12</span>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-purple">LS</div>
+          <div class="week-client-name">Lakshmi Shetty</div>
+          <span class="week-client-type">Meal Plan</span>
+        </div>
+      </div>
+
+      <!-- Saturday 25 Apr -->
+      <div class="week-day-section">
+        <div class="week-day-header">
+          <span class="week-day-name">Sat</span>
+          <span class="week-day-date">25 Apr</span>
+          <div class="week-day-line"></div>
+        </div>
+        <div class="week-client-row clickable">
+          <div class="week-avatar avatar-brown">VK</div>
+          <div class="week-client-name">Vikram Kumar</div>
+          <span class="week-client-type">Weekly Review</span>
+          <span class="week-pill">Week 4</span>
+        </div>
+      </div>
+
+      <!-- Sunday 26 Apr -->
+      <div class="week-day-section">
+        <div class="week-day-header">
+          <span class="week-day-name">Sun</span>
+          <span class="week-day-date">26 Apr</span>
+          <div class="week-day-line"></div>
+        </div>
+        <div class="week-no-clients">No appointments</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Tracking Screen -->
+  <div class="screen-tracking" id="screen-tracking">
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <div class="dynamic-island"></div>
+      <div class="status-icons">
+        <svg viewBox="0 0 18 12" fill="none"><path d="M1 9h1.5V3H1v6zm4 2h1.5V1H5v10zm4-3h1.5V4H9v4zm4 1h1.5V2H13v7z" fill="#1a1a1a"/></svg>
+        <svg viewBox="0 0 16 12" fill="none"><path d="M8 2.4C5.6 2.4 3.5 3.3 2 4.8l1.2 1.2C4.4 4.8 6.1 4 8 4s3.6.8 4.8 2l1.2-1.2C12.5 3.3 10.4 2.4 8 2.4zM8 6c-1.4 0-2.6.5-3.6 1.4L5.6 8.6C6.3 7.9 7.1 7.6 8 7.6s1.7.3 2.4 1l1.2-1.2C10.6 6.5 9.4 6 8 6zm0 3.6c-.6 0-1 .4-1 1s.4 1 1 1 1-.4 1-1-.4-1-1-1z" fill="#1a1a1a"/></svg>
+        <svg viewBox="0 0 28 14" fill="none"><rect x="0.5" y="0.5" width="22" height="13" rx="3" stroke="#1a1a1a" stroke-opacity="0.35"/><rect x="2" y="2" width="18" height="10" rx="1.5" fill="#1a1a1a"/><path d="M24 5v4a2.5 2.5 0 000-4z" fill="#1a1a1a" fill-opacity="0.4"/></svg>
+      </div>
+    </div>
+
+    <div class="tracking-header">
+      <div class="tracking-title">Tracking</div>
+      <div class="tracking-subtitle">Wed · 22 Apr · 12 clients</div>
+    </div>
+
+    <div class="tracking-actions-bar">
+      <button class="tracking-action-btn btn-pull clickable" id="btn-retrieve" onclick="retrieveLogs()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg>
+        Retrieve Meal Logs
+      </button>
+      <button class="tracking-action-btn btn-send clickable" onclick="openSendModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg>
+        Send Message
+      </button>
+    </div>
+    <div class="tracking-sync-info" id="sync-info">
+      <span><span class="sync-dot green"></span>Last retrieved: Today, 8:45 AM</span>
+      <span><span class="sync-dot blue"></span>Last sent: Today, 7:30 AM</span>
+    </div>
+
+    <div class="tracking-list">
+
+      <div class="track-card" id="tc-1"><div class="track-card-top">
+        <div class="track-avatar avatar-green">RS</div><div class="track-name">Rukmini Shah</div>
+        <div class="meal-legends"><div class="meal-dot unreviewed">B</div><div class="meal-dot unreviewed">L</div><div class="meal-dot future">D</div></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-1')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+      </div></div>
+
+      <div class="track-card" id="tc-2"><div class="track-card-top">
+        <div class="track-avatar avatar-green">MI</div><div class="track-name">Meera Iyer</div>
+        <div class="meal-legends"><div class="meal-dot unreviewed">B</div><div class="meal-dot marked-red">L</div><div class="meal-dot future">D</div></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-2')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+      </div></div>
+
+      <div class="track-card" id="tc-3"><div class="track-card-top">
+        <div class="track-avatar avatar-brown">PD</div><div class="track-name">Prakash Desai</div>
+        <div class="meal-legends"><div class="meal-dot marked-green">B</div><div class="meal-dot marked-green">L</div><div class="meal-dot marked-green">D</div></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-3')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+      </div></div>
+
+      <div class="track-card" id="tc-4"><div class="track-card-top">
+        <div class="track-avatar avatar-purple">AK</div><div class="track-name">Anita Kulkarni</div>
+        <div class="meal-legends"><div class="meal-dot marked-red">B</div><div class="meal-dot marked-red">L</div><div class="meal-dot future">D</div></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-4')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+      </div></div>
+
+      <div class="track-card" id="tc-5"><div class="track-card-top">
+        <div class="track-avatar avatar-brown">SN</div><div class="track-name">Sudha Narayanan</div>
+        <div class="meal-legends"><div class="meal-dot unreviewed">B</div><div class="meal-dot unreviewed">L</div><div class="meal-dot future">D</div></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-5')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+      </div></div>
+
+      <div class="track-card" id="tc-6"><div class="track-card-top">
+        <div class="track-avatar avatar-brown">VM</div><div class="track-name">Vijay Mehta</div>
+        <div class="meal-legends"><div class="meal-dot unreviewed">B</div><div class="meal-dot future">L</div><div class="meal-dot future">D</div></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-6')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+      </div></div>
+
+      <div class="track-card" id="tc-7"><div class="track-card-top">
+        <div class="track-avatar avatar-purple">DG</div><div class="track-name">Deepa Gupta</div>
+        <div class="meal-legends"><div class="meal-dot marked-green">B</div><div class="meal-dot marked-orange">L</div><div class="meal-dot marked-green">D</div></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-7')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+      </div></div>
+
+    </div>
+  </div>
+
+  <!-- Clients Screen -->
+  <div class="screen-clients" id="screen-clients">
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <div class="dynamic-island"></div>
+      <div class="status-icons">
+        <svg viewBox="0 0 18 12" fill="none"><path d="M1 9h1.5V3H1v6zm4 2h1.5V1H5v10zm4-3h1.5V4H9v4zm4 1h1.5V2H13v7z" fill="#1a1a1a"/></svg>
+        <svg viewBox="0 0 16 12" fill="none"><path d="M8 2.4C5.6 2.4 3.5 3.3 2 4.8l1.2 1.2C4.4 4.8 6.1 4 8 4s3.6.8 4.8 2l1.2-1.2C12.5 3.3 10.4 2.4 8 2.4zM8 6c-1.4 0-2.6.5-3.6 1.4L5.6 8.6C6.3 7.9 7.1 7.6 8 7.6s1.7.3 2.4 1l1.2-1.2C10.6 6.5 9.4 6 8 6zm0 3.6c-.6 0-1 .4-1 1s.4 1 1 1 1-.4 1-1-.4-1-1-1z" fill="#1a1a1a"/></svg>
+        <svg viewBox="0 0 28 14" fill="none"><rect x="0.5" y="0.5" width="22" height="13" rx="3" stroke="#1a1a1a" stroke-opacity="0.35"/><rect x="2" y="2" width="18" height="10" rx="1.5" fill="#1a1a1a"/><path d="M24 5v4a2.5 2.5 0 000-4z" fill="#1a1a1a" fill-opacity="0.4"/></svg>
+      </div>
+    </div>
+    <div class="clients-header">
+      <div class="clients-title">Clients</div>
+      <div class="clients-count" id="clients-count">12 clients</div>
+    </div>
+    <div class="clients-list" id="clients-list"></div>
+  </div>
+
+  <!-- Send Message Modal -->
+  <div class="send-msg-overlay" id="send-msg-overlay">
+    <div class="send-msg-backdrop" onclick="closeSendModal()"></div>
+    <div class="send-msg-sheet">
+      <div class="send-msg-header">
+        <div class="send-msg-title">Send to All Clients</div>
+        <button class="send-msg-close" onclick="closeSendModal()">&#10005;</button>
+      </div>
+      <textarea class="send-msg-textarea" id="send-msg-text" placeholder="Type your message for all clients..."></textarea>
+      <div class="send-msg-meta">Sending to 12 clients via WhatsApp</div>
+      <button class="send-msg-btn" id="send-msg-btn" onclick="sendBulkMessage()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg>
+        Send to All on WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- Meal Detail Overlay -->
+  <div class="meal-detail-overlay" id="meal-detail-overlay">
+    <div class="md-backdrop" onclick="closeMealDetail()"></div>
+    <div class="md-sheet">
+      <div class="md-header">
+        <button class="md-back" onclick="closeMealDetail()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+        <div class="md-header-text">
+          <div class="md-header-label">MEAL LOG</div>
+          <div class="md-header-title" id="md-title">Wednesday · Breakfast</div>
+        </div>
+        <button class="md-more">···</button>
+      </div>
+
+      <div class="md-client-bar">
+        <div class="md-client-avatar" id="md-avatar">RS</div>
+        <div class="md-client-info">
+          <div class="md-client-name" id="md-name">Rukmini Shah</div>
+          <div class="md-client-meta" id="md-meta">72 · Diabetic · Week 6</div>
+        </div>
+        <button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button>
+      </div>
+
+      <div class="md-meal-tabs" id="md-tabs"></div>
+
+      <div class="md-scroll" id="md-scroll"></div>
+
+      <div class="md-bottom">
+        <div class="md-quick-chips">
+          <button class="md-chip">Well done</button>
+          <button class="md-chip">Try green tea tomorrow</button>
+          <button class="md-chip">Call me if anything</button>
+        </div>
+        <div class="md-reply-row">
+          <svg class="md-reply-wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+          <input class="md-reply-input" placeholder="Reply on WhatsApp...">
+          <button class="md-reply-send"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client Profile Overlay -->
+  <div class="client-profile-overlay" id="client-profile-overlay">
+    <div class="cp-backdrop" onclick="closeClientProfile()"></div>
+    <div class="cp-sheet">
+      <div class="cp-header">
+        <button class="cp-back" onclick="closeClientProfile()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+        <div class="cp-header-title" id="cp-header-name">Client</div>
+        <button class="cp-edit-btn" onclick="openEditDesc()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+      </div>
+      <div class="cp-scroll">
+        <div class="cp-info-card">
+          <div class="cp-avatar" id="cp-avatar">RS</div>
+          <div class="cp-client-details">
+            <div class="cp-client-name" id="cp-name">Rukmini Shah</div>
+            <div class="cp-client-meta" id="cp-meta">72 yrs · Week 6</div>
+            <div class="cp-client-condition" id="cp-condition">Diabetic</div>
+          </div>
+          <button class="cp-edit-info" onclick="openEditDesc()">Edit</button>
+        </div>
+        <div class="cp-section-label">RECEIVED REPORTS <span class="cp-system-tag">· From system</span></div>
+        <div id="cp-documents"></div>
+
+        <div class="cp-section-label" style="margin-top:8px">YOUR UPLOADS</div>
+        <div id="cp-upload-analysis"></div>
+        <div id="cp-upload-mealplan"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Description Modal -->
+  <div class="edit-desc-overlay" id="edit-desc-overlay">
+    <div class="edit-desc-backdrop" onclick="closeEditDesc()"></div>
+    <div class="edit-desc-sheet">
+      <div class="edit-desc-header">
+        <div class="edit-desc-title">Edit Description</div>
+        <button class="edit-desc-close" onclick="closeEditDesc()">&#10005;</button>
+      </div>
+      <textarea class="edit-desc-input" id="edit-desc-input" placeholder="Enter condition or description..."></textarea>
+      <button class="edit-desc-save" onclick="saveEditDesc()">Save</button>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <div class="nav-item active clickable" data-tab="schedule">
+      <div class="nav-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2d5a3a" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+        </svg>
+      </div>
+      <span class="nav-label">Schedule</span>
+    </div>
+    <div class="nav-item clickable" data-tab="tracking">
+      <div class="nav-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2">
+          <path d="M21.5 2v6h-6M2.5 22v-6h6"/>
+          <path d="M2.5 16A10 10 0 0119 5.6M21.5 8A10 10 0 015 18.4"/>
+        </svg>
+      </div>
+      <span class="nav-label">Tracking</span>
+    </div>
+    <div class="nav-item clickable" data-tab="clients">
+      <div class="nav-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+          <path d="M16 3.13a4 4 0 010 7.75"/>
+        </svg>
+      </div>
+      <span class="nav-label">Clients</span>
+    </div>
+    <div class="nav-item clickable" data-tab="myboard">
+      <div class="nav-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+        </svg>
+      </div>
+      <span class="nav-label">My board</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Track clickable elements for future navigation
+  const screens = {};
+  let currentScreen = 'schedule';
+
+  // Add click listeners for future interactivity
+  document.querySelectorAll('.schedule-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const client = card.dataset.client;
+      console.log(`Navigate to client: ${client}`);
+      // Will be connected to client detail screens later
+    });
+  });
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const tab = item.dataset.tab;
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+
+      // Hide all screens
+      document.getElementById('screen-schedule').style.display = 'none';
+      document.getElementById('screen-tracking').classList.remove('active');
+      document.getElementById('screen-clients').classList.remove('active');
+
+      // Show selected screen
+      if (tab === 'schedule') {
+        document.getElementById('screen-schedule').style.display = 'block';
+      } else if (tab === 'tracking') {
+        document.getElementById('screen-tracking').classList.add('active');
+      } else if (tab === 'clients') {
+        document.getElementById('screen-clients').classList.add('active');
+      }
+    });
+  });
+
+  // Toggle Today/Week
+  document.getElementById('toggle-today').addEventListener('click', function() {
+    this.classList.add('active');
+    document.getElementById('toggle-week').classList.remove('active');
+    document.querySelector('.schedule').style.display = 'block';
+    document.getElementById('week-view').classList.remove('active');
+  });
+  document.getElementById('toggle-week').addEventListener('click', function() {
+    this.classList.add('active');
+    document.getElementById('toggle-today').classList.remove('active');
+    document.querySelector('.schedule').style.display = 'none';
+    document.getElementById('week-view').classList.add('active');
+  });
+
+  // Button click handlers (ready for screen navigation)
+  document.getElementById('btn-view-client')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    console.log('Navigate to: View Client - Prakash Desai');
+  });
+
+  document.getElementById('btn-reschedule')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    console.log('Navigate to: Reschedule - Prakash Desai');
+  });
+
+  // Clock In/Out Toggle Logic
+  let isClockedIn = true;
+  let clockedMinutes = 101; // 1h 41m
+  const REQUIRED_HOURS = 8;
+  const REQUIRED_MINUTES = REQUIRED_HOURS * 60;
+  let timerInterval = null;
+  let clockInTime = '8:00';
+  let clockInPeriod = 'AM';
+
+  function formatDuration(mins) {
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    if (h === 0) return `${m}m`;
+    return `${h}h ${m}m`;
+  }
+
+  function getCurrentTime() {
+    const now = new Date();
+    let hours = now.getHours();
+    const mins = now.getMinutes();
+    const period = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12 || 12;
+    const mStr = mins < 10 ? '0' + mins : mins;
+    return { time: `${hours}:${mStr}`, period };
+  }
+
+  function updateClockDisplay() {
+    const bar = document.getElementById('clock-bar');
+    const label = document.getElementById('clock-label');
+    const timeInfo = document.getElementById('clock-time-info');
+    const duration = document.getElementById('clock-duration');
+    const btn = document.getElementById('btn-clock-toggle');
+    const btnText = document.getElementById('clock-btn-text');
+    const icon = document.getElementById('clock-icon');
+    const warning = document.getElementById('clock-warning');
+    const warningText = document.getElementById('warning-text');
+    const warningFill = document.getElementById('warning-bar-fill');
+
+    duration.textContent = formatDuration(clockedMinutes);
+
+    if (isClockedIn) {
+      bar.classList.remove('clocked-out');
+      label.textContent = 'Clocked in';
+      timeInfo.innerHTML = clockInTime + '<span class="period">' + clockInPeriod + '</span>';
+      btnText.textContent = 'Clock out';
+      btn.classList.remove('clock-in');
+      icon.innerHTML = '<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>';
+      warning.classList.remove('visible');
+    } else {
+      bar.classList.add('clocked-out');
+      label.textContent = 'Clocked out';
+      const now = getCurrentTime();
+      timeInfo.innerHTML = clockInTime + '<span class="period">' + clockInPeriod + '</span>' +
+        ' <span class="time-separator">–</span> ' +
+        now.time + '<span class="period">' + now.period + '</span>';
+      btnText.textContent = 'Clock in';
+      btn.classList.add('clock-in');
+      icon.innerHTML = '<path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>';
+
+      // Show warning if under 8 hours
+      if (clockedMinutes < REQUIRED_MINUTES) {
+        const remaining = REQUIRED_MINUTES - clockedMinutes;
+        const pct = Math.round((clockedMinutes / REQUIRED_MINUTES) * 100);
+        warningFill.style.width = pct + '%';
+        warningText.textContent = formatDuration(remaining) + ' left to 8h';
+        warning.classList.add('visible');
+      } else {
+        warning.classList.remove('visible');
+      }
+    }
+  }
+
+  function startTimer() {
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      if (isClockedIn) {
+        clockedMinutes++;
+        document.getElementById('clock-duration').textContent = formatDuration(clockedMinutes);
+      }
+    }, 60000);
+  }
+
+  document.getElementById('btn-clock-toggle')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (isClockedIn) {
+      // Clocking out
+      isClockedIn = false;
+      if (timerInterval) clearInterval(timerInterval);
+    } else {
+      // Clocking back in — reset for new shift
+      isClockedIn = true;
+      const now = getCurrentTime();
+      clockInTime = now.time;
+      clockInPeriod = now.period;
+      clockedMinutes = 0;
+      startTimer();
+    }
+    updateClockDisplay();
+  });
+
+  startTimer();
+
+  // ===== WHATSAPP BULK ACTIONS =====
+  const waIcon14w = '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg>';
+
+  function getTimeStr() {
+    const now = new Date();
+    let h = now.getHours(), m = now.getMinutes();
+    const p = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    return h + ':' + (m < 10 ? '0' + m : m) + ' ' + p;
+  }
+
+  function updateSyncInfo(type) {
+    const info = document.getElementById('sync-info');
+    const spans = info.querySelectorAll('span');
+    const timeStr = 'Today, ' + getTimeStr();
+    if (type === 'retrieve') {
+      spans[0].innerHTML = '<span class="sync-dot green"></span>Last retrieved: ' + timeStr;
+    } else {
+      spans[1].innerHTML = '<span class="sync-dot blue"></span>Last sent: ' + timeStr;
+    }
+  }
+
+  function retrieveLogs() {
+    const btn = document.getElementById('btn-retrieve');
+    const orig = btn.innerHTML;
+    btn.innerHTML = waIcon14w + ' Retrieving...';
+    btn.style.opacity = '0.7';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.innerHTML = waIcon14w + ' Done!';
+      btn.style.opacity = '1';
+      updateSyncInfo('retrieve');
+      setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 1200);
+    }, 1500);
+  }
+  window.retrieveLogs = retrieveLogs;
+
+  function openSendModal() {
+    document.getElementById('send-msg-overlay').classList.add('open');
+    document.getElementById('send-msg-text').value = '';
+    document.getElementById('send-msg-text').focus();
+  }
+  window.openSendModal = openSendModal;
+
+  function closeSendModal() {
+    document.getElementById('send-msg-overlay').classList.remove('open');
+  }
+  window.closeSendModal = closeSendModal;
+
+  function sendBulkMessage() {
+    const text = document.getElementById('send-msg-text').value.trim();
+    if (!text) return;
+    const btn = document.getElementById('send-msg-btn');
+    btn.textContent = 'Sending...';
+    btn.style.opacity = '0.7';
+    btn.disabled = true;
+    setTimeout(() => {
+      updateSyncInfo('send');
+      closeSendModal();
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg> Send to All on WhatsApp';
+      btn.style.opacity = '1';
+      btn.disabled = false;
+    }, 1000);
+  }
+  window.sendBulkMessage = sendBulkMessage;
+
+  // ===== MEAL DETAIL OVERLAY =====
+  const mealNames = ['Breakfast', 'Lunch', 'Dinner'];
+  const mealKeys = ['b', 'l', 'd'];
+  let currentCardId = null;
+  let currentMealIndex = 0;
+
+  const clients = {
+    'tc-1': {
+      name: 'Rukmini Shah', initials: 'RS', avatar: 'avatar-green',
+      meta: '72 · Diabetic · Week 6',
+      meals: {
+        b: { status: 'unreviewed', logged: true, logTime: '8:17 AM',
+          planned: '1 bowl oats with almonds, half a banana, green tea',
+          actual: '1 bowl oats with almonds & banana, no tea',
+          waMsg: 'Had oats with almonds and banana. Skipped the green tea today, didn\'t feel like it. Feeling good.',
+          waMsgTime: '8:17 AM', waFrom: 'Rukmini',
+          voice: { dur: '0:18', transcript: 'Beta, khaana ho gaya — oats khaya aaj subah, badam bhi daali thi. Chai nahi pi, aaj man nahi kiya.' },
+          photo: true },
+        l: { status: 'unreviewed', logged: true, logTime: '1:05 PM',
+          planned: '2 rotis, dal, sabzi',
+          actual: '2 rotis, rice, dal',
+          waMsg: 'Added rice instead of sabzi today, hope that\'s okay.',
+          waMsgTime: '1:05 PM', waFrom: 'Rukmini' },
+        d: { status: 'future', logged: false, planned: 'Khichdi, buttermilk' }
+      }
+    },
+    'tc-2': {
+      name: 'Meera Iyer', initials: 'MI', avatar: 'avatar-green',
+      meta: '45 · PCOS · Week 4',
+      meals: {
+        b: { status: 'unreviewed', logged: true, logTime: '7:45 AM',
+          planned: 'Idli, sambhar', actual: 'Idli + sambhar',
+          waMsg: 'Had idli sambhar as planned!', waMsgTime: '7:45 AM', waFrom: 'Meera' },
+        l: { status: 'marked-red', logged: false, planned: 'Rice, dal, veggies' },
+        d: { status: 'future', logged: false, planned: 'Soup, salad' }
+      }
+    },
+    'tc-3': {
+      name: 'Prakash Desai', initials: 'PD', avatar: 'avatar-brown',
+      meta: '58 · Hypertension · Week 1',
+      meals: {
+        b: { status: 'marked-green', logged: true, logTime: '8:30 AM',
+          planned: 'Upma, tea', actual: 'Upma, tea' },
+        l: { status: 'marked-green', logged: true, logTime: '1:00 PM',
+          planned: 'Dal, sabzi, roti', actual: 'Dal, sabzi, roti' },
+        d: { status: 'marked-green', logged: true, logTime: '8:00 PM',
+          planned: 'Khichdi, buttermilk', actual: 'Khichdi, buttermilk' }
+      }
+    },
+    'tc-4': {
+      name: 'Anita Kulkarni', initials: 'AK', avatar: 'avatar-purple',
+      meta: '35 · Weight loss · Week 3',
+      meals: {
+        b: { status: 'marked-red', logged: false, planned: 'Poha, fruits' },
+        l: { status: 'marked-red', logged: false, planned: 'Roti, paneer, dal' },
+        d: { status: 'future', logged: false, planned: 'Soup, toast' }
+      }
+    },
+    'tc-5': {
+      name: 'Sudha Narayanan', initials: 'SN', avatar: 'avatar-brown',
+      meta: '62 · Thyroid · Week 10',
+      meals: {
+        b: { status: 'unreviewed', logged: true, logTime: '7:30 AM',
+          planned: 'Poha, curd', actual: 'Poha + curd',
+          voice: { dur: '0:12', transcript: 'Poha bana liya, curd bhi liya. Thoda namak zyada ho gaya.' } },
+        l: { status: 'unreviewed', logged: true, logTime: '12:45 PM',
+          planned: 'Rice, sambar, veggies', actual: 'Rice, sambar, beans',
+          waMsg: 'No veggies available, had beans instead.', waMsgTime: '12:45 PM', waFrom: 'Sudha' },
+        d: { status: 'future', logged: false, planned: 'Roti, paneer' }
+      }
+    },
+    'tc-6': {
+      name: 'Vijay Mehta', initials: 'VM', avatar: 'avatar-brown',
+      meta: '50 · Diabetic · Week 2',
+      meals: {
+        b: { status: 'unreviewed', logged: true, logTime: '8:00 AM',
+          planned: 'Dosa, chutney', actual: 'Dosa, chutney' },
+        l: { status: 'future', logged: false, planned: 'Rice, dal' },
+        d: { status: 'future', logged: false, planned: 'Roti, sabzi' }
+      }
+    },
+    'tc-7': {
+      name: 'Deepa Gupta', initials: 'DG', avatar: 'avatar-purple',
+      meta: '40 · PCOD · Week 2',
+      meals: {
+        b: { status: 'marked-green', logged: true, logTime: '7:50 AM',
+          planned: 'Paratha, curd', actual: 'Paratha, curd' },
+        l: { status: 'marked-orange', logged: true, logTime: '1:15 PM',
+          planned: 'Rajma, rice, salad', actual: 'Rajma, rice',
+          waMsg: 'Skipped salad, was in a hurry.', waMsgTime: '1:15 PM', waFrom: 'Deepa' },
+        d: { status: 'marked-green', logged: true, logTime: '7:45 PM',
+          planned: 'Soup, toast', actual: 'Soup, toast' }
+      }
+    }
+  };
+
+  function openMealDetail(cardId) {
+    currentCardId = cardId;
+    const c = clients[cardId];
+    if (!c) return;
+
+    // Set client info
+    const av = document.getElementById('md-avatar');
+    av.textContent = c.initials;
+    av.className = 'md-client-avatar ' + c.avatar;
+    document.getElementById('md-name').textContent = c.name;
+    document.getElementById('md-meta').textContent = c.meta;
+
+    // Find first logged meal to auto-select, or first
+    currentMealIndex = 0;
+    for (let i = 0; i < 3; i++) {
+      const m = c.meals[mealKeys[i]];
+      if (m.logged) { currentMealIndex = i; break; }
+    }
+
+    renderTabs(c);
+    renderMealContent(c, currentMealIndex);
+    document.getElementById('meal-detail-overlay').classList.add('open');
+  }
+  window.openMealDetail = openMealDetail;
+
+  function closeMealDetail() {
+    document.getElementById('meal-detail-overlay').classList.remove('open');
+  }
+  window.closeMealDetail = closeMealDetail;
+
+  function renderTabs(c) {
+    const cont = document.getElementById('md-tabs');
+    cont.innerHTML = '';
+    mealKeys.forEach((k, i) => {
+      const m = c.meals[k];
+      const tab = document.createElement('button');
+      tab.className = 'md-tab' + (i === currentMealIndex ? ' active' : '');
+      tab.innerHTML = '<span class="md-tab-name">' + mealNames[i] + '</span><span class="md-tab-time">' +
+        (m.logged ? m.logTime : '– pending') + '</span>';
+      tab.onclick = () => { currentMealIndex = i; renderTabs(c); renderMealContent(c, i); };
+      cont.appendChild(tab);
+    });
+  }
+
+  function renderMealContent(c, idx) {
+    const m = c.meals[mealKeys[idx]];
+    const scroll = document.getElementById('md-scroll');
+    document.getElementById('md-title').textContent = 'Wednesday · ' + mealNames[idx];
+
+    let html = '';
+
+    // Status + Plan comparison
+    if (m.status === 'future') {
+      html += '<div class="md-plan-header"><span class="md-status-badge future"><span class="status-dot"></span>PENDING</span></div>';
+      html += '<div class="md-plan-compare"><div class="md-plan-box"><div class="md-plan-box-label">PLANNED</div><div class="md-plan-box-text">' + m.planned + '</div></div></div>';
+      html += '<div class="md-empty">Meal time hasn\'t arrived yet</div>';
+    } else if (!m.logged) {
+      html += '<div class="md-plan-header"><span class="md-status-badge not-logged"><span class="status-dot"></span>NOT LOGGED</span></div>';
+      html += '<div class="md-plan-compare"><div class="md-plan-box"><div class="md-plan-box-label">PLANNED</div><div class="md-plan-box-text">' + m.planned + '</div></div></div>';
+      html += getMark(m, idx);
+    } else {
+      // Determine badge
+      let badge = 'on-plan', badgeText = 'ON PLAN';
+      if (m.status === 'marked-green') { badge = 'on-plan'; badgeText = 'ON PLAN'; }
+      else if (m.status === 'marked-orange') { badge = 'off-plan'; badgeText = 'OFF PLAN'; }
+      else if (m.status === 'marked-red') { badge = 'not-logged-meal'; badgeText = 'NOT LOGGED'; }
+      else { badge = 'not-logged'; badgeText = 'UNREVIEWED'; }
+
+      html += '<div class="md-plan-header"><span class="md-status-badge ' + badge + '"><span class="status-dot"></span>' + badgeText + '</span>';
+      html += '<span class="md-logged-time">Logged ' + m.logTime + '</span></div>';
+      html += '<div class="md-plan-compare">';
+      html += '<div class="md-plan-box"><div class="md-plan-box-label">PLANNED</div><div class="md-plan-box-text">' + m.planned + '</div></div>';
+      html += '</div>';
+
+      // Mark buttons
+      html += getMark(m, idx);
+
+      // WhatsApp message
+      if (m.waMsg) {
+        html += '<div class="md-section-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> TEXT MESSAGE</div>';
+        html += '<div class="md-wa-card"><div class="md-wa-from"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>WhatsApp · from ' + m.waFrom + '</div>';
+        html += '<div class="md-wa-text">"' + m.waMsg + '"</div>';
+        html += '<div class="md-wa-time">' + m.waMsgTime + '</div></div>';
+      }
+
+      // Voice note
+      if (m.voice) {
+        html += '<div class="md-section-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M12 1v11M19 10a7 7 0 01-14 0M12 18v4M8 22h8"/></svg> VOICE NOTE</div>';
+        html += '<div class="md-voice-card"><div class="md-voice-player"><button class="md-play-btn"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></button>';
+        html += '<div class="md-waveform">&#9612;&#9612;&#9615;&#9612;&#9615;&#9612;&#9612;&#9615;&#9612;&#9612;&#9615;&#9612;&#9615;&#9612;&#9612;&#9615;&#9612;&#9612;&#9615;&#9612;&#9615;&#9612;&#9612;&#9615;&#9612;</div></div>';
+        html += '<div class="md-voice-times"><span>0:00</span><span>' + m.voice.dur + '</span></div>';
+        html += '<div class="md-transcript-label">TRANSCRIPT</div>';
+        html += '<div class="md-transcript">"' + m.voice.transcript + '"</div></div>';
+      }
+
+      // Photo
+      if (m.photo) {
+        html += '<div class="md-section-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg> PHOTO</div>';
+        html += '<div class="md-photo-card"><div class="md-photo-img"><div class="md-photo-location">Home · kitchen</div></div>';
+        html += '<div class="md-photo-meta"><span>Taken 8:16 AM</span><a href="#">View full ↗</a></div></div>';
+      }
+    }
+
+    scroll.innerHTML = html;
+  }
+
+  function getMark(m, idx) {
+    const key = mealKeys[idx];
+    let gAct = m.status === 'marked-green' ? ' active' : '';
+    let oAct = m.status === 'marked-orange' ? ' active' : '';
+    let rAct = m.status === 'marked-red' ? ' active' : '';
+    return '<div class="md-mark-row">' +
+      '<button class="md-mark-btn mg' + gAct + '" onclick="markFromDetail(\'' + key + '\',\'green\')">&#10003; On plan</button>' +
+      '<button class="md-mark-btn mo' + oAct + '" onclick="markFromDetail(\'' + key + '\',\'orange\')">~ Off plan</button>' +
+      '<button class="md-mark-btn mr' + rAct + '" onclick="markFromDetail(\'' + key + '\',\'red\')">&#10007; Not logged</button>' +
+      '</div>';
+  }
+
+  function markFromDetail(mealKey, color) {
+    if (!currentCardId) return;
+    const c = clients[currentCardId];
+    const m = c.meals[mealKey];
+    m.status = 'marked-' + color;
+
+    // Update the dot on the tracking card
+    const card = document.getElementById(currentCardId);
+    const dots = card.querySelectorAll('.meal-dot');
+    const idx = mealKeys.indexOf(mealKey);
+    dots[idx].className = 'meal-dot marked-' + color;
+
+    // Re-render current tab
+    renderTabs(c);
+    renderMealContent(c, currentMealIndex);
+  }
+  window.markFromDetail = markFromDetail;
+
+  // ===== CLIENTS SCREEN =====
+  const allClients = [
+    { id: 'c1', name: 'Rukmini Shah', initials: 'RS', avatar: 'avatar-green', age: 72, condition: 'Diabetic', week: 6,
+      docs: [{name: 'Dr. Consultation — Diabetes Review', date: '15 Apr 2025'}, {name: 'Blood Test Report — HbA1c', date: '10 Apr 2025'}],
+      analysisPdf: {name: 'Analysis_RukminiShah_W6.pdf', date: '18 Apr 2025'},
+      mealPlanPdf: {name: 'MealPlan_RukminiShah_W6.pdf', date: '18 Apr 2025'} },
+    { id: 'c2', name: 'Meera Iyer', initials: 'MI', avatar: 'avatar-green', age: 45, condition: 'PCOS', week: 4,
+      docs: [{name: 'Gynecologist Consultation', date: '12 Apr 2025'}, {name: 'Hormone Panel Report', date: '8 Apr 2025'}],
+      analysisPdf: {name: 'Analysis_MeeraIyer_W4.pdf', date: '16 Apr 2025'},
+      mealPlanPdf: null },
+    { id: 'c3', name: 'Prakash Desai', initials: 'PD', avatar: 'avatar-brown', age: 58, condition: 'Hypertension', week: 1,
+      docs: [{name: 'Cardiologist Consultation', date: '20 Apr 2025'}],
+      analysisPdf: null, mealPlanPdf: null },
+    { id: 'c4', name: 'Anita Kulkarni', initials: 'AK', avatar: 'avatar-purple', age: 35, condition: 'Weight loss', week: 3,
+      docs: [{name: 'Initial Assessment Report', date: '1 Apr 2025'}],
+      analysisPdf: {name: 'Analysis_AnitaK_W3.pdf', date: '10 Apr 2025'},
+      mealPlanPdf: {name: 'MealPlan_AnitaK_W3.pdf', date: '10 Apr 2025'} },
+    { id: 'c5', name: 'Sudha Narayanan', initials: 'SN', avatar: 'avatar-brown', age: 62, condition: 'Thyroid', week: 10,
+      docs: [{name: 'Endocrinologist Consultation', date: '5 Apr 2025'}, {name: 'Thyroid Panel Report', date: '3 Apr 2025'}],
+      analysisPdf: {name: 'Analysis_SudhaN_W10.pdf', date: '20 Apr 2025'},
+      mealPlanPdf: {name: 'MealPlan_SudhaN_W10.pdf', date: '20 Apr 2025'} },
+    { id: 'c6', name: 'Vijay Mehta', initials: 'VM', avatar: 'avatar-brown', age: 50, condition: 'Diabetic', week: 2,
+      docs: [{name: 'Dr. Consultation — Diabetes', date: '18 Apr 2025'}],
+      analysisPdf: null, mealPlanPdf: null },
+    { id: 'c7', name: 'Deepa Gupta', initials: 'DG', avatar: 'avatar-purple', age: 40, condition: 'PCOD', week: 2,
+      docs: [{name: 'Gynecologist Report', date: '14 Apr 2025'}],
+      analysisPdf: null, mealPlanPdf: {name: 'MealPlan_DeepaG_W2.pdf', date: '17 Apr 2025'} },
+    { id: 'c8', name: 'Arjun Malhotra', initials: 'AM', avatar: 'avatar-brown', age: 33, condition: 'Cholesterol', week: 5,
+      docs: [{name: 'Lipid Profile Report', date: '11 Apr 2025'}],
+      analysisPdf: {name: 'Analysis_ArjunM_W5.pdf', date: '19 Apr 2025'},
+      mealPlanPdf: {name: 'MealPlan_ArjunM_W5.pdf', date: '19 Apr 2025'} },
+    { id: 'c9', name: 'Neha Rao', initials: 'NR', avatar: 'avatar-green', age: 28, condition: 'Weight loss', week: 6,
+      docs: [{name: 'Initial Consultation', date: '9 Apr 2025'}],
+      analysisPdf: null, mealPlanPdf: null },
+    { id: 'c10', name: 'Kavita Patel', initials: 'KP', avatar: 'avatar-brown', age: 55, condition: 'Diabetic', week: 8,
+      docs: [{name: 'Dr. Consultation — Diabetes', date: '6 Apr 2025'}, {name: 'Blood Sugar Log', date: '2 Apr 2025'}],
+      analysisPdf: {name: 'Analysis_KavitaP_W8.pdf', date: '14 Apr 2025'},
+      mealPlanPdf: {name: 'MealPlan_KavitaP_W8.pdf', date: '14 Apr 2025'} },
+    { id: 'c11', name: 'Rahul Joshi', initials: 'RJ', avatar: 'avatar-green', age: 42, condition: 'Fatty liver', week: 3,
+      docs: [{name: 'Liver Function Report', date: '13 Apr 2025'}],
+      analysisPdf: null, mealPlanPdf: null },
+    { id: 'c12', name: 'Sanjay Patil', initials: 'SP', avatar: 'avatar-brown', age: 48, condition: 'BP', week: 7,
+      docs: [{name: 'BP Monitoring Report', date: '7 Apr 2025'}],
+      analysisPdf: {name: 'Analysis_SanjayP_W7.pdf', date: '15 Apr 2025'},
+      mealPlanPdf: null }
+  ];
+
+  let currentProfileClient = null;
+
+  function clientNeedsUpload(c) {
+    return !c.analysisPdf || !c.mealPlanPdf;
+  }
+
+  function getMissingLabel(c) {
+    if (!c.analysisPdf && !c.mealPlanPdf) return 'Needs docs';
+    if (!c.analysisPdf) return 'Needs analysis';
+    if (!c.mealPlanPdf) return 'Needs plan';
+    return '';
+  }
+
+  function renderClientsList() {
+    const list = document.getElementById('clients-list');
+    document.getElementById('clients-count').textContent = allClients.length + ' clients';
+    list.innerHTML = allClients.map(c => {
+      const missing = clientNeedsUpload(c);
+      const warnTag = missing
+        ? `<span class="cl-needs-upload"><span class="warn-dot"></span>${getMissingLabel(c)}</span>`
+        : '';
+      return `
+      <div class="client-list-item${missing ? ' has-warning' : ''}" onclick="openClientProfile('${c.id}')">
+        <div class="cl-avatar ${c.avatar}">${c.initials}</div>
+        <div class="cl-info">
+          <div class="cl-name">${c.name}</div>
+          <div class="cl-meta">
+            <span>${c.age} yrs</span>
+            <span class="cl-condition">${c.condition}</span>
+            <span class="cl-week">Week ${c.week}</span>
+            ${warnTag}
+          </div>
+        </div>
+        <div class="cl-chevron">›</div>
+      </div>`;
+    }).join('');
+  }
+
+  function openClientProfile(clientId) {
+    const c = allClients.find(x => x.id === clientId);
+    if (!c) return;
+    currentProfileClient = c;
+
+    document.getElementById('cp-header-name').textContent = c.name;
+    const av = document.getElementById('cp-avatar');
+    av.textContent = c.initials;
+    av.className = 'cp-avatar ' + c.avatar;
+    document.getElementById('cp-name').textContent = c.name;
+    document.getElementById('cp-meta').textContent = c.age + ' yrs · Week ' + c.week;
+    document.getElementById('cp-condition').textContent = c.condition;
+
+    const docsEl = document.getElementById('cp-documents');
+    docsEl.innerHTML = c.docs.map(d => `
+      <div class="doc-card">
+        <div class="doc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <div class="doc-info">
+          <div class="doc-name">${d.name}</div>
+          <div class="doc-date">${d.date}</div>
+        </div>
+        <div class="doc-chevron">›</div>
+      </div>
+    `).join('');
+
+    renderUploadCard('cp-upload-analysis', 'Analysis PDF', c.analysisPdf, c.id, 'analysisPdf');
+    renderUploadCard('cp-upload-mealplan', 'Meal Plan', c.mealPlanPdf, c.id, 'mealPlanPdf');
+
+    document.getElementById('client-profile-overlay').classList.add('open');
+  }
+  window.openClientProfile = openClientProfile;
+
+  function closeClientProfile() {
+    document.getElementById('client-profile-overlay').classList.remove('open');
+  }
+  window.closeClientProfile = closeClientProfile;
+
+  function openEditDesc() {
+    if (!currentProfileClient) return;
+    document.getElementById('edit-desc-input').value = currentProfileClient.condition;
+    document.getElementById('edit-desc-overlay').classList.add('open');
+    document.getElementById('edit-desc-input').focus();
+  }
+  window.openEditDesc = openEditDesc;
+
+  function closeEditDesc() {
+    document.getElementById('edit-desc-overlay').classList.remove('open');
+  }
+  window.closeEditDesc = closeEditDesc;
+
+  function saveEditDesc() {
+    if (!currentProfileClient) return;
+    const newCondition = document.getElementById('edit-desc-input').value.trim();
+    if (!newCondition) return;
+
+    currentProfileClient.condition = newCondition;
+    document.getElementById('cp-condition').textContent = newCondition;
+    renderClientsList();
+
+    // Sync with tracking screen client data
+    for (const key in clients) {
+      if (clients[key].name === currentProfileClient.name) {
+        const parts = clients[key].meta.split(' · ');
+        if (parts.length >= 2) parts[1] = newCondition;
+        clients[key].meta = parts.join(' · ');
+      }
+    }
+
+    closeEditDesc();
+  }
+  window.saveEditDesc = saveEditDesc;
+
+  const fileIconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
+  const uploadIconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>';
+
+  function renderUploadCard(elId, label, fileData, clientId, field) {
+    const el = document.getElementById(elId);
+    if (fileData) {
+      el.className = 'cp-upload-card uploaded';
+      el.innerHTML = `
+        <div class="cp-upload-icon filled">${fileIconSvg}</div>
+        <div class="cp-upload-info">
+          <div class="cp-upload-name">${label}</div>
+          <div class="cp-upload-status">${fileData.name} · ${fileData.date}</div>
+        </div>
+        <div class="cp-upload-action">View ›</div>`;
+      el.onclick = () => alert('Viewing ' + fileData.name);
+    } else {
+      el.className = 'cp-upload-card';
+      el.innerHTML = `
+        <div class="cp-upload-icon empty">${uploadIconSvg}</div>
+        <div class="cp-upload-info">
+          <div class="cp-upload-name">${label}</div>
+          <div class="cp-upload-status">Not uploaded yet</div>
+        </div>
+        <div class="cp-upload-action pending">Upload</div>`;
+      el.onclick = () => simulateUpload(clientId, field, label, elId);
+    }
+  }
+
+  function simulateUpload(clientId, field, label, elId) {
+    const c = allClients.find(x => x.id === clientId);
+    if (!c) return;
+    const el = document.getElementById(elId);
+    el.querySelector('.cp-upload-action').textContent = 'Uploading...';
+    setTimeout(() => {
+      const shortName = c.name.replace(/\s+/g, '').substring(0, 8);
+      const fakeFile = { name: label.replace(/\s+/g, '') + '_' + shortName + '_W' + c.week + '.pdf', date: 'Just now' };
+      c[field] = fakeFile;
+      renderUploadCard(elId, label, fakeFile, clientId, field);
+      renderClientsList();
+      updateScheduleUploadWarnings();
+    }, 800);
+  }
+  window.simulateUpload = simulateUpload;
+
+  // Map schedule card data-client slugs to allClients
+  function getClientBySlug(slug) {
+    const name = slug.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' ');
+    return allClients.find(c => c.name === name);
+  }
+
+  function updateScheduleUploadWarnings() {
+    document.querySelectorAll('.schedule-card[data-client]').forEach(card => {
+      const slug = card.dataset.client;
+      const c = getClientBySlug(slug);
+      // Remove any existing warning
+      card.querySelectorAll('.sched-upload-warn').forEach(el => el.remove());
+      if (c && clientNeedsUpload(c)) {
+        const metaRow = card.querySelector('.client-meta-row') || card.querySelector('.client-meta');
+        if (metaRow) {
+          const warn = document.createElement('span');
+          warn.className = 'sched-upload-warn';
+          warn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#d35400" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' + getMissingLabel(c);
+          metaRow.appendChild(warn);
+        }
+      }
+    });
+    // Also update new client card if Prakash Desai needs docs
+    const newClientCard = document.getElementById('card-new-client');
+    if (newClientCard) {
+      newClientCard.querySelectorAll('.sched-upload-warn').forEach(el => el.remove());
+      const prakash = allClients.find(c => c.name === 'Prakash Desai');
+      if (prakash && clientNeedsUpload(prakash)) {
+        const schedRow = newClientCard.querySelector('.new-client-schedule');
+        if (schedRow) {
+          const warn = document.createElement('span');
+          warn.className = 'sched-upload-warn';
+          warn.style.marginLeft = '6px';
+          warn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#d35400" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' + getMissingLabel(prakash);
+          schedRow.appendChild(warn);
+        }
+      }
+    }
+  }
+
+  renderClientsList();
+  updateScheduleUploadWarnings();
+</script>
+
+</body>
+</html>
