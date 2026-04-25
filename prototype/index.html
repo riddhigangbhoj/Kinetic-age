@@ -355,6 +355,117 @@
       transition: all 0.2s;
     }
 
+    /* New client card — expanded details */
+    .new-client-info-tags {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .new-client-info-tags span {
+      background: rgba(255,255,255,0.15);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+    }
+    .new-client-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      font-style: italic;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 8px;
+      border: 1px dashed rgba(255,255,255,0.25);
+    }
+    .btn-join-call {
+      flex: 1;
+      background: rgba(255,255,255,0.95);
+      color: #4a7c59;
+      border: none;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+    }
+    .btn-join-call:active {
+      transform: scale(0.97);
+      opacity: 0.9;
+    }
+
+    /* New-client extras in profile */
+    .cp-nc-desc {
+      margin: 0 16px 12px;
+      padding: 12px 14px;
+      background: #faf8f5;
+      border-radius: 12px;
+      border: 1px dashed #ddd5c8;
+    }
+    .cp-nc-desc-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #999;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .cp-nc-desc-text {
+      font-size: 13px;
+      color: #aaa;
+      font-style: italic;
+      line-height: 1.4;
+    }
+    .cp-nc-session {
+      margin: 0 16px 14px;
+      padding: 14px;
+      background: #f0f7f2;
+      border-radius: 12px;
+      border: 1px solid #d4e8d9;
+    }
+    .cp-nc-session-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .cp-nc-session-date {
+      font-size: 13px;
+      font-weight: 700;
+      color: #2d2d2d;
+    }
+    .cp-nc-session-time {
+      font-size: 12px;
+      color: #666;
+    }
+    .cp-nc-join-call {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      background: #4a7c59;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+    .cp-nc-join-call:active {
+      transform: scale(0.97);
+      opacity: 0.85;
+    }
+
     .btn-reschedule:hover {
       background: rgba(255,255,255,0.28);
     }
@@ -1232,8 +1343,8 @@
     }
 
     .meal-dot.marked-orange {
-      background: #fef0e2;
-      color: #d35400;
+      background: #fdf4dc;
+      color: #b8860b;
     }
 
     .meal-dot.marked-red {
@@ -1451,11 +1562,11 @@
     }
 
     .mark-btn.btn-orange {
-      border-color: #d35400;
-      color: #d35400;
+      border-color: #b8860b;
+      color: #b8860b;
     }
     .mark-btn.btn-orange:hover, .mark-btn.btn-orange.active {
-      background: #d35400;
+      background: #b8860b;
       color: white;
     }
 
@@ -1687,8 +1798,8 @@
     }
 
     .md-status-badge.off-plan {
-      background: #fef0e2;
-      color: #d35400;
+      background: #fdf4dc;
+      color: #b8860b;
     }
 
     .md-status-badge.not-logged-meal {
@@ -1782,11 +1893,11 @@
     }
 
     .md-mark-btn.mo {
-      border-color: #d35400;
-      color: #d35400;
+      border-color: #b8860b;
+      color: #b8860b;
     }
     .md-mark-btn.mo:hover, .md-mark-btn.mo.active {
-      background: #d35400;
+      background: #b8860b;
       color: white;
     }
 
@@ -2145,8 +2256,8 @@
       font-weight: 700;
     }
     .cl-needs-upload {
-      background: #fef0e2;
-      color: #d35400;
+      background: #fdf4dc;
+      color: #b8860b;
       padding: 2px 7px;
       border-radius: 5px;
       font-size: 9px;
@@ -2162,7 +2273,7 @@
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background: #d35400;
+      background: #b8860b;
       flex-shrink: 0;
     }
     .client-list-item.has-warning {
@@ -2172,8 +2283,8 @@
       display: inline-flex;
       align-items: center;
       gap: 3px;
-      background: #fef0e2;
-      color: #d35400;
+      background: #fdf4dc;
+      color: #b8860b;
       padding: 2px 6px;
       border-radius: 5px;
       font-size: 8px;
@@ -2507,6 +2618,625 @@
       transform: scale(0.97);
       opacity: 0.85;
     }
+
+    /* ===== MEAL PROGRESS SECTION ===== */
+    .meal-progress-section {
+      padding: 0 14px 6px;
+    }
+    .mpr-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: white;
+      border: 1px solid #f0ebe3;
+      border-radius: 10px;
+      margin-bottom: 6px;
+    }
+    .mpr-row.upcoming { opacity: 0.45; }
+    .mpr-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .mpr-icon.b { background: #f0f7f1; color: #4a7c59; }
+    .mpr-icon.l { background: #fef9ef; color: #b8860b; }
+    .mpr-icon.d { background: #f5f0fa; color: #7b6b9e; }
+    .mpr-info { flex: 1; min-width: 0; }
+    .mpr-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #2d2d2d;
+      margin-bottom: 2px;
+    }
+    .mpr-count {
+      font-size: 10px;
+      color: #999;
+      font-weight: 500;
+    }
+    .mpr-bar-bg {
+      height: 4px;
+      background: #f0ebe3;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 3px;
+    }
+    .mpr-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.3s;
+    }
+    .mpr-bar-fill.b { background: #4a7c59; }
+    .mpr-bar-fill.l { background: #b8860b; }
+    .mpr-bar-fill.d { background: #7b6b9e; }
+    .mpr-done-btn {
+      padding: 5px 10px;
+      border-radius: 8px;
+      border: 1.5px solid #4a7c59;
+      background: transparent;
+      color: #4a7c59;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .mpr-done-btn:active { transform: scale(0.95); }
+    .mpr-done-btn.completed {
+      background: #4a7c59;
+      color: white;
+      border-color: #4a7c59;
+      pointer-events: none;
+    }
+    .mpr-upcoming-label {
+      font-size: 10px;
+      color: #bbb;
+      font-weight: 600;
+    }
+    .mpr-pending-list {
+      background: #fffaf5;
+      border: 1px solid #f0ebe3;
+      border-radius: 10px;
+      padding: 8px 10px;
+      margin: -2px 0 6px;
+      animation: mprFadeIn 0.2s ease;
+    }
+    .mpr-pending-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: #c0392b;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .mpr-pending-client {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 0;
+    }
+    .mpr-pending-avatar {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+    .mpr-pending-name {
+      font-size: 11px;
+      font-weight: 500;
+      color: #2d2d2d;
+    }
+    @keyframes mprFadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== MY BOARD SCREEN ===== */
+    .screen-myboard {
+      display: none;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-bottom: 90px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .screen-myboard::-webkit-scrollbar { display: none; }
+    .screen-myboard.active { display: block; }
+
+    .mb-header {
+      padding: 8px 20px 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .mb-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: #2d2d2d;
+    }
+    .mb-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #4a7c59;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+    }
+    .mb-content { padding: 0 14px; }
+    .mb-section { margin-bottom: 16px; }
+    .mb-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 8px;
+      padding: 0 2px;
+    }
+
+    /* Variable Pay Card */
+    .mb-pay-card {
+      background: white;
+      border: 1px solid #f0ebe3;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .mb-pay-month {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d2d2d;
+      margin-bottom: 10px;
+    }
+    .mb-pay-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f5f0e8;
+    }
+    .mb-pay-row:last-of-type { border-bottom: none; }
+    .mb-pay-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+    .mb-pay-info { flex: 1; min-width: 0; }
+    .mb-pay-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d2d2d;
+    }
+    .mb-pay-type {
+      font-size: 10px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .mb-pay-amount {
+      font-size: 14px;
+      font-weight: 700;
+      color: #4a7c59;
+      flex-shrink: 0;
+    }
+    .mb-pay-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      margin-top: 6px;
+      border-top: 1.5px solid #f0ebe3;
+    }
+    .mb-pay-total {
+      font-size: 12px;
+      color: #6b6b6b;
+      font-weight: 500;
+    }
+    .mb-pay-total strong {
+      color: #2d2d2d;
+      font-weight: 700;
+    }
+
+    /* Calendar */
+    .mb-cal-card {
+      background: white;
+      border: 1px solid #f0ebe3;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .mb-cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .mb-cal-month {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2d2d2d;
+    }
+    .mb-cal-nav {
+      display: flex;
+      gap: 6px;
+    }
+    .mb-cal-nav button {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid #e0dbd3;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 14px;
+    }
+    .mb-cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+    .mb-cal-day-label {
+      text-align: center;
+      font-size: 10px;
+      font-weight: 600;
+      color: #999;
+      text-transform: uppercase;
+      padding: 4px 0;
+    }
+    .mb-cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: #2d2d2d;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+    }
+    .mb-cal-day.empty { cursor: default; }
+    .mb-cal-day.density-0 { background: #f0ebe3; }
+    .mb-cal-day.density-1 { background: #d4e8d9; }
+    .mb-cal-day.density-2 { background: #4a7c59; color: white; }
+    .mb-cal-day.density-3 { background: #2d5a3a; color: white; }
+    .mb-cal-day.today { box-shadow: 0 0 0 2.5px #2d5a3a; }
+    .mb-cal-day.selected {
+      box-shadow: 0 0 0 2.5px #4a7c59;
+      transform: scale(1.1);
+      z-index: 2;
+    }
+    .mb-cal-day:active:not(.empty) { transform: scale(0.92); }
+
+    /* Day Detail */
+    .mb-day-detail {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #f0ebe3;
+    }
+    .mb-day-detail-header {
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b6b6b;
+      margin-bottom: 8px;
+    }
+    .mb-day-client-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
+    }
+    .mb-day-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+    .mb-day-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d2d2d;
+      flex: 1;
+    }
+    .mb-day-type {
+      font-size: 10px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+    .mb-day-empty {
+      font-size: 12px;
+      color: #bbb;
+      text-align: center;
+      padding: 12px 0;
+    }
+
+    /* Leave Section */
+    .mb-leave-card {
+      background: white;
+      border: 1px solid #f0ebe3;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .mb-leave-balance {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .mb-leave-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d2d2d;
+      flex-shrink: 0;
+    }
+    .mb-leave-bar-bg {
+      flex: 1;
+      height: 6px;
+      background: #f0ebe3;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .mb-leave-bar-fill {
+      height: 100%;
+      background: #4a7c59;
+      border-radius: 3px;
+      transition: width 0.3s;
+    }
+    .mb-apply-btn {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1.5px solid #4a7c59;
+      background: transparent;
+      color: #4a7c59;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      margin-bottom: 12px;
+      transition: all 0.15s;
+    }
+    .mb-apply-btn:active {
+      background: #edf5ef;
+      transform: scale(0.97);
+    }
+    .mb-leave-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 0;
+      border-top: 1px solid #f5f0e8;
+    }
+    .mb-leave-dates { flex: 1; min-width: 0; }
+    .mb-leave-range {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d2d2d;
+    }
+    .mb-leave-reason {
+      font-size: 11px;
+      color: #999;
+      margin-top: 2px;
+    }
+    .mb-leave-status {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+    .mb-leave-status.approved {
+      background: #edf5ef;
+      color: #4a7c59;
+    }
+    .mb-leave-status.pending {
+      background: #fef6e9;
+      color: #c98a1a;
+    }
+
+    /* Apply Leave Modal */
+    .apply-leave-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 350;
+      display: none;
+    }
+    .apply-leave-overlay.open { display: flex; }
+    .apply-leave-backdrop {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.35);
+    }
+    .apply-leave-sheet {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: #faf7f2;
+      border-radius: 20px 20px 0 0;
+      padding: 20px 18px 28px;
+      animation: slideUp 0.25s ease;
+    }
+    .apply-leave-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .apply-leave-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2d2d2d;
+    }
+    .apply-leave-close {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid #e0dbd3;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #999;
+    }
+    .apply-leave-form { display: flex; flex-direction: column; gap: 10px; }
+    .apply-leave-row { display: flex; gap: 10px; }
+    .apply-leave-field { flex: 1; }
+    .apply-leave-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+    }
+    .apply-leave-input {
+      width: 100%;
+      border: 1.5px solid #e0dbd3;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      background: white;
+      color: #2d2d2d;
+    }
+    .apply-leave-input:focus { border-color: #4a7c59; }
+    .apply-leave-textarea {
+      width: 100%;
+      border: 1.5px solid #e0dbd3;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      resize: none;
+      height: 60px;
+      outline: none;
+      background: white;
+      color: #2d2d2d;
+      line-height: 1.4;
+    }
+    .apply-leave-textarea:focus { border-color: #4a7c59; }
+    .apply-leave-submit {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      background: #4a7c59;
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: 4px;
+      transition: all 0.15s;
+    }
+    .apply-leave-submit:active {
+      transform: scale(0.97);
+      opacity: 0.85;
+    }
+
+    /* Docs Needed Block — Schedule screen */
+    .docs-needed-card {
+      margin: 0 20px 12px;
+      background: #fdf4dc;
+      border-radius: 16px;
+      border: 1px solid #f0dda0;
+      overflow: hidden;
+    }
+    .docs-needed-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 16px 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #7a6520;
+    }
+    .docs-needed-header svg { flex-shrink: 0; }
+    .docs-needed-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      border-top: 1px solid #f0dda0;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .docs-needed-item:active { background: #f5eaca; }
+    .docs-needed-item .dn-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: white; flex-shrink: 0;
+    }
+    .docs-needed-item .dn-name {
+      flex: 1; font-size: 13px; font-weight: 600; color: #2d2d2d;
+    }
+    .docs-needed-item .dn-due {
+      font-size: 11px; font-weight: 600; color: #b8860b;
+      white-space: nowrap;
+    }
+
+    /* Clients Filter Row */
+    .clients-filter-row {
+      display: flex;
+      gap: 8px;
+      padding: 0 20px 12px;
+    }
+    .clients-filter-btn {
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #e0d9cf;
+      border-radius: 10px;
+      background: #f0ebe3;
+      color: #888;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+    .clients-filter-btn.active {
+      background: #2d2d2d;
+      color: white;
+      border-color: #2d2d2d;
+    }
   </style>
 </head>
 <body>
@@ -2574,6 +3304,12 @@
         <span class="new-client-time">2 min ago</span>
       </div>
       <div class="new-client-name">Prakash Desai</div>
+      <div class="new-client-info-tags">
+        <span>58 yrs</span>
+        <span>Hypertension</span>
+        <span>Week 1</span>
+      </div>
+      <div class="new-client-desc">No description added yet — tap to add</div>
       <div class="new-client-schedule">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2">
           <circle cx="12" cy="12" r="10"/>
@@ -2583,9 +3319,15 @@
       </div>
       <div class="new-client-actions">
         <button class="btn-view-client clickable" id="btn-view-client">View client →</button>
-        <button class="btn-reschedule clickable" id="btn-reschedule">Reschedule</button>
+        <button class="btn-join-call clickable" onclick="event.stopPropagation(); alert('Joining call...')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Join Call
+        </button>
       </div>
     </div>
+
+    <!-- Docs Needed Block -->
+    <div id="docs-needed-block"></div>
 
     <!-- Today/Week Toggle -->
     <div class="view-toggle-row">
@@ -2972,48 +3714,50 @@
       <span><span class="sync-dot blue"></span>Last sent: Today, 7:30 AM</span>
     </div>
 
+    <div class="meal-progress-section" id="meal-progress-section"></div>
+
     <div class="tracking-list">
 
       <div class="track-card" id="tc-1"><div class="track-card-top">
         <div class="track-avatar avatar-green">RS</div><div class="track-name">Rukmini Shah</div>
         <div class="meal-legends"><div class="meal-dot unreviewed">B</div><div class="meal-dot unreviewed">L</div><div class="meal-dot future">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-1')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-1')">View</button></div>
       </div></div>
 
       <div class="track-card" id="tc-2"><div class="track-card-top">
         <div class="track-avatar avatar-green">MI</div><div class="track-name">Meera Iyer</div>
         <div class="meal-legends"><div class="meal-dot unreviewed">B</div><div class="meal-dot marked-red">L</div><div class="meal-dot future">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-2')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-2')">View</button></div>
       </div></div>
 
       <div class="track-card" id="tc-3"><div class="track-card-top">
         <div class="track-avatar avatar-brown">PD</div><div class="track-name">Prakash Desai</div>
         <div class="meal-legends"><div class="meal-dot marked-green">B</div><div class="meal-dot marked-green">L</div><div class="meal-dot marked-green">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-3')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-3')">View</button></div>
       </div></div>
 
       <div class="track-card" id="tc-4"><div class="track-card-top">
         <div class="track-avatar avatar-purple">AK</div><div class="track-name">Anita Kulkarni</div>
         <div class="meal-legends"><div class="meal-dot marked-red">B</div><div class="meal-dot marked-red">L</div><div class="meal-dot future">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-4')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-4')">View</button></div>
       </div></div>
 
       <div class="track-card" id="tc-5"><div class="track-card-top">
         <div class="track-avatar avatar-brown">SN</div><div class="track-name">Sudha Narayanan</div>
         <div class="meal-legends"><div class="meal-dot unreviewed">B</div><div class="meal-dot unreviewed">L</div><div class="meal-dot future">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-5')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-5')">View</button></div>
       </div></div>
 
       <div class="track-card" id="tc-6"><div class="track-card-top">
         <div class="track-avatar avatar-brown">VM</div><div class="track-name">Vijay Mehta</div>
         <div class="meal-legends"><div class="meal-dot unreviewed">B</div><div class="meal-dot future">L</div><div class="meal-dot future">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-6')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-6')">View</button></div>
       </div></div>
 
       <div class="track-card" id="tc-7"><div class="track-card-top">
         <div class="track-avatar avatar-purple">DG</div><div class="track-name">Deepa Gupta</div>
         <div class="meal-legends"><div class="meal-dot marked-green">B</div><div class="meal-dot marked-orange">L</div><div class="meal-dot marked-green">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-7')">View</button><button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-7')">View</button></div>
       </div></div>
 
     </div>
@@ -3033,6 +3777,10 @@
     <div class="clients-header">
       <div class="clients-title">Clients</div>
       <div class="clients-count" id="clients-count">12 clients</div>
+    </div>
+    <div class="clients-filter-row">
+      <button class="clients-filter-btn active" id="filter-all" onclick="setClientsFilter('all')">All</button>
+      <button class="clients-filter-btn" id="filter-needs-docs" onclick="setClientsFilter('needs-docs')">Needs Docs (<span id="needs-docs-count">7</span>)</button>
     </div>
     <div class="clients-list" id="clients-list"></div>
   </div>
@@ -3073,8 +3821,7 @@
           <div class="md-client-name" id="md-name">Rukmini Shah</div>
           <div class="md-client-meta" id="md-meta">72 · Diabetic · Week 6</div>
         </div>
-        <button class="btn-wa clickable"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg></button>
-      </div>
+              </div>
 
       <div class="md-meal-tabs" id="md-tabs"></div>
 
@@ -3114,6 +3861,26 @@
           </div>
           <button class="cp-edit-info" onclick="openEditDesc()">Edit</button>
         </div>
+
+        <!-- New client only: description + session -->
+        <div id="cp-new-client-extras" style="display:none">
+          <div class="cp-nc-desc" id="cp-nc-desc">
+            <div class="cp-nc-desc-label">DESCRIPTION</div>
+            <div class="cp-nc-desc-text" id="cp-nc-desc-text">No description added yet — tap to add</div>
+          </div>
+          <div class="cp-nc-session">
+            <div class="cp-nc-session-row">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4a7c59" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span class="cp-nc-session-date" id="cp-nc-session-date">Today</span>
+              <span class="cp-nc-session-time" id="cp-nc-session-time">11:00 AM — 12:00 PM</span>
+            </div>
+            <button class="cp-nc-join-call clickable" onclick="alert('Joining call...')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              Join Call
+            </button>
+          </div>
+        </div>
+
         <div class="cp-section-label">RECEIVED REPORTS <span class="cp-system-tag">· From system</span></div>
         <div id="cp-documents"></div>
 
@@ -3134,6 +3901,98 @@
       </div>
       <textarea class="edit-desc-input" id="edit-desc-input" placeholder="Enter condition or description..."></textarea>
       <button class="edit-desc-save" onclick="saveEditDesc()">Save</button>
+    </div>
+  </div>
+
+  <!-- ===== MY BOARD SCREEN ===== -->
+  <div class="screen-myboard" id="screen-myboard">
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <div class="dynamic-island"></div>
+      <div class="status-icons">
+        <svg viewBox="0 0 18 12" fill="none"><path d="M1 9h1.5V3H1v6zm4 2h1.5V1H5v10zm4-3h1.5V4H9v4zm4 1h1.5V2H13v7z" fill="#1a1a1a"/></svg>
+        <svg viewBox="0 0 16 12" fill="none"><path d="M8 2.4C5.6 2.4 3.5 3.3 2 4.8l1.2 1.2C4.4 4.8 6.1 4 8 4s3.6.8 4.8 2l1.2-1.2C12.5 3.3 10.4 2.4 8 2.4zM8 6c-1.4 0-2.6.5-3.6 1.4L5.6 8.6C6.3 7.9 7.1 7.6 8 7.6s1.7.3 2.4 1l1.2-1.2C10.6 6.5 9.4 6 8 6zm0 3.6c-.6 0-1 .4-1 1s.4 1 1 1 1-.4 1-1-.4-1-1-1z" fill="#1a1a1a"/></svg>
+        <svg viewBox="0 0 28 14" fill="none"><rect x="0.5" y="0.5" width="22" height="13" rx="3" stroke="#1a1a1a" stroke-opacity="0.35"/><rect x="2" y="2" width="17" height="10" rx="2" fill="#1a1a1a"/><path d="M24 5v4a2.5 2.5 0 000-4z" fill="#1a1a1a" opacity="0.4"/></svg>
+      </div>
+    </div>
+
+    <div class="mb-header">
+      <div class="mb-title">My Board</div>
+      <div class="mb-avatar">NK</div>
+    </div>
+
+    <div class="mb-content">
+      <!-- Variable Pay Section -->
+      <div class="mb-section">
+        <div class="mb-section-label">VARIABLE PAY</div>
+        <div class="mb-pay-card">
+          <div class="mb-pay-month">April 2025</div>
+          <div id="mb-pay-list"></div>
+          <div class="mb-pay-summary">
+            <div class="mb-pay-total">Today's total: <strong id="mb-pay-today">\u20B90</strong></div>
+            <div class="mb-pay-total">Month total: <strong id="mb-pay-month-total">\u20B90</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calendar Section -->
+      <div class="mb-section">
+        <div class="mb-section-label">CALENDAR</div>
+        <div class="mb-cal-card">
+          <div class="mb-cal-header">
+            <div class="mb-cal-month">April 2025</div>
+            <div class="mb-cal-nav">
+              <button>&#8249;</button>
+              <button>&#8250;</button>
+            </div>
+          </div>
+          <div class="mb-cal-grid" id="mb-cal-grid"></div>
+          <div class="mb-day-detail" id="mb-day-detail"></div>
+        </div>
+      </div>
+
+      <!-- Leave Section -->
+      <div class="mb-section">
+        <div class="mb-section-label">LEAVE</div>
+        <div class="mb-leave-card">
+          <div class="mb-leave-balance">
+            <div class="mb-leave-text" id="mb-leave-text">3 / 12 days used</div>
+            <div class="mb-leave-bar-bg">
+              <div class="mb-leave-bar-fill" id="mb-leave-bar" style="width: 25%"></div>
+            </div>
+          </div>
+          <button class="mb-apply-btn" onclick="openApplyLeave()">Apply Leave</button>
+          <div class="mb-leave-list" id="mb-leave-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Apply Leave Modal -->
+  <div class="apply-leave-overlay" id="apply-leave-overlay">
+    <div class="apply-leave-backdrop" onclick="closeApplyLeave()"></div>
+    <div class="apply-leave-sheet">
+      <div class="apply-leave-header">
+        <div class="apply-leave-title">Apply Leave</div>
+        <button class="apply-leave-close" onclick="closeApplyLeave()">&#10005;</button>
+      </div>
+      <div class="apply-leave-form">
+        <div class="apply-leave-row">
+          <div class="apply-leave-field">
+            <div class="apply-leave-label">From</div>
+            <input type="date" class="apply-leave-input" id="leave-from" value="2025-04-28">
+          </div>
+          <div class="apply-leave-field">
+            <div class="apply-leave-label">To</div>
+            <input type="date" class="apply-leave-input" id="leave-to" value="2025-04-28">
+          </div>
+        </div>
+        <div>
+          <div class="apply-leave-label">Reason</div>
+          <textarea class="apply-leave-textarea" id="leave-reason" placeholder="Enter reason for leave..."></textarea>
+        </div>
+        <button class="apply-leave-submit" onclick="submitLeave()">Submit Leave Request</button>
+      </div>
     </div>
   </div>
 
@@ -3208,6 +4067,7 @@
       document.getElementById('screen-schedule').style.display = 'none';
       document.getElementById('screen-tracking').classList.remove('active');
       document.getElementById('screen-clients').classList.remove('active');
+      document.getElementById('screen-myboard').classList.remove('active');
 
       // Show selected screen
       if (tab === 'schedule') {
@@ -3216,6 +4076,8 @@
         document.getElementById('screen-tracking').classList.add('active');
       } else if (tab === 'clients') {
         document.getElementById('screen-clients').classList.add('active');
+      } else if (tab === 'myboard') {
+        document.getElementById('screen-myboard').classList.add('active');
       }
     });
   });
@@ -3237,7 +4099,7 @@
   // Button click handlers (ready for screen navigation)
   document.getElementById('btn-view-client')?.addEventListener('click', (e) => {
     e.stopPropagation();
-    console.log('Navigate to: View Client - Prakash Desai');
+    openClientProfile('c3');
   });
 
   document.getElementById('btn-reschedule')?.addEventListener('click', (e) => {
@@ -3642,8 +4504,77 @@
     // Re-render current tab
     renderTabs(c);
     renderMealContent(c, currentMealIndex);
+
+    // Refresh meal progress
+    renderMealProgress();
   }
   window.markFromDetail = markFromDetail;
+
+  // ===== MEAL PROGRESS =====
+  const mealDoneState = { b: false, l: false, d: false };
+  let pendingMealKey = null;
+
+  function getMealProgress(mk) {
+    const ckeys = Object.keys(clients);
+    let total = 0, reviewed = 0, unreviewedClients = [];
+    ckeys.forEach(k => {
+      const meal = clients[k].meals[mk];
+      if (meal.status !== 'future') {
+        total++;
+        if (meal.status.startsWith('marked-')) {
+          reviewed++;
+        } else {
+          unreviewedClients.push({ name: clients[k].name, initials: clients[k].initials, avatar: clients[k].avatar });
+        }
+      }
+    });
+    return { total, reviewed, unreviewedClients, allFuture: total === 0 };
+  }
+
+  function renderMealProgress() {
+    const section = document.getElementById('meal-progress-section');
+    if (!section) return;
+    const labels = { b: 'Breakfast', l: 'Lunch', d: 'Dinner' };
+    let html = '';
+
+    ['b', 'l', 'd'].forEach(key => {
+      const p = getMealProgress(key);
+      const isDone = mealDoneState[key] || (p.total > 0 && p.reviewed === p.total);
+      if (p.total > 0 && p.reviewed === p.total) mealDoneState[key] = true;
+
+      if (p.allFuture) {
+        html += '<div class="mpr-row upcoming"><div class="mpr-icon '+key+'">'+key.toUpperCase()+'</div><div class="mpr-info"><div class="mpr-name">'+labels[key]+'</div><div class="mpr-count">Upcoming</div></div><div class="mpr-action"><span class="mpr-upcoming-label">Not yet</span></div></div>';
+      } else if (isDone) {
+        html += '<div class="mpr-row"><div class="mpr-icon '+key+'">'+key.toUpperCase()+'</div><div class="mpr-info"><div class="mpr-name">'+labels[key]+'</div><div class="mpr-count">'+p.reviewed+' of '+p.total+' reviewed</div><div class="mpr-bar-bg"><div class="mpr-bar-fill '+key+'" style="width:100%"></div></div></div><div class="mpr-action"><button class="mpr-done-btn completed">&#10003; Done</button></div></div>';
+      } else {
+        const pct = p.total > 0 ? Math.round((p.reviewed / p.total) * 100) : 0;
+        html += '<div class="mpr-row"><div class="mpr-icon '+key+'">'+key.toUpperCase()+'</div><div class="mpr-info"><div class="mpr-name">'+labels[key]+'</div><div class="mpr-count">'+p.reviewed+' of '+p.total+' reviewed</div><div class="mpr-bar-bg"><div class="mpr-bar-fill '+key+'" style="width:'+pct+'%"></div></div></div><div class="mpr-action"><button class="mpr-done-btn" onclick="tryMarkMealDone(\''+key+'\')">Mark Done</button></div></div>';
+        if (pendingMealKey === key) {
+          html += '<div class="mpr-pending-list"><div class="mpr-pending-title">Pending review ('+p.unreviewedClients.length+')</div>';
+          p.unreviewedClients.forEach(c => {
+            html += '<div class="mpr-pending-client"><div class="mpr-pending-avatar '+c.avatar+'">'+c.initials+'</div><div class="mpr-pending-name">'+c.name+'</div></div>';
+          });
+          html += '</div>';
+        }
+      }
+    });
+
+    section.innerHTML = html;
+  }
+
+  function tryMarkMealDone(mk) {
+    const p = getMealProgress(mk);
+    if (p.reviewed === p.total) {
+      mealDoneState[mk] = true;
+      pendingMealKey = null;
+    } else {
+      pendingMealKey = pendingMealKey === mk ? null : mk;
+    }
+    renderMealProgress();
+  }
+  window.tryMarkMealDone = tryMarkMealDone;
+
+  renderMealProgress();
 
   // ===== CLIENTS SCREEN =====
   const allClients = [
@@ -3693,22 +4624,47 @@
   ];
 
   let currentProfileClient = null;
+  let clientsFilter = 'all';
 
   function clientNeedsUpload(c) {
     return !c.analysisPdf || !c.mealPlanPdf;
   }
 
   function getMissingLabel(c) {
-    if (!c.analysisPdf && !c.mealPlanPdf) return 'Needs docs';
-    if (!c.analysisPdf) return 'Needs analysis';
-    if (!c.mealPlanPdf) return 'Needs plan';
+    if (!c.analysisPdf || !c.mealPlanPdf) return 'Needs docs';
     return '';
   }
 
+  function setClientsFilter(filter) {
+    clientsFilter = filter;
+    document.getElementById('filter-all').classList.toggle('active', filter === 'all');
+    document.getElementById('filter-needs-docs').classList.toggle('active', filter === 'needs-docs');
+    renderClientsList();
+  }
+  window.setClientsFilter = setClientsFilter;
+
   function renderClientsList() {
     const list = document.getElementById('clients-list');
-    document.getElementById('clients-count').textContent = allClients.length + ' clients';
-    list.innerHTML = allClients.map(c => {
+    const needsDocsCount = allClients.filter(c => clientNeedsUpload(c)).length;
+    // Update filter badge count
+    const countEl = document.getElementById('needs-docs-count');
+    if (countEl) countEl.textContent = needsDocsCount;
+
+    // Sort: missing docs first, then alphabetical
+    const sorted = [...allClients].sort((a, b) => {
+      const aMissing = clientNeedsUpload(a) ? 0 : 1;
+      const bMissing = clientNeedsUpload(b) ? 0 : 1;
+      if (aMissing !== bMissing) return aMissing - bMissing;
+      return a.name.localeCompare(b.name);
+    });
+
+    // Filter
+    const filtered = clientsFilter === 'needs-docs'
+      ? sorted.filter(c => clientNeedsUpload(c))
+      : sorted;
+
+    document.getElementById('clients-count').textContent = filtered.length + ' clients';
+    list.innerHTML = filtered.map(c => {
       const missing = clientNeedsUpload(c);
       const warnTag = missing
         ? `<span class="cl-needs-upload"><span class="warn-dot"></span>${getMissingLabel(c)}</span>`
@@ -3742,6 +4698,22 @@
     document.getElementById('cp-name').textContent = c.name;
     document.getElementById('cp-meta').textContent = c.age + ' yrs · Week ' + c.week;
     document.getElementById('cp-condition').textContent = c.condition;
+
+    // Show description + session + join call only for new clients
+    const extras = document.getElementById('cp-new-client-extras');
+    const isNewClient = c.id === 'c3'; // Prakash Desai — new client
+    if (isNewClient) {
+      extras.style.display = '';
+      const descText = document.getElementById('cp-nc-desc-text');
+      descText.textContent = c.description || 'No description added yet — tap to add';
+      const session = clientSessionInfo[c.id];
+      if (session) {
+        document.getElementById('cp-nc-session-date').textContent = session.date === 'Today' ? 'Today' : session.date;
+        document.getElementById('cp-nc-session-time').textContent = session.time;
+      }
+    } else {
+      extras.style.display = 'none';
+    }
 
     const docsEl = document.getElementById('cp-documents');
     docsEl.innerHTML = c.docs.map(d => `
@@ -3842,6 +4814,7 @@
       renderUploadCard(elId, label, fakeFile, clientId, field);
       renderClientsList();
       updateScheduleUploadWarnings();
+      renderDocsNeededBlock();
     }, 800);
   }
   window.simulateUpload = simulateUpload;
@@ -3863,7 +4836,7 @@
         if (metaRow) {
           const warn = document.createElement('span');
           warn.className = 'sched-upload-warn';
-          warn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#d35400" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' + getMissingLabel(c);
+          warn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' + getMissingLabel(c);
           metaRow.appendChild(warn);
         }
       }
@@ -3879,15 +4852,231 @@
           const warn = document.createElement('span');
           warn.className = 'sched-upload-warn';
           warn.style.marginLeft = '6px';
-          warn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#d35400" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' + getMissingLabel(prakash);
+          warn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' + getMissingLabel(prakash);
           schedRow.appendChild(warn);
         }
       }
     }
   }
 
+  // Schedule data for each client
+  const clientSessionInfo = {
+    'c1': { date: 'Today', time: '8:30 AM — 9:30 AM' },
+    'c2': { date: 'Today', time: '2:00 PM — 3:00 PM' },
+    'c3': { date: 'Today', time: '11:00 AM — 12:00 PM' },
+    'c4': { date: 'Today', time: '10:00 AM — 10:45 AM' },
+    'c5': { date: 'Today', time: '4:00 PM — 5:00 PM' },
+    'c6': { date: '25 Apr', time: '9:00 AM — 10:00 AM' },
+    'c7': { date: '28 Apr', time: '11:00 AM — 12:00 PM' },
+    'c8': { date: '26 Apr', time: '3:00 PM — 4:00 PM' },
+    'c9': { date: '24 Apr', time: '10:00 AM — 11:00 AM' },
+    'c10': { date: '27 Apr', time: '2:00 PM — 3:00 PM' },
+    'c11': { date: '29 Apr', time: '9:30 AM — 10:30 AM' },
+    'c12': { date: '30 Apr', time: '11:00 AM — 12:00 PM' }
+  };
+  const clientNextSession = {};
+  for (const k in clientSessionInfo) clientNextSession[k] = clientSessionInfo[k].date;
+
+  function renderDocsNeededBlock() {
+    const block = document.getElementById('docs-needed-block');
+    if (!block) return;
+    const needsDocs = allClients.filter(c => clientNeedsUpload(c));
+    if (needsDocs.length === 0) { block.innerHTML = ''; return; }
+    // Sort: "Today" clients first, then by soonest date
+    const datePriority = d => d === 'Today' ? 0 : 1;
+    const sorted = [...needsDocs].sort((a, b) => {
+      const da = clientNextSession[a.id] || 'This week';
+      const db = clientNextSession[b.id] || 'This week';
+      return datePriority(da) - datePriority(db);
+    });
+    const shown = sorted.slice(0, 3);
+    const remaining = needsDocs.length - shown.length;
+    const avatarColors = { 'avatar-green': '#4a7c59', 'avatar-brown': '#8B6914', 'avatar-purple': '#7B5EA7' };
+    const rows = shown.map(c => {
+      const bg = avatarColors[c.avatar] || '#888';
+      const due = clientNextSession[c.id] || 'This week';
+      return `<div class="docs-needed-item" onclick="openClientProfile('${c.id}')">
+        <div class="dn-avatar" style="background:${bg}">${c.initials}</div>
+        <div class="dn-name">${c.name}</div>
+        <div class="dn-due">${due}</div>
+      </div>`;
+    }).join('');
+    const moreRow = remaining > 0
+      ? `<div class="docs-needed-item" onclick="switchTab('clients'); setClientsFilter('needs-docs');" style="justify-content:center;gap:4px;color:#b8860b;font-size:12px;font-weight:600;">+${remaining} more clients →</div>`
+      : '';
+    block.innerHTML = `<div class="docs-needed-card">
+      <div class="docs-needed-header">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+        Upload docs for ${needsDocs.length} clients
+      </div>
+      ${rows}
+      ${moreRow}
+    </div>`;
+  }
+
+  // ===== MY BOARD =====
+  const mbCalendarData = {
+    1:[{name:'Neha Rao',initials:'NR',avatar:'avatar-green',type:'Meal Plan'}],
+    2:[{name:'Kavita Patel',initials:'KP',avatar:'avatar-brown',type:'Weekly Review'}],
+    3:[],
+    4:[{name:'Sanjay Patil',initials:'SP',avatar:'avatar-brown',type:'Weekly Review'},{name:'Priya Thakur',initials:'PT',avatar:'avatar-green',type:'Meal Plan'}],
+    5:[{name:'Vikram Kumar',initials:'VK',avatar:'avatar-brown',type:'Weekly Review'}],
+    6:[],
+    7:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Arjun Malhotra',initials:'AM',avatar:'avatar-brown',type:'Meal Plan'}],
+    8:[{name:'Deepa Gupta',initials:'DG',avatar:'avatar-purple',type:'Weekly Review'},{name:'Rahul Joshi',initials:'RJ',avatar:'avatar-green',type:'Meal Plan'},{name:'Anita Kulkarni',initials:'AK',avatar:'avatar-purple',type:'Weekly Review'}],
+    9:[{name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Meal Plan'},{name:'Meera Iyer',initials:'MI',avatar:'avatar-green',type:'Weekly Review'},{name:'Sudha Narayanan',initials:'SN',avatar:'avatar-brown',type:'Weekly Review'}],
+    10:[{name:'Vijay Mehta',initials:'VM',avatar:'avatar-brown',type:'Meal Plan'},{name:'Lakshmi Shetty',initials:'LS',avatar:'avatar-purple',type:'Weekly Review'}],
+    11:[{name:'Sanjay Patil',initials:'SP',avatar:'avatar-brown',type:'Weekly Review'},{name:'Priya Thakur',initials:'PT',avatar:'avatar-green',type:'Weekly Review'}],
+    12:[{name:'Vikram Kumar',initials:'VK',avatar:'avatar-brown',type:'Weekly Review'}],
+    13:[],
+    14:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Arjun Malhotra',initials:'AM',avatar:'avatar-brown',type:'Meal Plan'}],
+    15:[{name:'Anita Kulkarni',initials:'AK',avatar:'avatar-purple',type:'Weekly Review'},{name:'Neha Rao',initials:'NR',avatar:'avatar-green',type:'Meal Plan'},{name:'Kavita Patel',initials:'KP',avatar:'avatar-brown',type:'Weekly Review'}],
+    16:[{name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Meal Plan'},{name:'Meera Iyer',initials:'MI',avatar:'avatar-green',type:'Weekly Review'},{name:'Sudha Narayanan',initials:'SN',avatar:'avatar-brown',type:'Weekly Review'},{name:'Vijay Mehta',initials:'VM',avatar:'avatar-brown',type:'Meal Plan'}],
+    17:[{name:'Deepa Gupta',initials:'DG',avatar:'avatar-purple',type:'Weekly Review'},{name:'Rahul Joshi',initials:'RJ',avatar:'avatar-green',type:'Meal Plan'}],
+    18:[{name:'Sanjay Patil',initials:'SP',avatar:'avatar-brown',type:'Weekly Review'},{name:'Priya Thakur',initials:'PT',avatar:'avatar-green',type:'Weekly Review'},{name:'Lakshmi Shetty',initials:'LS',avatar:'avatar-purple',type:'Meal Plan'}],
+    19:[{name:'Vikram Kumar',initials:'VK',avatar:'avatar-brown',type:'Weekly Review'}],
+    20:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Arjun Malhotra',initials:'AM',avatar:'avatar-brown',type:'Meal Plan'}],
+    21:[{name:'Anita Kulkarni',initials:'AK',avatar:'avatar-purple',type:'Weekly Review'},{name:'Neha Rao',initials:'NR',avatar:'avatar-green',type:'Meal Plan'},{name:'Kavita Patel',initials:'KP',avatar:'avatar-brown',type:'Weekly Review'}],
+    22:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Meal Plan'},{name:'Meera Iyer',initials:'MI',avatar:'avatar-green',type:'Weekly Review'},{name:'Sudha Narayanan',initials:'SN',avatar:'avatar-brown',type:'Weekly Review'},{name:'Vijay Mehta',initials:'VM',avatar:'avatar-brown',type:'Meal Plan'}],
+    23:[{name:'Deepa Gupta',initials:'DG',avatar:'avatar-purple',type:'Weekly Review'},{name:'Rahul Joshi',initials:'RJ',avatar:'avatar-green',type:'Meal Plan'}],
+    24:[{name:'Sanjay Patil',initials:'SP',avatar:'avatar-brown',type:'Weekly Review'},{name:'Priya Thakur',initials:'PT',avatar:'avatar-green',type:'Weekly Review'},{name:'Lakshmi Shetty',initials:'LS',avatar:'avatar-purple',type:'Meal Plan'}],
+    25:[{name:'Vikram Kumar',initials:'VK',avatar:'avatar-brown',type:'Weekly Review'}],
+    26:[],
+    27:[{name:'Neha Rao',initials:'NR',avatar:'avatar-green',type:'Meal Plan'},{name:'Arjun Malhotra',initials:'AM',avatar:'avatar-brown',type:'Meal Plan'}],
+    28:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Kavita Patel',initials:'KP',avatar:'avatar-brown',type:'Weekly Review'}],
+    29:[{name:'Anita Kulkarni',initials:'AK',avatar:'avatar-purple',type:'Weekly Review'},{name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Meal Plan'},{name:'Meera Iyer',initials:'MI',avatar:'avatar-green',type:'Weekly Review'}],
+    30:[{name:'Sudha Narayanan',initials:'SN',avatar:'avatar-brown',type:'Weekly Review'},{name:'Vijay Mehta',initials:'VM',avatar:'avatar-brown',type:'Meal Plan'}]
+  };
+
+  const MB_TODAY = 22;
+  let mbSelectedDay = MB_TODAY;
+
+  const mbPayData = [
+    {name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review',amount:200},
+    {name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Meal Plan',amount:150}
+  ];
+  const mbMonthTotal = 4800;
+
+  let mbLeaves = [
+    {from:'5 May',to:'6 May',reason:'Family function',status:'approved'},
+    {from:'15 May',to:'15 May',reason:'Doctor appointment',status:'pending'},
+    {from:'28 Apr',to:'28 Apr',reason:'Personal work',status:'approved'}
+  ];
+  let mbLeaveUsed = 3;
+  const mbLeaveTotal = 12;
+
+  function renderMyBoard() {
+    renderPayCard();
+    renderCalendar();
+    renderDayDetail(mbSelectedDay);
+    renderLeaves();
+  }
+
+  function renderPayCard() {
+    const list = document.getElementById('mb-pay-list');
+    let todayTotal = 0;
+    let html = '';
+    mbPayData.forEach(p => {
+      todayTotal += p.amount;
+      html += '<div class="mb-pay-row"><div class="mb-pay-avatar '+p.avatar+'">'+p.initials+'</div><div class="mb-pay-info"><div class="mb-pay-name">'+p.name+'</div><div class="mb-pay-type">'+p.type+'</div></div><div class="mb-pay-amount">\u20B9'+p.amount+'</div></div>';
+    });
+    list.innerHTML = html;
+    document.getElementById('mb-pay-today').textContent = '\u20B9'+todayTotal;
+    document.getElementById('mb-pay-month-total').textContent = '\u20B9'+(mbMonthTotal+todayTotal).toLocaleString('en-IN');
+  }
+
+  function renderCalendar() {
+    const grid = document.getElementById('mb-cal-grid');
+    const dayLabels = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    let html = dayLabels.map(d => '<div class="mb-cal-day-label">'+d+'</div>').join('');
+    // April 2025 starts on Tuesday → 1 empty cell
+    for (let i = 0; i < 1; i++) html += '<div class="mb-cal-day empty"></div>';
+    for (let day = 1; day <= 30; day++) {
+      const cl = mbCalendarData[day] || [];
+      const count = cl.length;
+      let density = 'density-0';
+      if (count >= 5) density = 'density-3';
+      else if (count >= 3) density = 'density-2';
+      else if (count >= 1) density = 'density-1';
+      let classes = 'mb-cal-day '+density;
+      if (day === MB_TODAY) classes += ' today';
+      if (day === mbSelectedDay) classes += ' selected';
+      html += '<div class="'+classes+'" data-day="'+day+'" onclick="selectCalDay('+day+')">'+day+'</div>';
+    }
+    grid.innerHTML = html;
+  }
+
+  function selectCalDay(day) {
+    mbSelectedDay = day;
+    renderCalendar();
+    renderDayDetail(day);
+  }
+  window.selectCalDay = selectCalDay;
+
+  function renderDayDetail(day) {
+    const detail = document.getElementById('mb-day-detail');
+    const cl = mbCalendarData[day] || [];
+    const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const d = new Date(2025, 3, day);
+    const dayName = dayNames[d.getDay()];
+    let html = '<div class="mb-day-detail-header">'+dayName+', '+day+' April'+(day===MB_TODAY?' (Today)':'')+' &middot; '+cl.length+' session'+(cl.length!==1?'s':'')+'</div>';
+    if (cl.length === 0) {
+      html += '<div class="mb-day-empty">No appointments</div>';
+    } else {
+      cl.forEach(c => {
+        html += '<div class="mb-day-client-row"><div class="mb-day-avatar '+c.avatar+'">'+c.initials+'</div><div class="mb-day-name">'+c.name+'</div><div class="mb-day-type">'+c.type+'</div></div>';
+      });
+    }
+    detail.innerHTML = html;
+  }
+
+  function renderLeaves() {
+    const list = document.getElementById('mb-leave-list');
+    let html = '';
+    mbLeaves.forEach(l => {
+      const range = l.from === l.to ? l.from : l.from+' \u2013 '+l.to;
+      html += '<div class="mb-leave-item"><div class="mb-leave-dates"><div class="mb-leave-range">'+range+'</div><div class="mb-leave-reason">'+l.reason+'</div></div><div class="mb-leave-status '+l.status+'">'+l.status.charAt(0).toUpperCase()+l.status.slice(1)+'</div></div>';
+    });
+    list.innerHTML = html;
+    document.getElementById('mb-leave-text').textContent = mbLeaveUsed+' / '+mbLeaveTotal+' days used';
+    document.getElementById('mb-leave-bar').style.width = Math.round((mbLeaveUsed/mbLeaveTotal)*100)+'%';
+  }
+
+  function openApplyLeave() {
+    document.getElementById('apply-leave-overlay').classList.add('open');
+    document.getElementById('leave-reason').value = '';
+    document.getElementById('leave-from').value = '2025-04-28';
+    document.getElementById('leave-to').value = '2025-04-28';
+  }
+  window.openApplyLeave = openApplyLeave;
+
+  function closeApplyLeave() {
+    document.getElementById('apply-leave-overlay').classList.remove('open');
+  }
+  window.closeApplyLeave = closeApplyLeave;
+
+  function submitLeave() {
+    const from = document.getElementById('leave-from').value;
+    const to = document.getElementById('leave-to').value;
+    const reason = document.getElementById('leave-reason').value.trim() || 'Personal';
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const fromStr = fromDate.getDate()+' '+months[fromDate.getMonth()];
+    const toStr = toDate.getDate()+' '+months[toDate.getMonth()];
+    const diffDays = Math.max(1, Math.round((toDate - fromDate)/86400000)+1);
+    mbLeaves.unshift({from:fromStr,to:toStr,reason:reason,status:'pending'});
+    mbLeaveUsed += diffDays;
+    renderLeaves();
+    closeApplyLeave();
+  }
+  window.submitLeave = submitLeave;
+
+  renderMyBoard();
+
   renderClientsList();
   updateScheduleUploadWarnings();
+  renderDocsNeededBlock();
 </script>
 
 </body>
