@@ -1005,20 +1005,12 @@
       align-items: center;
       gap: 4px;
       cursor: pointer;
-      padding: 4px 12px;
+      padding: 4px 6px;
       transition: all 0.2s;
     }
 
     .nav-item:active {
       transform: scale(0.92);
-    }
-
-    .nav-icon {
-      width: 24px;
-      height: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .nav-label {
@@ -1352,33 +1344,6 @@
       color: #c0392b;
     }
 
-    .track-actions {
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-
-    .btn-track-view {
-      background: #f0ebe3;
-      border: none;
-      border-radius: 6px;
-      padding: 5px 10px;
-      font-size: 9px;
-      font-weight: 700;
-      color: #6b5e4f;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-      transition: all 0.2s;
-    }
-
-    .btn-track-view:hover { background: #e6dfd5; }
-
-    .btn-track-view:active {
-      background: #2d2d2d;
-      color: white;
-    }
-
     .btn-wa {
       width: 28px;
       height: 28px;
@@ -1579,588 +1544,429 @@
       color: white;
     }
 
-    /* ===== MEAL DETAIL OVERLAY ===== */
-    .meal-detail-overlay {
+    /* Track actions */
+    .track-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .btn-track-view {
+      background: #f0ebe3;
+      border: none;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 9px;
+      font-weight: 700;
+      color: #6b5e4f;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .btn-track-view:hover { background: #e6dfd5; }
+    .btn-track-view:active { background: #2d2d2d; color: white; }
+
+    /* ===== MEAL SUMMARY OVERLAY ===== */
+    .meal-summary-overlay {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       z-index: 300;
       display: none;
     }
-
-    .meal-detail-overlay.open {
+    .meal-summary-overlay.open {
       display: flex;
       flex-direction: column;
     }
-
-    .md-backdrop {
+    .ms-backdrop {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.3);
     }
-
-    .md-sheet {
+    .ms-sheet {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      height: 92%;
+      max-height: 80%;
       background: #faf7f2;
       border-radius: 20px 20px 0 0;
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      animation: slideUp 0.3s ease;
+      animation: msSlideUp 0.3s ease;
     }
-
-    @keyframes slideUp {
+    @keyframes msSlideUp {
       from { transform: translateY(100%); }
       to { transform: translateY(0); }
     }
-
-    .md-header {
+    .ms-header {
       display: flex;
       align-items: center;
-      padding: 16px 18px 10px;
+      padding: 16px 18px 12px;
       gap: 10px;
-    }
-
-    .md-back {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1px solid #e0dbd3;
-      background: white;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      color: #2d2d2d;
-      flex-shrink: 0;
-    }
-
-    .md-header-text {
-      flex: 1;
-      text-align: center;
-    }
-
-    .md-header-label {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #999;
-    }
-
-    .md-header-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: #2d2d2d;
-    }
-
-    .md-more {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1px solid #e0dbd3;
-      background: white;
-      cursor: pointer;
-      font-size: 16px;
-      color: #999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .md-client-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 18px 12px;
       border-bottom: 1px solid #e8e3db;
     }
-
-    .md-client-avatar {
-      width: 40px;
-      height: 40px;
+    .ms-back {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #e0dbd3;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .ms-avatar {
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
-      font-weight: 700;
-      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
     }
-
-    .md-client-info {
-      flex: 1;
-    }
-
-    .md-client-name {
-      font-size: 16px;
-      font-weight: 700;
-      color: #2d2d2d;
-    }
-
-    .md-client-meta {
+    .ms-client-info { flex: 1; }
+    .ms-client-name { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+    .ms-client-meta { font-size: 11px; color: #999; }
+    .ms-date {
       font-size: 11px;
       color: #999;
       font-weight: 500;
     }
-
-    .md-client-bar .btn-wa {
-      width: 36px;
-      height: 36px;
-    }
-
-    .md-client-bar .btn-wa svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    /* Meal Tabs */
-    .md-meal-tabs {
-      display: flex;
-      gap: 0;
-      padding: 12px 18px 0;
-    }
-
-    .md-tab {
-      flex: 1;
-      padding: 8px 4px;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      text-align: center;
-      border-radius: 10px;
-      transition: all 0.2s;
-    }
-
-    .md-tab-name {
-      font-size: 12px;
-      font-weight: 700;
-      color: #999;
-      display: block;
-    }
-
-    .md-tab-time {
-      font-size: 10px;
-      font-weight: 500;
-      color: #bbb;
-      display: block;
-      margin-top: 1px;
-    }
-
-    .md-tab.active {
-      background: #2d2d2d;
-      border-radius: 10px;
-    }
-
-    .md-tab.active .md-tab-name {
-      color: white;
-    }
-
-    .md-tab.active .md-tab-time {
-      color: rgba(255,255,255,0.6);
-    }
-
-    /* Scrollable Content */
-    .md-scroll {
+    .ms-scroll {
       flex: 1;
       overflow-y: auto;
-      padding: 14px 18px;
+      padding: 14px 18px 20px;
       -webkit-overflow-scrolling: touch;
     }
+    .ms-scroll::-webkit-scrollbar { display: none; }
 
-    .md-scroll::-webkit-scrollbar { display: none; }
-
-    /* Plan Comparison */
-    .md-plan-header {
+    /* Meal row */
+    .ms-meal {
+      margin-bottom: 14px;
+    }
+    .ms-meal-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 8px;
       margin-bottom: 8px;
     }
-
-    .md-status-badge {
+    .ms-meal-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .ms-meal-icon.b { background: #4a7c59; }
+    .ms-meal-icon.l { background: #b8860b; }
+    .ms-meal-icon.d { background: #7b6b9e; }
+    .ms-meal-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+      flex: 1;
+    }
+    .ms-meal-time {
+      font-size: 11px;
+      color: #999;
+    }
+    .ms-meal-source {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 600;
+      background: #f5f0e8;
+      color: #8a7d6b;
+      letter-spacing: 0.3px;
+    }
+    .ms-meal-source svg {
+      width: 10px;
+      height: 10px;
+      flex-shrink: 0;
+    }
+    .ms-week-report-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border: 1.5px solid #4a7c59;
+      border-radius: 12px;
+      background: transparent;
+      color: #4a7c59;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .ms-week-report-btn:active {
+      background: #d4e8d9;
+    }
+    .ms-meal-status {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-    }
-
-    .md-status-badge.on-plan {
-      background: #d4e8d9;
-      color: #4a7c59;
-    }
-
-    .md-status-badge.off-plan {
-      background: #fdf4dc;
-      color: #b8860b;
-    }
-
-    .md-status-badge.not-logged-meal {
-      background: #fce4e1;
-      color: #c0392b;
-    }
-
-    .md-status-badge.not-logged {
-      background: #e8e3db;
-      color: #8a7d6b;
-    }
-
-    .md-status-badge.future {
-      background: #e8ddf5;
-      color: #7b6b9e;
-    }
-
-    .md-status-badge .status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: currentColor;
-    }
-
-    .md-logged-time {
-      font-size: 11px;
-      color: #999;
-      font-weight: 500;
-    }
-
-    .md-plan-compare {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .md-plan-box {
-      flex: 1;
-      background: #edf5ef;
-      border-radius: 10px;
-      padding: 10px;
-    }
-
-    .md-plan-box-label {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: #4a7c59;
-      margin-bottom: 5px;
-    }
-
-    .md-plan-box-text {
-      font-size: 13px;
-      color: #2d2d2d;
-      line-height: 1.35;
-    }
-
-    /* Mark Buttons Row */
-    .md-mark-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .md-mark-btn {
-      flex: 1;
-      padding: 8px;
-      border-radius: 10px;
-      border: 1.5px solid;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      font-size: 11px;
-      font-weight: 700;
-      background: white;
-      transition: all 0.2s;
-    }
-
-    .md-mark-btn:active { transform: scale(0.95); }
-
-    .md-mark-btn.mg {
-      border-color: #4a7c59;
-      color: #4a7c59;
-    }
-    .md-mark-btn.mg:hover, .md-mark-btn.mg.active {
-      background: #4a7c59;
-      color: white;
-    }
-
-    .md-mark-btn.mo {
-      border-color: #b8860b;
-      color: #b8860b;
-    }
-    .md-mark-btn.mo:hover, .md-mark-btn.mo.active {
-      background: #b8860b;
-      color: white;
-    }
-
-    .md-mark-btn.mr {
-      border-color: #c0392b;
-      color: #c0392b;
-    }
-    .md-mark-btn.mr:hover, .md-mark-btn.mr.active {
-      background: #c0392b;
-      color: white;
-    }
-
-    /* Section Labels */
-    .md-section-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: #999;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* WhatsApp Message Card */
-    .md-wa-card {
-      background: white;
-      border-radius: 12px;
-      padding: 12px 14px;
-      margin-bottom: 16px;
-      border: 1px solid #e8e3db;
-    }
-
-    .md-wa-from {
-      font-size: 10px;
-      color: #999;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .md-wa-from svg {
-      width: 12px;
-      height: 12px;
-      fill: #25D366;
-    }
-
-    .md-wa-text {
-      font-size: 14px;
-      color: #2d2d2d;
-      line-height: 1.4;
-      margin-bottom: 6px;
-    }
-
-    .md-wa-time {
-      font-size: 10px;
-      color: #bbb;
-    }
-
-    /* Voice Note Card */
-    .md-voice-card {
-      background: white;
-      border-radius: 12px;
-      padding: 12px 14px;
-      margin-bottom: 16px;
-      border: 1px solid #e8e3db;
-    }
-
-    .md-voice-player {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-      background: #edf5ef;
-      border-radius: 24px;
-      padding: 6px 12px;
-    }
-
-    .md-play-btn {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: #4a7c59;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: white;
-      font-size: 11px;
-    }
-
-    .md-waveform {
-      flex: 1;
-      font-size: 14px;
-      color: #4a7c59;
-      letter-spacing: -1px;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-
-    .md-voice-times {
-      display: flex;
-      justify-content: space-between;
-      font-size: 9px;
-      color: #999;
-      padding: 0 4px;
-    }
-
-    .md-transcript-label {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #999;
-      margin: 8px 0 4px;
-      border-top: 1px dashed #e0dbd3;
-      padding-top: 8px;
-    }
-
-    .md-transcript {
-      font-size: 13px;
-      color: #555;
-      font-style: italic;
-      line-height: 1.4;
-    }
-
-    /* Photo Card */
-    .md-photo-card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 16px;
-      border: 1px solid #e8e3db;
-    }
-
-    .md-photo-img {
-      width: 100%;
-      height: 160px;
-      background: linear-gradient(135deg, #d4a574 0%, #c98b6a 40%, #b87b5e 100%);
-      position: relative;
-    }
-
-    .md-photo-location {
-      position: absolute;
-      bottom: 8px;
-      left: 10px;
-      font-size: 10px;
-      color: white;
-      background: rgba(0,0,0,0.35);
-      padding: 3px 8px;
+      padding: 2px 8px;
       border-radius: 4px;
-      backdrop-filter: blur(4px);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
+    .ms-meal-status.on-plan { background: #d4e8d9; color: #4a7c59; }
+    .ms-meal-status.off-plan { background: #fdf4dc; color: #b8860b; }
+    .ms-meal-status.not-logged { background: #fce4e1; color: #c0392b; }
+    .ms-meal-status.unreviewed { background: #e8e3db; color: #8a7d6b; }
+    .ms-meal-status.pending { background: #f0eaff; color: #7b6b9e; }
 
-    .md-photo-meta {
-      display: flex;
-      justify-content: space-between;
-      padding: 8px 12px;
-      font-size: 10px;
-      color: #999;
+    .ms-meal-body {
+      background: #fff;
+      border-radius: 10px;
+      border: 1px solid #e8e3db;
+      overflow: hidden;
     }
-
-    .md-photo-meta a {
-      color: #4a7c59;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    /* No data state */
-    .md-empty {
-      text-align: center;
-      padding: 30px;
-      color: #bbb;
-      font-size: 13px;
-      font-style: italic;
-    }
-
-    /* Bottom Bar */
-    .md-bottom {
-      border-top: 1px solid #e8e3db;
-      background: #faf7f2;
-      padding: 8px 14px 20px;
-      flex-shrink: 0;
-    }
-
-    .md-quick-chips {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .md-quick-chips::-webkit-scrollbar { display: none; }
-
-    .md-chip {
-      padding: 6px 12px;
-      border-radius: 18px;
-      border: 1px solid #e0dbd3;
-      background: white;
-      font-size: 11px;
-      font-weight: 500;
-      color: #555;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
-    .md-chip:active {
-      background: #f0ebe3;
-      transform: scale(0.95);
-    }
-
-    .md-reply-row {
+    .ms-meal-row {
+      padding: 10px 12px;
       display: flex;
       gap: 8px;
-      align-items: center;
-      margin-top: 4px;
     }
-
-    .md-reply-wa-icon {
-      width: 20px;
-      height: 20px;
-      fill: #25D366;
+    .ms-meal-row + .ms-meal-row {
+      border-top: 1px solid #f0ebe3;
+    }
+    .ms-meal-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #999;
+      width: 56px;
       flex-shrink: 0;
+      padding-top: 2px;
+    }
+    .ms-meal-text {
+      font-size: 13px;
+      color: #1a1a1a;
+      line-height: 1.4;
+      flex: 1;
+    }
+    .ms-meal-text.muted {
+      color: #bbb;
+      font-style: italic;
+    }
+    .ms-no-data {
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #bbb;
+      font-style: italic;
+      text-align: center;
     }
 
-    .md-reply-input {
+    /* Meal Summary Tab Toggle */
+    .ms-tab-bar {
+      display: flex;
+      background: #f0ebe3;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #e0d9cf;
+      margin: 12px 18px 0;
+    }
+    .ms-tab-btn {
       flex: 1;
-      border: 1px solid #e0dbd3;
-      border-radius: 20px;
-      padding: 8px 14px;
+      padding: 7px 0;
       font-size: 12px;
-      background: white;
-      outline: none;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.2s;
       font-family: inherit;
     }
-
-    .md-reply-input:focus {
-      border-color: #4a7c59;
+    .ms-tab-btn.active {
+      background: #2d2d2d;
+      color: white;
+      border-radius: 8px;
     }
 
-    .md-reply-send {
-      width: 36px;
-      height: 36px;
+    /* ===== WEEK VIEW ===== */
+    .ms-week-view { padding: 4px 0; }
+    .ms-week-day {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0ebe3;
+      cursor: pointer;
+      gap: 10px;
+    }
+    .ms-week-day:last-child { border-bottom: none; }
+    .ms-week-day-label {
+      width: 56px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #2d2d2d;
+      flex-shrink: 0;
+    }
+    .ms-week-day-label .ms-week-day-num {
+      font-size: 10px;
+      color: #999;
+      font-weight: 500;
+    }
+    .ms-week-day.today .ms-week-day-label {
+      color: #4a7c59;
+    }
+    .ms-week-dots {
+      display: flex;
+      gap: 6px;
+      flex: 1;
+    }
+    .ms-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .ms-dot.green { background: #4a7c59; }
+    .ms-dot.orange { background: #d4a017; }
+    .ms-dot.red { background: #e74c3c; }
+    .ms-dot.gray { background: #d5d0c8; color: #999; }
+    .ms-week-summary {
+      font-size: 11px;
+      color: #999;
+      font-weight: 500;
+      text-align: right;
+      min-width: 48px;
+    }
+    .ms-week-expand-icon {
+      color: #ccc;
+      font-size: 12px;
+      margin-left: 2px;
+    }
+    .ms-week-detail {
+      display: none;
+      padding: 8px 0 4px 0;
+    }
+    .ms-week-detail.open { display: block; }
+
+    /* ===== MONTH HEATMAP VIEW ===== */
+    .ms-month-view { padding: 4px 0; }
+    .ms-month-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .ms-month-nav-btn {
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
-      background: #4a7c59;
-      border: none;
+      border: 1px solid #e0dbd3;
+      background: #fff;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-shrink: 0;
+      font-size: 14px;
+      color: #666;
     }
-
-    .md-reply-send svg {
-      width: 16px;
-      height: 16px;
-      fill: white;
+    .ms-month-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #2d2d2d;
+    }
+    .ms-month-grid-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    .ms-month-grid-header span {
+      text-align: center;
+      font-size: 9px;
+      font-weight: 600;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .ms-month-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+    .ms-month-cell {
+      aspect-ratio: 1;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      transition: outline 0.15s;
+    }
+    .ms-month-cell.empty {
+      background: transparent;
+      cursor: default;
+    }
+    .ms-month-cell.all-on { background: #4a7c59; color: #fff; }
+    .ms-month-cell.most-on { background: #a8d5b8; color: #2d5a3a; }
+    .ms-month-cell.some-on { background: #f0c040; color: #6b5300; }
+    .ms-month-cell.none-on { background: #e74c3c; color: #fff; }
+    .ms-month-cell.no-data { background: #e8e3db; color: #999; }
+    .ms-month-cell.selected {
+      outline: 2.5px solid #2d2d2d;
+      outline-offset: 1px;
+    }
+    .ms-month-legend {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .ms-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 9px;
+      color: #888;
+      font-weight: 500;
+    }
+    .ms-legend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+    .ms-month-day-detail {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid #e8e3db;
+    }
+    .ms-month-day-detail-header {
+      font-size: 12px;
+      font-weight: 600;
+      color: #2d2d2d;
+      margin-bottom: 10px;
     }
 
     /* ===== CLIENTS SCREEN ===== */
@@ -3237,6 +3043,353 @@
       color: white;
       border-color: #2d2d2d;
     }
+
+    /* ===== REVIEW CARDS SCREEN ===== */
+    .screen-review {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      padding-bottom: 90px;
+      display: none;
+      background: #faf7f2;
+    }
+    .screen-review.active { display: block; }
+
+    .review-header { padding: 8px 20px 0; }
+    .review-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a1a1a;
+      font-family: 'DM Serif Display', serif;
+    }
+    .review-date {
+      font-size: 15px;
+      color: #6b6b6b;
+      margin-top: 2px;
+    }
+    .review-stats {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px 8px;
+    }
+    .review-stats-text {
+      font-size: 13px;
+      color: #6b6b6b;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .review-stats-bar {
+      flex: 1;
+      height: 4px;
+      background: #e8e3db;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .review-stats-fill {
+      height: 100%;
+      background: #4a7c59;
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    /* Card Stack */
+    .card-stack {
+      position: relative;
+      width: 100%;
+      height: calc(100% - 200px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+    }
+    .swipe-card {
+      position: absolute;
+      width: calc(100% - 40px);
+      max-height: 480px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 20px;
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+      transition: transform 0.1s ease, box-shadow 0.2s ease;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .swipe-card::-webkit-scrollbar { display: none; }
+    .swipe-card:active { cursor: grabbing; }
+    .swipe-card.behind-1 {
+      transform: scale(0.95) translateY(10px);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .swipe-card.behind-2 {
+      transform: scale(0.90) translateY(20px);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    /* Swipe overlays */
+    .swipe-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.1s ease;
+      z-index: 10;
+    }
+    .swipe-overlay.on-plan {
+      background: rgba(74, 124, 89, 0.15);
+      color: #4a7c59;
+      border: 3px solid #4a7c59;
+    }
+    .swipe-overlay.off-plan {
+      background: rgba(192, 57, 43, 0.15);
+      color: #c0392b;
+      border: 3px solid #c0392b;
+    }
+    .swipe-overlay.not-logged {
+      background: rgba(52, 73, 94, 0.15);
+      color: #34495e;
+      border: 3px solid #34495e;
+    }
+
+    /* Card fly-out animations */
+    .swipe-card.fly-right {
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      transform: translateX(150%) rotate(20deg) !important;
+      opacity: 0;
+    }
+    .swipe-card.fly-left {
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      transform: translateX(-150%) rotate(-20deg) !important;
+      opacity: 0;
+    }
+    .swipe-card.fly-up {
+      transition: transform 0.35s ease, opacity 0.35s ease;
+      transform: translateY(-150%) !important;
+      opacity: 0;
+    }
+    .swipe-card.snap-back {
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform: translateX(0) translateY(0) rotate(0deg) !important;
+    }
+    .swipe-card.shake {
+      animation: cardShake 0.4s ease;
+    }
+    @keyframes cardShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      50% { transform: translateX(8px); }
+      75% { transform: translateX(-4px); }
+    }
+
+    /* Card Content */
+    .sc-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .sc-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .sc-client-info { flex: 1; }
+    .sc-client-name { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+    .sc-client-meta { font-size: 12px; color: #999; }
+    .sc-time { font-size: 12px; color: #999; font-weight: 500; }
+
+    /* Meal type pills */
+    .sc-meal-pills {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .sc-meal-pill {
+      flex: 1;
+      padding: 8px 0;
+      border-radius: 20px;
+      border: 2px solid #e8e3db;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 600;
+      color: #999;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+    .sc-meal-pill:active { transform: scale(0.95); }
+    .sc-meal-pill.selected-b {
+      border-color: #4a7c59;
+      background: rgba(74, 124, 89, 0.1);
+      color: #4a7c59;
+    }
+    .sc-meal-pill.selected-l {
+      border-color: #b8860b;
+      background: rgba(184, 134, 11, 0.1);
+      color: #b8860b;
+    }
+    .sc-meal-pill.selected-d {
+      border-color: #7b6b9e;
+      background: rgba(123, 107, 158, 0.1);
+      color: #7b6b9e;
+    }
+
+    /* Message section */
+    .sc-message-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .sc-message {
+      font-size: 14px;
+      color: #1a1a1a;
+      line-height: 1.5;
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      background: #f5f0e8;
+      border-radius: 10px;
+    }
+
+    /* Attachments */
+    .sc-attachments {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .sc-voice-badge, .sc-photo-badge {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: #f5f0e8;
+      font-size: 11px;
+      color: #6b6b6b;
+      font-weight: 500;
+    }
+
+    /* Planned meal */
+    .sc-planned {
+      padding: 10px 12px;
+      background: #f5f0e8;
+      border-radius: 10px;
+      border-left: 3px solid #e8e3db;
+    }
+    .sc-planned-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .sc-planned-text {
+      font-size: 13px;
+      color: #6b6b6b;
+      line-height: 1.4;
+    }
+    .sc-planned.meal-b { border-left-color: #4a7c59; }
+    .sc-planned.meal-l { border-left-color: #b8860b; }
+    .sc-planned.meal-d { border-left-color: #7b6b9e; }
+
+    /* Swipe legend */
+    .swipe-legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      padding: 12px 20px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #999;
+      font-weight: 500;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .legend-dot.green { background: #4a7c59; }
+    .legend-dot.red { background: #c0392b; }
+    .legend-dot.blue { background: #34495e; }
+
+    /* Empty state */
+    .review-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: calc(100% - 200px);
+      text-align: center;
+      padding: 40px;
+    }
+    .review-empty-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+    .review-empty-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 6px;
+    }
+    .review-empty-sub {
+      font-size: 14px;
+      color: #999;
+    }
+
+    /* Nav badge */
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .nav-item .nav-badge {
+      position: absolute;
+      top: -2px;
+      right: -4px;
+      min-width: 16px;
+      height: 16px;
+      background: #c0392b;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+    }
   </style>
 </head>
 <body>
@@ -3721,43 +3874,43 @@
       <div class="track-card" id="tc-1"><div class="track-card-top">
         <div class="track-avatar avatar-green">RS</div><div class="track-name">Rukmini Shah</div>
         <div class="meal-legends"><div class="meal-dot unreviewed">B</div><div class="meal-dot unreviewed">L</div><div class="meal-dot future">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-1')">View</button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealSummary('tc-1')">View</button></div>
       </div></div>
 
       <div class="track-card" id="tc-2"><div class="track-card-top">
         <div class="track-avatar avatar-green">MI</div><div class="track-name">Meera Iyer</div>
         <div class="meal-legends"><div class="meal-dot unreviewed">B</div><div class="meal-dot marked-red">L</div><div class="meal-dot future">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-2')">View</button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealSummary('tc-2')">View</button></div>
       </div></div>
 
       <div class="track-card" id="tc-3"><div class="track-card-top">
         <div class="track-avatar avatar-brown">PD</div><div class="track-name">Prakash Desai</div>
         <div class="meal-legends"><div class="meal-dot marked-green">B</div><div class="meal-dot marked-green">L</div><div class="meal-dot marked-green">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-3')">View</button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealSummary('tc-3')">View</button></div>
       </div></div>
 
       <div class="track-card" id="tc-4"><div class="track-card-top">
         <div class="track-avatar avatar-purple">AK</div><div class="track-name">Anita Kulkarni</div>
         <div class="meal-legends"><div class="meal-dot marked-red">B</div><div class="meal-dot marked-red">L</div><div class="meal-dot future">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-4')">View</button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealSummary('tc-4')">View</button></div>
       </div></div>
 
       <div class="track-card" id="tc-5"><div class="track-card-top">
         <div class="track-avatar avatar-brown">SN</div><div class="track-name">Sudha Narayanan</div>
         <div class="meal-legends"><div class="meal-dot unreviewed">B</div><div class="meal-dot unreviewed">L</div><div class="meal-dot future">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-5')">View</button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealSummary('tc-5')">View</button></div>
       </div></div>
 
       <div class="track-card" id="tc-6"><div class="track-card-top">
         <div class="track-avatar avatar-brown">VM</div><div class="track-name">Vijay Mehta</div>
         <div class="meal-legends"><div class="meal-dot unreviewed">B</div><div class="meal-dot future">L</div><div class="meal-dot future">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-6')">View</button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealSummary('tc-6')">View</button></div>
       </div></div>
 
       <div class="track-card" id="tc-7"><div class="track-card-top">
         <div class="track-avatar avatar-purple">DG</div><div class="track-name">Deepa Gupta</div>
         <div class="meal-legends"><div class="meal-dot marked-green">B</div><div class="meal-dot marked-orange">L</div><div class="meal-dot marked-green">D</div></div>
-        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealDetail('tc-7')">View</button></div>
+        <div class="track-actions"><button class="btn-track-view clickable" onclick="openMealSummary('tc-7')">View</button></div>
       </div></div>
 
     </div>
@@ -3802,43 +3955,25 @@
     </div>
   </div>
 
-  <!-- Meal Detail Overlay -->
-  <div class="meal-detail-overlay" id="meal-detail-overlay">
-    <div class="md-backdrop" onclick="closeMealDetail()"></div>
-    <div class="md-sheet">
-      <div class="md-header">
-        <button class="md-back" onclick="closeMealDetail()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-        <div class="md-header-text">
-          <div class="md-header-label">MEAL LOG</div>
-          <div class="md-header-title" id="md-title">Wednesday · Breakfast</div>
+  <!-- Meal Summary Overlay -->
+  <div class="meal-summary-overlay" id="meal-summary-overlay">
+    <div class="ms-backdrop" onclick="closeMealSummary()"></div>
+    <div class="ms-sheet">
+      <div class="ms-header">
+        <button class="ms-back" onclick="closeMealSummary()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+        <div class="ms-avatar" id="ms-avatar">RS</div>
+        <div class="ms-client-info">
+          <div class="ms-client-name" id="ms-name">Rukmini Shah</div>
+          <div class="ms-client-meta" id="ms-meta">72 · Diabetic · Week 6</div>
         </div>
-        <button class="md-more">···</button>
+        <div class="ms-date" id="ms-date">Wed · 22 Apr</div>
       </div>
-
-      <div class="md-client-bar">
-        <div class="md-client-avatar" id="md-avatar">RS</div>
-        <div class="md-client-info">
-          <div class="md-client-name" id="md-name">Rukmini Shah</div>
-          <div class="md-client-meta" id="md-meta">72 · Diabetic · Week 6</div>
-        </div>
-              </div>
-
-      <div class="md-meal-tabs" id="md-tabs"></div>
-
-      <div class="md-scroll" id="md-scroll"></div>
-
-      <div class="md-bottom">
-        <div class="md-quick-chips">
-          <button class="md-chip">Well done</button>
-          <button class="md-chip">Try green tea tomorrow</button>
-          <button class="md-chip">Call me if anything</button>
-        </div>
-        <div class="md-reply-row">
-          <svg class="md-reply-wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
-          <input class="md-reply-input" placeholder="Reply on WhatsApp...">
-          <button class="md-reply-send"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
-        </div>
+      <div class="ms-tab-bar">
+        <button class="ms-tab-btn active" data-mstab="today" onclick="switchMsTab('today')">Today</button>
+        <button class="ms-tab-btn" data-mstab="week" onclick="switchMsTab('week')">Week</button>
+        <button class="ms-tab-btn" data-mstab="month" onclick="switchMsTab('month')">Month</button>
       </div>
+      <div class="ms-scroll" id="ms-scroll"></div>
     </div>
   </div>
 
@@ -3996,6 +4131,40 @@
     </div>
   </div>
 
+  <!-- Review Cards Screen -->
+  <div class="screen-review" id="screen-review">
+    <div class="status-bar">
+      <span class="status-time">9:41</span>
+      <div class="dynamic-island"></div>
+      <div class="status-icons">
+        <svg viewBox="0 0 18 12"><path d="M1 9l4-4 4 4 8-8" stroke="#1a1a1a" stroke-width="2" fill="none"/></svg>
+        <svg viewBox="0 0 16 12"><path d="M0 8.5a8 8 0 0116 0" stroke="#1a1a1a" stroke-width="1.5" fill="none"/><circle cx="8" cy="9" r="1.5" fill="#1a1a1a"/></svg>
+        <svg viewBox="0 0 28 13"><rect x="0.5" y="0.5" width="23" height="12" rx="2.5" stroke="#1a1a1a"/><rect x="25" y="3.5" width="2" height="5.5" rx="1" fill="#1a1a1a"/><rect x="2" y="2" width="18" height="9" rx="1.5" fill="#1a1a1a"/></svg>
+      </div>
+    </div>
+    <div class="review-header">
+      <div class="review-title">Review</div>
+      <div class="review-date">Wed · 22 Apr · <span id="review-client-count">0</span> messages</div>
+    </div>
+    <div class="review-stats">
+      <span class="review-stats-text" id="review-stats-text">0 reviewed · 0 remaining</span>
+      <div class="review-stats-bar">
+        <div class="review-stats-fill" id="review-stats-fill" style="width: 0%"></div>
+      </div>
+    </div>
+    <div class="card-stack" id="card-stack"></div>
+    <div class="swipe-legend" id="swipe-legend">
+      <div class="legend-item"><div class="legend-dot red"></div>← Off Plan</div>
+      <div class="legend-item"><div class="legend-dot blue"></div>↑ Didn't Log</div>
+      <div class="legend-item"><div class="legend-dot green"></div>On Plan →</div>
+    </div>
+    <div class="review-empty" id="review-empty" style="display: none;">
+      <div class="review-empty-icon">&#10003;</div>
+      <div class="review-empty-title">All caught up!</div>
+      <div class="review-empty-sub">No more meals to review right now</div>
+    </div>
+  </div>
+
   <!-- Bottom Navigation -->
   <div class="bottom-nav">
     <div class="nav-item active clickable" data-tab="schedule">
@@ -4017,6 +4186,15 @@
         </svg>
       </div>
       <span class="nav-label">Tracking</span>
+    </div>
+    <div class="nav-item clickable" data-tab="review">
+      <div class="nav-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2">
+          <rect x="2" y="4" width="16" height="16" rx="2"/>
+          <rect x="6" y="2" width="16" height="16" rx="2"/>
+        </svg>
+      </div>
+      <span class="nav-label">Review</span>
     </div>
     <div class="nav-item clickable" data-tab="clients">
       <div class="nav-icon">
@@ -4066,6 +4244,7 @@
       // Hide all screens
       document.getElementById('screen-schedule').style.display = 'none';
       document.getElementById('screen-tracking').classList.remove('active');
+      document.getElementById('screen-review').classList.remove('active');
       document.getElementById('screen-clients').classList.remove('active');
       document.getElementById('screen-myboard').classList.remove('active');
 
@@ -4074,6 +4253,9 @@
         document.getElementById('screen-schedule').style.display = 'block';
       } else if (tab === 'tracking') {
         document.getElementById('screen-tracking').classList.add('active');
+      } else if (tab === 'review') {
+        document.getElementById('screen-review').classList.add('active');
+        renderReviewCards();
       } else if (tab === 'clients') {
         document.getElementById('screen-clients').classList.add('active');
       } else if (tab === 'myboard') {
@@ -4275,11 +4457,9 @@
   }
   window.sendBulkMessage = sendBulkMessage;
 
-  // ===== MEAL DETAIL OVERLAY =====
+  // ===== TRACKING DATA =====
   const mealNames = ['Breakfast', 'Lunch', 'Dinner'];
   const mealKeys = ['b', 'l', 'd'];
-  let currentCardId = null;
-  let currentMealIndex = 0;
 
   const clients = {
     'tc-1': {
@@ -4371,144 +4551,515 @@
     }
   };
 
-  function openMealDetail(cardId) {
-    currentCardId = cardId;
+  // ===== MOCK MEAL HISTORY (30 days per client) =====
+  const mealHistory = {};
+  const sampleMeals = {
+    b: [
+      { planned: 'Oats, almonds, banana', actual: 'Oats, almonds, banana' },
+      { planned: 'Idli, sambhar', actual: 'Idli, sambhar' },
+      { planned: 'Poha, curd', actual: 'Poha, tea' },
+      { planned: 'Upma, tea', actual: 'Upma, tea' },
+      { planned: 'Dosa, chutney', actual: 'Dosa, chutney' },
+      { planned: 'Paratha, curd', actual: 'Paratha, pickle' },
+    ],
+    l: [
+      { planned: '2 rotis, dal, sabzi', actual: '2 rotis, dal, sabzi' },
+      { planned: 'Rice, dal, veggies', actual: 'Rice, dal' },
+      { planned: 'Rajma, rice, salad', actual: 'Rajma, rice' },
+      { planned: 'Curd rice, papad', actual: 'Curd rice, papad' },
+      { planned: 'Roti, paneer, dal', actual: 'Roti, paneer, dal' },
+    ],
+    d: [
+      { planned: 'Khichdi, buttermilk', actual: 'Khichdi, buttermilk' },
+      { planned: 'Soup, toast', actual: 'Soup, toast' },
+      { planned: 'Roti, sabzi', actual: 'Roti, sabzi, rice' },
+      { planned: 'Soup, salad', actual: 'Soup' },
+      { planned: 'Dal, roti', actual: 'Dal, roti' },
+    ]
+  };
+
+  function seededRandom(seed) {
+    let s = seed;
+    return function() {
+      s = (s * 16807 + 0) % 2147483647;
+      return (s - 1) / 2147483646;
+    };
+  }
+
+  function generateMealHistory(clientId) {
+    if (mealHistory[clientId]) return mealHistory[clientId];
+    // Seed from clientId for consistent data
+    let seed = 0;
+    for (let i = 0; i < clientId.length; i++) seed += clientId.charCodeAt(i) * (i + 1);
+    const rng = seededRandom(seed * 137);
+
+    const today = new Date();
+    const history = {};
+
+    for (let d = 29; d >= 0; d--) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - d);
+      const key = date.toISOString().split('T')[0];
+      const dayOfWeek = date.getDay(); // 0=Sun, 6=Sat
+      const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+      const isFuture = d < 0;
+
+      const dayData = {};
+      ['b', 'l', 'd'].forEach(meal => {
+        const r = rng();
+        const samples = sampleMeals[meal];
+        const pick = samples[Math.floor(rng() * samples.length)];
+
+        if (d === 0) {
+          // Today: use live client data if available
+          const c = clients[clientId];
+          if (c && c.meals[meal]) {
+            const cm = c.meals[meal];
+            const src = cm.photo ? 'photo' : (cm.voice ? 'audio' : 'text');
+            dayData[meal] = { ...cm, source: cm.source || src };
+            return;
+          }
+        }
+
+        // Weighted: weekdays mostly on-plan, weekends more varied
+        const onPlanThreshold = isWeekend ? 0.55 : 0.75;
+        const offPlanThreshold = isWeekend ? 0.80 : 0.90;
+        const sources = ['text', 'audio', 'photo'];
+        const src = sources[Math.floor(rng() * 3)];
+
+        if (r < onPlanThreshold) {
+          dayData[meal] = { status: 'marked-green', logged: true, planned: pick.planned, actual: pick.actual, source: src };
+        } else if (r < offPlanThreshold) {
+          dayData[meal] = { status: 'marked-orange', logged: true, planned: pick.planned, actual: pick.actual, source: src };
+        } else if (r < 0.95) {
+          dayData[meal] = { status: 'marked-red', logged: false, planned: pick.planned, source: src };
+        } else {
+          dayData[meal] = { status: 'marked-red', logged: false, planned: pick.planned, source: src };
+        }
+      });
+
+      history[key] = dayData;
+    }
+
+    mealHistory[clientId] = history;
+    return history;
+  }
+
+  // ===== MEAL SUMMARY =====
+  let currentMsClient = null;
+  let currentMsTab = 'today';
+  let currentMonthOffset = 0;
+  let selectedMonthDay = null;
+
+  const mealLabels = { b: 'Breakfast', l: 'Lunch', d: 'Dinner' };
+
+  function renderMealRow(key, m) {
+    let html = '';
+    let statusClass = 'pending', statusText = 'PENDING';
+    if (m.status === 'marked-green') { statusClass = 'on-plan'; statusText = 'ON PLAN'; }
+    else if (m.status === 'marked-orange') { statusClass = 'off-plan'; statusText = 'OFF PLAN'; }
+    else if (m.status === 'marked-red') { statusClass = 'not-logged'; statusText = 'NOT LOGGED'; }
+    else if (m.status === 'unreviewed') { statusClass = 'unreviewed'; statusText = 'UNREVIEWED'; }
+    else if (m.status === 'future') { statusClass = 'pending'; statusText = 'UPCOMING'; }
+
+    // Derive source if not set
+    const source = m.source || (m.photo ? 'photo' : (m.voice ? 'audio' : 'text'));
+
+    const sourceIcons = {
+      photo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
+      audio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v11"/><path d="M19 10a7 7 0 01-14 0"/><path d="M12 18v4M8 22h8"/></svg>',
+      text: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>'
+    };
+    const sourceLabels = { photo: 'Photo', audio: 'Audio', text: 'Text' };
+
+    html += '<div class="ms-meal">';
+    html += '<div class="ms-meal-header">';
+    html += '<div class="ms-meal-icon ' + key + '">' + key.toUpperCase() + '</div>';
+    html += '<div class="ms-meal-title">' + mealLabels[key] + '</div>';
+    if (m.logged && m.logTime) html += '<div class="ms-meal-time">' + m.logTime + '</div>';
+    if (m.logged && source) html += '<div class="ms-meal-source">' + sourceIcons[source] + sourceLabels[source] + '</div>';
+    html += '<div class="ms-meal-status ' + statusClass + '">' + statusText + '</div>';
+    html += '</div>';
+
+    html += '<div class="ms-meal-body">';
+    html += '<div class="ms-meal-row"><div class="ms-meal-label">Planned</div><div class="ms-meal-text">' + m.planned + '</div></div>';
+    if (m.logged && m.actual) {
+      html += '<div class="ms-meal-row"><div class="ms-meal-label">Actual</div><div class="ms-meal-text">' + m.actual + '</div></div>';
+    } else if (m.status === 'future') {
+      html += '<div class="ms-no-data">Upcoming</div>';
+    } else if (!m.logged) {
+      html += '<div class="ms-no-data">Not logged yet</div>';
+    }
+    html += '</div></div>';
+    return html;
+  }
+
+  function renderTodayView(cardId) {
+    const c = clients[cardId];
+    if (!c) return '';
+    let html = '';
+    ['b', 'l', 'd'].forEach(key => {
+      html += renderMealRow(key, c.meals[key]);
+    });
+    return html;
+  }
+
+  function statusToDotClass(status) {
+    if (status === 'marked-green') return 'green';
+    if (status === 'marked-orange') return 'orange';
+    if (status === 'marked-red') return 'red';
+    if (status === 'unreviewed') return 'orange';
+    return 'gray';
+  }
+
+  function renderWeekView(cardId) {
+    const history = generateMealHistory(cardId);
+    const today = new Date();
+    // Get Monday of current week
+    const dow = today.getDay();
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - ((dow + 6) % 7));
+
+    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    let html = '<div class="ms-week-view">';
+
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(monday);
+      d.setDate(monday.getDate() + i);
+      const key = d.toISOString().split('T')[0];
+      const dayData = history[key];
+      const isToday = d.toDateString() === today.toDateString();
+      const isFuture = d > today;
+
+      html += '<div class="ms-week-day' + (isToday ? ' today' : '') + '" data-weekkey="' + key + '" onclick="toggleWeekDetail(\'' + key + '\', \'' + cardId + '\')">';
+      html += '<div class="ms-week-day-label">' + dayNames[i] + ' <span class="ms-week-day-num">' + d.getDate() + '</span></div>';
+      html += '<div class="ms-week-dots">';
+
+      if (dayData && !isFuture) {
+        let onPlan = 0;
+        ['b', 'l', 'd'].forEach(meal => {
+          const dot = dayData[meal] ? statusToDotClass(dayData[meal].status) : 'gray';
+          if (dot === 'green') onPlan++;
+          html += '<div class="ms-dot ' + dot + '">' + meal.toUpperCase() + '</div>';
+        });
+        html += '</div>';
+        html += '<div class="ms-week-summary">' + onPlan + '/3</div>';
+      } else {
+        ['b', 'l', 'd'].forEach(meal => {
+          html += '<div class="ms-dot gray">' + meal.toUpperCase() + '</div>';
+        });
+        html += '</div>';
+        html += '<div class="ms-week-summary" style="color:#ccc">' + (isFuture ? '—' : '—') + '</div>';
+      }
+
+      html += '<span class="ms-week-expand-icon">›</span>';
+      html += '</div>';
+      // Detail (hidden by default)
+      html += '<div class="ms-week-detail" id="wd-' + key + '">';
+      if (dayData && !isFuture) {
+        ['b', 'l', 'd'].forEach(meal => {
+          if (dayData[meal]) html += renderMealRow(meal, dayData[meal]);
+        });
+      } else {
+        html += '<div class="ms-no-data">No data</div>';
+      }
+      html += '</div>';
+    }
+    html += '<button class="ms-week-report-btn" onclick="event.stopPropagation(); generateWeeklyReport(\'' + cardId + '\')">'
+      + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'
+      + 'Download Weekly Report</button>';
+    html += '</div>';
+    return html;
+  }
+
+  function toggleWeekDetail(key) {
+    const el = document.getElementById('wd-' + key);
+    if (el) el.classList.toggle('open');
+  }
+  window.toggleWeekDetail = toggleWeekDetail;
+
+  function generateWeeklyReport(clientId) {
+    const c = clients[clientId];
+    if (!c) return;
+    const history = generateMealHistory(clientId);
+    const today = new Date();
+    const dow = today.getDay();
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - ((dow + 6) % 7));
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+
+    const fmt = d => d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    const dayNames = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+    const mLabels = { b: 'Breakfast', l: 'Lunch', d: 'Dinner' };
+
+    let totalOnPlan = 0, totalOffPlan = 0, totalNotLogged = 0, totalMeals = 0;
+    const days = [];
+
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(monday);
+      d.setDate(monday.getDate() + i);
+      const key = d.toISOString().split('T')[0];
+      const dayData = history[key];
+      const isFuture = d > today;
+      const meals = [];
+
+      ['b', 'l', 'd'].forEach(mk => {
+        const m = dayData && !isFuture ? dayData[mk] : null;
+        if (m) {
+          totalMeals++;
+          if (m.status === 'marked-green') totalOnPlan++;
+          else if (m.status === 'marked-orange') totalOffPlan++;
+          else totalNotLogged++;
+        } else if (!isFuture) {
+          totalMeals++;
+          totalNotLogged++;
+        }
+        meals.push({
+          label: mLabels[mk],
+          planned: m ? m.planned : '—',
+          actual: m && m.logged && m.actual ? m.actual : (isFuture ? 'Upcoming' : 'Not logged'),
+          status: m ? m.status : (isFuture ? 'future' : 'marked-red'),
+          source: m ? (m.source || 'text') : null
+        });
+      });
+
+      days.push({ name: dayNames[i], date: fmt(d), meals, isFuture });
+    }
+
+    function statusColor(s) {
+      if (s === 'marked-green') return '#4a7c59';
+      if (s === 'marked-orange') return '#b8860b';
+      if (s === 'marked-red') return '#e74c3c';
+      return '#999';
+    }
+    function statusLabel(s) {
+      if (s === 'marked-green') return 'On Plan';
+      if (s === 'marked-orange') return 'Off Plan';
+      if (s === 'marked-red') return 'Not Logged';
+      if (s === 'future') return 'Upcoming';
+      return '—';
+    }
+
+    let daysSections = '';
+    days.forEach(day => {
+      let rows = '';
+      day.meals.forEach(m => {
+        const sc = statusColor(m.status);
+        rows += '<tr>'
+          + '<td style="padding:8px 12px;border-bottom:1px solid #eee;font-weight:500">' + m.label + '</td>'
+          + '<td style="padding:8px 12px;border-bottom:1px solid #eee;color:#666">' + m.planned + '</td>'
+          + '<td style="padding:8px 12px;border-bottom:1px solid #eee;color:#666">' + m.actual + '</td>'
+          + '<td style="padding:8px 12px;border-bottom:1px solid #eee"><span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;color:#fff;background:' + sc + '">' + statusLabel(m.status) + '</span></td>'
+          + '</tr>';
+      });
+      daysSections += '<div style="break-inside:avoid;margin-bottom:20px">'
+        + '<h3 style="font-size:15px;font-weight:600;margin:0 0 8px;color:#1a1a1a;border-bottom:2px solid #e8e3db;padding-bottom:6px">' + day.name + ' <span style="font-weight:400;color:#999;font-size:13px">' + day.date + '</span></h3>'
+        + '<table style="width:100%;border-collapse:collapse;font-size:13px">'
+        + '<thead><tr style="background:#f9f6f1">'
+        + '<th style="padding:8px 12px;text-align:left;font-weight:600;color:#8a7d6b;font-size:11px;text-transform:uppercase">Meal</th>'
+        + '<th style="padding:8px 12px;text-align:left;font-weight:600;color:#8a7d6b;font-size:11px;text-transform:uppercase">Planned</th>'
+        + '<th style="padding:8px 12px;text-align:left;font-weight:600;color:#8a7d6b;font-size:11px;text-transform:uppercase">Actual</th>'
+        + '<th style="padding:8px 12px;text-align:left;font-weight:600;color:#8a7d6b;font-size:11px;text-transform:uppercase">Status</th>'
+        + '</tr></thead><tbody>' + rows + '</tbody></table></div>';
+    });
+
+    const reportHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Weekly Report - ' + c.name + '</title>'
+      + '<style>body{font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;max-width:800px;margin:0 auto;padding:40px 30px;color:#1a1a1a;}'
+      + '@media print{body{padding:20px}button{display:none!important}}</style></head><body>'
+      + '<div style="text-align:center;margin-bottom:30px">'
+      + '<h1 style="font-size:22px;font-weight:700;margin:0 0 4px;color:#1a1a1a">Weekly Meal Report</h1>'
+      + '<h2 style="font-size:17px;font-weight:600;margin:0 0 4px;color:#4a7c59">' + c.name + '</h2>'
+      + '<p style="font-size:13px;color:#999;margin:0">' + c.meta + '</p>'
+      + '<p style="font-size:13px;color:#8a7d6b;margin:6px 0 0">' + fmt(monday) + ' — ' + fmt(sunday) + '</p>'
+      + '</div>'
+      + '<div style="display:flex;gap:12px;margin-bottom:28px;justify-content:center;flex-wrap:wrap">'
+      + '<div style="flex:1;min-width:120px;text-align:center;padding:14px;background:#d4e8d9;border-radius:10px"><div style="font-size:24px;font-weight:700;color:#4a7c59">' + totalOnPlan + '</div><div style="font-size:11px;color:#4a7c59;font-weight:600;text-transform:uppercase">On Plan</div></div>'
+      + '<div style="flex:1;min-width:120px;text-align:center;padding:14px;background:#fdf4dc;border-radius:10px"><div style="font-size:24px;font-weight:700;color:#b8860b">' + totalOffPlan + '</div><div style="font-size:11px;color:#b8860b;font-weight:600;text-transform:uppercase">Off Plan</div></div>'
+      + '<div style="flex:1;min-width:120px;text-align:center;padding:14px;background:#fce4e1;border-radius:10px"><div style="font-size:24px;font-weight:700;color:#e74c3c">' + totalNotLogged + '</div><div style="font-size:11px;color:#e74c3c;font-weight:600;text-transform:uppercase">Not Logged</div></div>'
+      + '</div>'
+      + daysSections
+      + '<div style="text-align:center;margin-top:30px;padding-top:20px;border-top:1px solid #e8e3db;color:#999;font-size:11px">'
+      + 'Generated by KineticAge Nutritionist App &middot; ' + fmt(today)
+      + '</div></body></html>';
+
+    const w = window.open('', '_blank');
+    if (w) {
+      w.document.write(reportHtml);
+      w.document.close();
+      setTimeout(() => w.print(), 600);
+    }
+  }
+  window.generateWeeklyReport = generateWeeklyReport;
+
+  function countOnPlan(dayData) {
+    if (!dayData) return -1; // no data
+    let count = 0;
+    ['b', 'l', 'd'].forEach(m => {
+      if (dayData[m] && dayData[m].status === 'marked-green') count++;
+    });
+    return count;
+  }
+
+  function cellClass(dayData) {
+    const n = countOnPlan(dayData);
+    if (n === -1) return 'no-data';
+    if (n === 3) return 'all-on';
+    if (n === 2) return 'most-on';
+    if (n === 1) return 'some-on';
+    return 'none-on';
+  }
+
+  function renderMonthView(cardId) {
+    const history = generateMealHistory(cardId);
+    const today = new Date();
+    const viewDate = new Date(today.getFullYear(), today.getMonth() + currentMonthOffset, 1);
+    const year = viewDate.getFullYear();
+    const month = viewDate.getMonth();
+    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const startDow = (firstDay.getDay() + 6) % 7; // 0=Mon
+
+    let html = '<div class="ms-month-view">';
+    // Nav
+    html += '<div class="ms-month-nav">';
+    html += '<button class="ms-month-nav-btn" onclick="changeMonth(-1, \'' + cardId + '\')">‹</button>';
+    html += '<div class="ms-month-label">' + monthNames[month] + ' ' + year + '</div>';
+    html += '<button class="ms-month-nav-btn" onclick="changeMonth(1, \'' + cardId + '\')">›</button>';
+    html += '</div>';
+
+    // Day headers
+    html += '<div class="ms-month-grid-header">';
+    ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(d => {
+      html += '<span>' + d + '</span>';
+    });
+    html += '</div>';
+
+    // Grid
+    html += '<div class="ms-month-grid">';
+    // Empty cells before first day
+    for (let e = 0; e < startDow; e++) {
+      html += '<div class="ms-month-cell empty"></div>';
+    }
+
+    for (let day = 1; day <= lastDay.getDate(); day++) {
+      const d = new Date(year, month, day);
+      const key = d.toISOString().split('T')[0];
+      const dayData = history[key];
+      const isFuture = d > today;
+      const cls = isFuture ? 'no-data' : (dayData ? cellClass(dayData) : 'no-data');
+      const sel = selectedMonthDay === key ? ' selected' : '';
+
+      html += '<div class="ms-month-cell ' + cls + sel + '" onclick="selectMonthDay(\'' + key + '\', \'' + cardId + '\')">' + day + '</div>';
+    }
+    html += '</div>';
+
+    // Legend
+    html += '<div class="ms-month-legend">';
+    html += '<div class="ms-legend-item"><div class="ms-legend-swatch" style="background:#4a7c59"></div>3/3</div>';
+    html += '<div class="ms-legend-item"><div class="ms-legend-swatch" style="background:#a8d5b8"></div>2/3</div>';
+    html += '<div class="ms-legend-item"><div class="ms-legend-swatch" style="background:#f0c040"></div>1/3</div>';
+    html += '<div class="ms-legend-item"><div class="ms-legend-swatch" style="background:#e74c3c"></div>0/3</div>';
+    html += '<div class="ms-legend-item"><div class="ms-legend-swatch" style="background:#e8e3db"></div>No data</div>';
+    html += '</div>';
+
+    // Selected day detail
+    if (selectedMonthDay) {
+      const selData = history[selectedMonthDay];
+      const selDate = new Date(selectedMonthDay + 'T12:00:00');
+      if (selData && selDate <= today) {
+        html += '<div class="ms-month-day-detail">';
+        html += '<div class="ms-month-day-detail-header">' + selDate.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' }) + '</div>';
+        ['b', 'l', 'd'].forEach(meal => {
+          if (selData[meal]) html += renderMealRow(meal, selData[meal]);
+        });
+        html += '</div>';
+      }
+    }
+
+    html += '</div>';
+    return html;
+  }
+
+  function selectMonthDay(key, cardId) {
+    selectedMonthDay = selectedMonthDay === key ? null : key;
+    document.getElementById('ms-scroll').innerHTML = renderMonthView(cardId);
+  }
+  window.selectMonthDay = selectMonthDay;
+
+  function changeMonth(delta, cardId) {
+    currentMonthOffset += delta;
+    selectedMonthDay = null;
+    document.getElementById('ms-scroll').innerHTML = renderMonthView(cardId);
+  }
+  window.changeMonth = changeMonth;
+
+  function switchMsTab(tab) {
+    currentMsTab = tab;
+    selectedMonthDay = null;
+    currentMonthOffset = 0;
+    // Update tab buttons
+    document.querySelectorAll('.ms-tab-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.mstab === tab);
+    });
+    // Update date display
+    const dateEl = document.getElementById('ms-date');
+    const today = new Date();
+    if (tab === 'today') {
+      dateEl.textContent = today.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+    } else if (tab === 'week') {
+      const dow = today.getDay();
+      const monday = new Date(today);
+      monday.setDate(today.getDate() - ((dow + 6) % 7));
+      const sunday = new Date(monday);
+      sunday.setDate(monday.getDate() + 6);
+      dateEl.textContent = monday.getDate() + '–' + sunday.getDate() + ' ' + today.toLocaleDateString('en-IN', { month: 'short' });
+    } else {
+      dateEl.textContent = today.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+    }
+    // Render
+    const scroll = document.getElementById('ms-scroll');
+    if (tab === 'today') scroll.innerHTML = renderTodayView(currentMsClient);
+    else if (tab === 'week') scroll.innerHTML = renderWeekView(currentMsClient);
+    else scroll.innerHTML = renderMonthView(currentMsClient);
+  }
+  window.switchMsTab = switchMsTab;
+
+  function openMealSummary(cardId) {
     const c = clients[cardId];
     if (!c) return;
+    currentMsClient = cardId;
+    currentMsTab = 'today';
+    currentMonthOffset = 0;
+    selectedMonthDay = null;
 
-    // Set client info
-    const av = document.getElementById('md-avatar');
+    const av = document.getElementById('ms-avatar');
     av.textContent = c.initials;
-    av.className = 'md-client-avatar ' + c.avatar;
-    document.getElementById('md-name').textContent = c.name;
-    document.getElementById('md-meta').textContent = c.meta;
+    av.className = 'ms-avatar ' + c.avatar;
+    document.getElementById('ms-name').textContent = c.name;
+    document.getElementById('ms-meta').textContent = c.meta;
 
-    // Find first logged meal to auto-select, or first
-    currentMealIndex = 0;
-    for (let i = 0; i < 3; i++) {
-      const m = c.meals[mealKeys[i]];
-      if (m.logged) { currentMealIndex = i; break; }
-    }
-
-    renderTabs(c);
-    renderMealContent(c, currentMealIndex);
-    document.getElementById('meal-detail-overlay').classList.add('open');
-  }
-  window.openMealDetail = openMealDetail;
-
-  function closeMealDetail() {
-    document.getElementById('meal-detail-overlay').classList.remove('open');
-  }
-  window.closeMealDetail = closeMealDetail;
-
-  function renderTabs(c) {
-    const cont = document.getElementById('md-tabs');
-    cont.innerHTML = '';
-    mealKeys.forEach((k, i) => {
-      const m = c.meals[k];
-      const tab = document.createElement('button');
-      tab.className = 'md-tab' + (i === currentMealIndex ? ' active' : '');
-      tab.innerHTML = '<span class="md-tab-name">' + mealNames[i] + '</span><span class="md-tab-time">' +
-        (m.logged ? m.logTime : '– pending') + '</span>';
-      tab.onclick = () => { currentMealIndex = i; renderTabs(c); renderMealContent(c, i); };
-      cont.appendChild(tab);
+    // Reset tabs
+    document.querySelectorAll('.ms-tab-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.mstab === 'today');
     });
+    const today = new Date();
+    document.getElementById('ms-date').textContent = today.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+
+    // Generate history for this client
+    generateMealHistory(cardId);
+
+    document.getElementById('ms-scroll').innerHTML = renderTodayView(cardId);
+    document.getElementById('meal-summary-overlay').classList.add('open');
   }
+  window.openMealSummary = openMealSummary;
 
-  function renderMealContent(c, idx) {
-    const m = c.meals[mealKeys[idx]];
-    const scroll = document.getElementById('md-scroll');
-    document.getElementById('md-title').textContent = 'Wednesday · ' + mealNames[idx];
-
-    let html = '';
-
-    // Status + Plan comparison
-    if (m.status === 'future') {
-      html += '<div class="md-plan-header"><span class="md-status-badge future"><span class="status-dot"></span>PENDING</span></div>';
-      html += '<div class="md-plan-compare"><div class="md-plan-box"><div class="md-plan-box-label">PLANNED</div><div class="md-plan-box-text">' + m.planned + '</div></div></div>';
-      html += '<div class="md-empty">Meal time hasn\'t arrived yet</div>';
-    } else if (!m.logged) {
-      html += '<div class="md-plan-header"><span class="md-status-badge not-logged"><span class="status-dot"></span>NOT LOGGED</span></div>';
-      html += '<div class="md-plan-compare"><div class="md-plan-box"><div class="md-plan-box-label">PLANNED</div><div class="md-plan-box-text">' + m.planned + '</div></div></div>';
-      html += getMark(m, idx);
-    } else {
-      // Determine badge
-      let badge = 'on-plan', badgeText = 'ON PLAN';
-      if (m.status === 'marked-green') { badge = 'on-plan'; badgeText = 'ON PLAN'; }
-      else if (m.status === 'marked-orange') { badge = 'off-plan'; badgeText = 'OFF PLAN'; }
-      else if (m.status === 'marked-red') { badge = 'not-logged-meal'; badgeText = 'NOT LOGGED'; }
-      else { badge = 'not-logged'; badgeText = 'UNREVIEWED'; }
-
-      html += '<div class="md-plan-header"><span class="md-status-badge ' + badge + '"><span class="status-dot"></span>' + badgeText + '</span>';
-      html += '<span class="md-logged-time">Logged ' + m.logTime + '</span></div>';
-      html += '<div class="md-plan-compare">';
-      html += '<div class="md-plan-box"><div class="md-plan-box-label">PLANNED</div><div class="md-plan-box-text">' + m.planned + '</div></div>';
-      html += '</div>';
-
-      // Mark buttons
-      html += getMark(m, idx);
-
-      // WhatsApp message
-      if (m.waMsg) {
-        html += '<div class="md-section-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> TEXT MESSAGE</div>';
-        html += '<div class="md-wa-card"><div class="md-wa-from"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>WhatsApp · from ' + m.waFrom + '</div>';
-        html += '<div class="md-wa-text">"' + m.waMsg + '"</div>';
-        html += '<div class="md-wa-time">' + m.waMsgTime + '</div></div>';
-      }
-
-      // Voice note
-      if (m.voice) {
-        html += '<div class="md-section-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M12 1v11M19 10a7 7 0 01-14 0M12 18v4M8 22h8"/></svg> VOICE NOTE</div>';
-        html += '<div class="md-voice-card"><div class="md-voice-player"><button class="md-play-btn"><svg width="10" height="10" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></button>';
-        html += '<div class="md-waveform">&#9612;&#9612;&#9615;&#9612;&#9615;&#9612;&#9612;&#9615;&#9612;&#9612;&#9615;&#9612;&#9615;&#9612;&#9612;&#9615;&#9612;&#9612;&#9615;&#9612;&#9615;&#9612;&#9612;&#9615;&#9612;</div></div>';
-        html += '<div class="md-voice-times"><span>0:00</span><span>' + m.voice.dur + '</span></div>';
-        html += '<div class="md-transcript-label">TRANSCRIPT</div>';
-        html += '<div class="md-transcript">"' + m.voice.transcript + '"</div></div>';
-      }
-
-      // Photo
-      if (m.photo) {
-        html += '<div class="md-section-label"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg> PHOTO</div>';
-        html += '<div class="md-photo-card"><div class="md-photo-img"><div class="md-photo-location">Home · kitchen</div></div>';
-        html += '<div class="md-photo-meta"><span>Taken 8:16 AM</span><a href="#">View full ↗</a></div></div>';
-      }
-    }
-
-    scroll.innerHTML = html;
+  function closeMealSummary() {
+    document.getElementById('meal-summary-overlay').classList.remove('open');
   }
-
-  function getMark(m, idx) {
-    const key = mealKeys[idx];
-    let gAct = m.status === 'marked-green' ? ' active' : '';
-    let oAct = m.status === 'marked-orange' ? ' active' : '';
-    let rAct = m.status === 'marked-red' ? ' active' : '';
-    return '<div class="md-mark-row">' +
-      '<button class="md-mark-btn mg' + gAct + '" onclick="markFromDetail(\'' + key + '\',\'green\')">&#10003; On plan</button>' +
-      '<button class="md-mark-btn mo' + oAct + '" onclick="markFromDetail(\'' + key + '\',\'orange\')">~ Off plan</button>' +
-      '<button class="md-mark-btn mr' + rAct + '" onclick="markFromDetail(\'' + key + '\',\'red\')">&#10007; Not logged</button>' +
-      '</div>';
-  }
-
-  function markFromDetail(mealKey, color) {
-    if (!currentCardId) return;
-    const c = clients[currentCardId];
-    const m = c.meals[mealKey];
-    m.status = 'marked-' + color;
-
-    // Update the dot on the tracking card
-    const card = document.getElementById(currentCardId);
-    const dots = card.querySelectorAll('.meal-dot');
-    const idx = mealKeys.indexOf(mealKey);
-    dots[idx].className = 'meal-dot marked-' + color;
-
-    // Re-render current tab
-    renderTabs(c);
-    renderMealContent(c, currentMealIndex);
-
-    // Refresh meal progress
-    renderMealProgress();
-  }
-  window.markFromDetail = markFromDetail;
+  window.closeMealSummary = closeMealSummary;
 
   // ===== MEAL PROGRESS =====
   const mealDoneState = { b: false, l: false, d: false };
@@ -4575,6 +5126,305 @@
   window.tryMarkMealDone = tryMarkMealDone;
 
   renderMealProgress();
+
+  // ===== REVIEW CARDS =====
+  let reviewCards = [];
+  let reviewedCount = 0;
+
+  function generateReviewCards() {
+    reviewCards = [];
+    Object.keys(clients).forEach(clientId => {
+      const c = clients[clientId];
+      ['b', 'l', 'd'].forEach(mealKey => {
+        const meal = c.meals[mealKey];
+        if (meal.logged && meal.status === 'unreviewed') {
+          reviewCards.push({
+            clientId: clientId,
+            clientName: c.name,
+            clientInitials: c.initials,
+            clientAvatar: c.avatar,
+            clientMeta: c.meta,
+            mealKey: mealKey,
+            message: meal.waMsg || (meal.voice ? meal.voice.transcript : ''),
+            msgTime: meal.waMsgTime || meal.logTime,
+            hasVoice: !!meal.voice,
+            voiceDur: meal.voice ? meal.voice.dur : null,
+            hasPhoto: !!meal.photo,
+            planned: {
+              b: c.meals.b.planned,
+              l: c.meals.l.planned,
+              d: c.meals.d.planned
+            },
+            selectedMeal: null
+          });
+        }
+      });
+    });
+    reviewedCount = 0;
+  }
+
+  function renderCardHTML(card) {
+    const mealLabels = { b: 'Breakfast', l: 'Lunch', d: 'Dinner' };
+    let html = '';
+
+    // Swipe overlays
+    html += '<div class="swipe-overlay on-plan">ON PLAN</div>';
+    html += '<div class="swipe-overlay off-plan">OFF PLAN</div>';
+    html += '<div class="swipe-overlay not-logged">DIDN\'T LOG</div>';
+
+    // Header
+    html += '<div class="sc-header">';
+    html += '<div class="sc-avatar ' + card.clientAvatar + '">' + card.clientInitials + '</div>';
+    html += '<div class="sc-client-info"><div class="sc-client-name">' + card.clientName + '</div>';
+    html += '<div class="sc-client-meta">' + card.clientMeta + '</div></div>';
+    html += '<div class="sc-time">' + card.msgTime + '</div>';
+    html += '</div>';
+
+    // Meal type pills
+    html += '<div class="sc-meal-pills">';
+    ['b', 'l', 'd'].forEach(key => {
+      const sel = card.selectedMeal === key ? ' selected-' + key : '';
+      html += '<button class="sc-meal-pill' + sel + '" data-meal="' + key + '">' + mealLabels[key] + '</button>';
+    });
+    html += '</div>';
+
+    // Message
+    if (card.message) {
+      html += '<div class="sc-message-label">MESSAGE</div>';
+      html += '<div class="sc-message">"' + card.message + '"</div>';
+    }
+
+    // Attachments
+    if (card.hasVoice || card.hasPhoto) {
+      html += '<div class="sc-attachments">';
+      if (card.hasVoice) {
+        html += '<div class="sc-voice-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6b6b6b" stroke-width="2"><path d="M12 1v11M19 10a7 7 0 01-14 0M12 18v4M8 22h8"/></svg>' + card.voiceDur + '</div>';
+      }
+      if (card.hasPhoto) {
+        html += '<div class="sc-photo-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6b6b6b" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Photo</div>';
+      }
+      html += '</div>';
+    }
+
+    // Planned meal (shows based on selected pill)
+    if (card.selectedMeal) {
+      const mealClass = 'meal-' + card.selectedMeal;
+      html += '<div class="sc-planned ' + mealClass + '">';
+      html += '<div class="sc-planned-label">PLANNED ' + mealLabels[card.selectedMeal].toUpperCase() + '</div>';
+      html += '<div class="sc-planned-text">' + card.planned[card.selectedMeal] + '</div>';
+      html += '</div>';
+    }
+
+    return html;
+  }
+
+  function attachPillListeners(el, card) {
+    el.querySelectorAll('.sc-meal-pill').forEach(pill => {
+      pill.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const mealKey = pill.dataset.meal;
+        card.selectedMeal = mealKey;
+        el.innerHTML = renderCardHTML(card);
+        attachPillListeners(el, card);
+        attachSwipeListeners(el, card);
+      });
+    });
+  }
+
+  function renderReviewCards() {
+    if (reviewCards.length === 0 && reviewedCount === 0) generateReviewCards();
+
+    const stack = document.getElementById('card-stack');
+    const emptyState = document.getElementById('review-empty');
+    const legend = document.getElementById('swipe-legend');
+    const totalCards = reviewCards.length + reviewedCount;
+
+    // Update stats
+    document.getElementById('review-client-count').textContent = totalCards;
+    document.getElementById('review-stats-text').textContent = reviewedCount + ' reviewed · ' + reviewCards.length + ' remaining';
+    const pct = totalCards > 0 ? Math.round((reviewedCount / totalCards) * 100) : 0;
+    document.getElementById('review-stats-fill').style.width = pct + '%';
+
+    // Clear stack
+    stack.innerHTML = '';
+
+    if (reviewCards.length === 0) {
+      stack.style.display = 'none';
+      legend.style.display = 'none';
+      emptyState.style.display = 'flex';
+      updateReviewBadge();
+      return;
+    }
+
+    stack.style.display = 'flex';
+    legend.style.display = 'flex';
+    emptyState.style.display = 'none';
+
+    // Render up to 3 cards (top card + 2 behind)
+    const visibleCount = Math.min(reviewCards.length, 3);
+    for (let i = visibleCount - 1; i >= 0; i--) {
+      const card = reviewCards[i];
+      const el = document.createElement('div');
+      el.className = 'swipe-card';
+      el.dataset.index = i;
+      if (i === 1) el.classList.add('behind-1');
+      if (i === 2) el.classList.add('behind-2');
+      el.innerHTML = renderCardHTML(card);
+
+      if (i === 0) {
+        attachPillListeners(el, card);
+        attachSwipeListeners(el, card);
+      }
+
+      stack.appendChild(el);
+    }
+
+    updateReviewBadge();
+  }
+
+  function attachSwipeListeners(el, card) {
+    let startX = 0, startY = 0, currentX = 0, currentY = 0, isDragging = false;
+
+    function onStart(e) {
+      if (e.target.closest('.sc-meal-pill')) return;
+      isDragging = true;
+      el.setPointerCapture(e.pointerId);
+      const point = e.touches ? e.touches[0] : e;
+      startX = point.clientX;
+      startY = point.clientY;
+      currentX = 0;
+      currentY = 0;
+      el.style.transition = 'none';
+      el.style.overflowY = 'hidden';
+    }
+
+    function onMove(e) {
+      if (!isDragging) return;
+      const point = e.touches ? e.touches[0] : e;
+      currentX = point.clientX - startX;
+      currentY = point.clientY - startY;
+
+      const rotate = currentX * 0.08;
+      el.style.transform = 'translateX(' + currentX + 'px) translateY(' + currentY + 'px) rotate(' + rotate + 'deg)';
+
+      const onPlanOverlay = el.querySelector('.swipe-overlay.on-plan');
+      const offPlanOverlay = el.querySelector('.swipe-overlay.off-plan');
+      const notLoggedOverlay = el.querySelector('.swipe-overlay.not-logged');
+
+      const absX = Math.abs(currentX);
+      const absY = Math.abs(currentY);
+
+      if (currentY < -30 && absY > absX) {
+        onPlanOverlay.style.opacity = '0';
+        offPlanOverlay.style.opacity = '0';
+        notLoggedOverlay.style.opacity = Math.min(absY / 100, 1);
+      } else if (currentX > 30) {
+        onPlanOverlay.style.opacity = Math.min(absX / 100, 1);
+        offPlanOverlay.style.opacity = '0';
+        notLoggedOverlay.style.opacity = '0';
+      } else if (currentX < -30) {
+        onPlanOverlay.style.opacity = '0';
+        offPlanOverlay.style.opacity = Math.min(absX / 100, 1);
+        notLoggedOverlay.style.opacity = '0';
+      } else {
+        onPlanOverlay.style.opacity = '0';
+        offPlanOverlay.style.opacity = '0';
+        notLoggedOverlay.style.opacity = '0';
+      }
+    }
+
+    function onEnd() {
+      if (!isDragging) return;
+      isDragging = false;
+
+      const absX = Math.abs(currentX);
+      const absY = Math.abs(currentY);
+      const threshold = 50;
+
+      let action = null;
+      if (currentY < -threshold && absY > absX) {
+        action = 'up';
+      } else if (currentX > threshold) {
+        action = 'right';
+      } else if (currentX < -threshold) {
+        action = 'left';
+      }
+
+      if (action && !card.selectedMeal) {
+        card.selectedMeal = card.mealKey;
+      }
+
+      if (action) {
+        if (action === 'right') el.classList.add('fly-right');
+        else if (action === 'left') el.classList.add('fly-left');
+        else if (action === 'up') el.classList.add('fly-up');
+
+        setTimeout(() => {
+          processSwipe(card, action);
+        }, 350);
+      } else {
+        el.classList.add('snap-back');
+        el.style.transform = '';
+        el.querySelector('.swipe-overlay.on-plan').style.opacity = '0';
+        el.querySelector('.swipe-overlay.off-plan').style.opacity = '0';
+        el.querySelector('.swipe-overlay.not-logged').style.opacity = '0';
+        setTimeout(() => el.classList.remove('snap-back'), 300);
+      }
+      el.style.overflowY = 'auto';
+    }
+
+    el.addEventListener('pointerdown', onStart);
+    el.addEventListener('pointermove', onMove);
+    el.addEventListener('pointerup', onEnd);
+  }
+
+  function processSwipe(card, action) {
+    let newStatus;
+    if (action === 'right') newStatus = 'marked-green';
+    else if (action === 'left') newStatus = 'marked-orange';
+    else if (action === 'up') newStatus = 'marked-red';
+
+    const c = clients[card.clientId];
+    if (c) {
+      c.meals[card.selectedMeal].status = newStatus;
+
+      const trackCard = document.getElementById(card.clientId);
+      if (trackCard) {
+        const dots = trackCard.querySelectorAll('.meal-dot');
+        const mealIdx = mealKeys.indexOf(card.selectedMeal);
+        if (dots[mealIdx]) {
+          dots[mealIdx].className = 'meal-dot ' + newStatus;
+        }
+      }
+
+      renderMealProgress();
+    }
+
+    reviewCards.shift();
+    reviewedCount++;
+    renderReviewCards();
+  }
+
+  function updateReviewBadge() {
+    const navIcon = document.querySelector('[data-tab="review"] .nav-icon');
+    if (!navIcon) return;
+    let badge = navIcon.querySelector('.nav-badge');
+    const count = reviewCards.length;
+
+    if (count > 0) {
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'nav-badge';
+        navIcon.appendChild(badge);
+      }
+      badge.textContent = count;
+    } else if (badge) {
+      badge.remove();
+    }
+  }
+
+  generateReviewCards();
+  updateReviewBadge();
 
   // ===== CLIENTS SCREEN =====
   const allClients = [
