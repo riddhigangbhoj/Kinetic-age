@@ -92,167 +92,6 @@
       font-weight: 400;
     }
 
-    /* Clock In Bar */
-    .clock-wrapper {
-      margin: 0 16px 12px;
-    }
-
-    .clock-bar {
-      background: #eef3ee;
-      border-radius: 16px;
-      padding: 12px 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: background 0.3s;
-    }
-
-    .clock-bar.clocked-out {
-      background: #fef2f0;
-    }
-
-    .clock-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: 1;
-    }
-
-    .clock-dot {
-      width: 10px;
-      height: 10px;
-      background: #4a7c59;
-      border-radius: 50%;
-      flex-shrink: 0;
-      transition: background 0.3s;
-    }
-
-    .clock-bar.clocked-out .clock-dot {
-      background: #ccc;
-    }
-
-    .clock-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: #2d2d2d;
-      line-height: 1.2;
-      white-space: nowrap;
-    }
-
-    .clock-time-info {
-      font-size: 13px;
-      font-weight: 600;
-      color: #2d2d2d;
-      white-space: nowrap;
-    }
-
-    .clock-time-info .period {
-      font-size: 11px;
-      color: #888;
-      font-weight: 500;
-      margin-left: 2px;
-    }
-
-    .clock-time-info .time-separator {
-      color: #aaa;
-      margin: 0 1px;
-    }
-
-    .clock-bar.clocked-out .clock-label {
-      color: #999;
-    }
-
-    .clock-bar.clocked-out .clock-time-info {
-      color: #999;
-      font-size: 12px;
-    }
-
-    .clock-bar.clocked-out .clock-duration {
-      color: #c0392b;
-      font-weight: 700;
-    }
-
-    .clock-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .clock-duration {
-      font-size: 13px;
-      font-weight: 600;
-      color: #555;
-      white-space: nowrap;
-    }
-
-    .clock-toggle-btn {
-      background: #fff;
-      border: 1.5px solid #ccc;
-      border-radius: 12px;
-      padding: 10px 16px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #2d2d2d;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.3s;
-      white-space: nowrap;
-    }
-
-    .clock-toggle-btn:hover {
-      background: #f0f0f0;
-    }
-
-    .clock-toggle-btn.clock-in {
-      background: #4a7c59;
-      border-color: #4a7c59;
-      color: white;
-    }
-
-    .clock-toggle-btn.clock-in:hover {
-      background: #3d6a4b;
-    }
-
-    /* Warning bar */
-    .clock-warning {
-      display: none;
-      align-items: center;
-      gap: 6px;
-      margin-top: 6px;
-      padding: 7px 14px;
-      background: #fef2f0;
-      border-radius: 10px;
-      border: 1px solid #f5d0cc;
-    }
-
-    .clock-warning.visible {
-      display: flex;
-    }
-
-    .warning-bar-track {
-      flex: 1;
-      height: 5px;
-      background: #f0ddd9;
-      border-radius: 3px;
-      overflow: hidden;
-    }
-
-    .warning-bar-fill {
-      height: 100%;
-      background: #c0392b;
-      border-radius: 3px;
-      transition: width 0.5s ease;
-    }
-
-    .warning-text {
-      font-size: 11px;
-      font-weight: 600;
-      color: #c0392b;
-      white-space: nowrap;
-    }
-
     /* New Client Card */
     .new-client-card {
       margin: 0 16px 12px;
@@ -981,6 +820,181 @@
       height: 2px;
       background: #c0392b;
       margin-left: 0;
+    }
+
+    /* Profile — Meal history */
+    .cp-mh-card {
+      background: white;
+      border: 1px solid #f0ebe3;
+      border-radius: 12px;
+      padding: 6px 12px;
+      margin-bottom: 14px;
+    }
+    .cp-mh-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-top: 1px solid #f5f0e8;
+    }
+    .cp-mh-row:first-child { border-top: none; }
+    .cp-mh-date {
+      font-size: 11px;
+      color: #6b6b6b;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .cp-mh-date.today {
+      color: #2d5a3a;
+      font-weight: 700;
+    }
+    .cp-mh-pills {
+      display: flex;
+      gap: 4px;
+    }
+    .cp-mh-summary {
+      display: flex;
+      gap: 14px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      background: #f8f5f0;
+      border-radius: 10px;
+      font-size: 11px;
+      color: #6b6b6b;
+      font-weight: 600;
+    }
+    .cp-mh-summary strong { color: #2d2d2d; }
+
+    /* FAB — Add new client */
+    .fab-add-client {
+      position: absolute;
+      right: 18px;
+      bottom: 108px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #2d5a3a;
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 16px rgba(45,90,58,0.35);
+      z-index: 80;
+      transition: all 0.15s;
+    }
+    .fab-add-client.visible { display: flex; }
+    .fab-add-client:active {
+      transform: scale(0.92);
+      background: #1f3f28;
+    }
+    .fab-add-client svg { width: 22px; height: 22px; }
+
+    /* Add Client Modal */
+    .ac-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 370;
+      display: none;
+    }
+    .ac-overlay.open { display: flex; }
+    .ac-backdrop {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+    }
+    .ac-sheet {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: #faf7f2;
+      border-radius: 20px 20px 0 0;
+      padding: 18px 18px 24px;
+      animation: slideUp 0.25s ease;
+      max-height: 92%;
+      overflow-y: auto;
+    }
+    .ac-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .ac-title { font-size: 15px; font-weight: 700; color: #2d2d2d; }
+    .ac-close {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1px solid #e0dbd3;
+      background: white;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      color: #999;
+    }
+    .ac-row { margin-bottom: 12px; }
+    .ac-row-2 { display: flex; gap: 10px; }
+    .ac-row-2 > div { flex: 1; min-width: 0; }
+    .ac-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 6px;
+    }
+    .ac-input {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1.5px solid #e0dbd3;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      background: white;
+      color: #2d2d2d;
+      outline: none;
+    }
+    .ac-input:focus { border-color: #4a7c59; }
+    .ac-avatar-row { display: flex; gap: 8px; }
+    .ac-avatar-pick {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .ac-avatar-pick.green  { background: #4a7c59; }
+    .ac-avatar-pick.brown  { background: #a08870; }
+    .ac-avatar-pick.purple { background: #7b6b9e; }
+    .ac-avatar-pick.active { border-color: #2d2d2d; box-shadow: 0 0 0 3px rgba(45,45,45,0.08); }
+    .ac-actions { display: flex; gap: 8px; margin-top: 14px; }
+    .ac-cancel, .ac-save {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+    }
+    .ac-cancel {
+      background: white;
+      border: 1px solid #e0dbd3;
+      color: #6b6b6b;
+    }
+    .ac-save {
+      background: #2d5a3a;
+      color: white;
+    }
+    .ac-save:disabled {
+      background: #b8c8bc;
+      cursor: not-allowed;
+    }
+    .ac-error {
+      color: #c0392b;
+      font-size: 11px;
+      margin-top: 4px;
+      min-height: 14px;
     }
 
     /* Bottom Navigation */
@@ -1993,11 +2007,75 @@
       font-size: 26px;
       color: #2d2d2d;
     }
+    .clients-header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
     .clients-count {
       font-size: 12px;
       color: #999;
       font-weight: 500;
     }
+    .btn-search-clients {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #e5e0d8;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .btn-search-clients svg { width: 14px; height: 14px; }
+    .btn-search-clients:active { transform: scale(0.95); }
+    .btn-search-clients.active {
+      background: #2d2d2d;
+      border-color: #2d2d2d;
+    }
+    .btn-search-clients.active svg path,
+    .btn-search-clients.active svg circle { stroke: white; }
+    .clients-search-bar {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      margin: 0 14px 10px;
+      padding: 8px 12px;
+      background: white;
+      border: 1px solid #e5e0d8;
+      border-radius: 12px;
+    }
+    .clients-search-bar.open { display: flex; }
+    .clients-search-bar svg.cs-icon { width: 14px; height: 14px; flex-shrink: 0; }
+    .clients-search-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 13px;
+      font-family: inherit;
+      color: #2d2d2d;
+    }
+    .clients-search-input::placeholder { color: #b8b0a4; }
+    .clients-search-clear {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: none;
+      background: #e5e0d8;
+      color: #6b6b6b;
+      font-size: 12px;
+      line-height: 1;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .clients-search-clear.visible { display: flex; }
     .clients-list { padding: 0 14px; }
 
     .client-list-item {
@@ -2082,8 +2160,37 @@
       background: #b8860b;
       flex-shrink: 0;
     }
+    .cl-urgent {
+      background: #fce4e1;
+      color: #c0392b;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .cl-urgent .warn-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #c0392b;
+      flex-shrink: 0;
+    }
     .client-list-item.has-warning {
       border-color: #f5e0cc;
+    }
+    .client-list-item.has-urgent {
+      border-color: #f0c4bf;
+      background: #fef8f7;
+    }
+    .clients-filter-btn.urgent.active {
+      background: #c0392b;
+      border-color: #c0392b;
     }
     .sched-upload-warn {
       display: inline-flex;
@@ -2506,6 +2613,14 @@
       color: #bbb;
       font-weight: 600;
     }
+    .mpr-status {
+      font-size: 10px;
+      font-weight: 700;
+      white-space: nowrap;
+      letter-spacing: 0.2px;
+    }
+    .mpr-status.left { color: #b8860b; }
+    .mpr-status.done { color: #4a7c59; }
     .mpr-pending-list {
       background: #fffaf5;
       border: 1px solid #f0ebe3;
@@ -2979,6 +3094,57 @@
       opacity: 0.85;
     }
 
+    /* Missed Docs Alert — Schedule screen */
+    .missed-docs-card {
+      margin: 0 20px 12px;
+      background: #fce4e1;
+      border-radius: 16px;
+      border: 1px solid #f0c4bf;
+      overflow: hidden;
+    }
+    .missed-docs-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 16px 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #8c2d23;
+    }
+    .missed-docs-header svg { flex-shrink: 0; }
+    .missed-docs-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      border-top: 1px solid #f0c4bf;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .missed-docs-item:active { background: #f7d4cf; }
+    .md-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 11px; font-weight: 700; flex-shrink: 0;
+    }
+    .md-name {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 700;
+      color: #2d2d2d;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .md-overdue {
+      font-size: 10px;
+      font-weight: 700;
+      color: #c0392b;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
     /* Docs Needed Block — Schedule screen */
     .docs-needed-card {
       margin: 0 20px 12px;
@@ -3053,7 +3219,75 @@
       display: none;
       background: #faf7f2;
     }
-    .screen-review.active { display: block; }
+    .screen-review.active { display: flex; flex-direction: column; }
+
+    /* Not-logged alert on Review screen */
+    .not-logged-card {
+      margin: 6px 14px 8px;
+      background: #fdf4dc;
+      border-radius: 14px;
+      border: 1px solid #f0dda0;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .not-logged-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #7a6520;
+    }
+    .not-logged-header svg { flex-shrink: 0; }
+    .not-logged-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-top: 1px solid #f0dda0;
+    }
+    .nl-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 10px; font-weight: 700; flex-shrink: 0;
+    }
+    .nl-info { flex: 1; min-width: 0; }
+    .nl-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #2d2d2d;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nl-meal {
+      font-size: 9px;
+      color: #7a6520;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+    .nl-nudge-btn {
+      background: #25D366;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nl-nudge-btn:active { transform: scale(0.96); opacity: 0.9; }
+    .nl-nudge-btn svg { width: 11px; height: 11px; fill: white; }
 
     .review-header { padding: 8px 20px 0; }
     .review-title {
@@ -3097,7 +3331,8 @@
     .card-stack {
       position: relative;
       width: 100%;
-      height: calc(100% - 200px);
+      flex: 1;
+      min-height: 280px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -3390,6 +3625,697 @@
       justify-content: center;
       padding: 0 4px;
     }
+
+    /* ===== Call Scheduling ===== */
+    .date-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 20px 10px;
+    }
+    .date-header-row .date-header { padding: 0; }
+
+    .add-call-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #2d5a3a;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 6px 12px 6px 9px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .add-call-btn:active { transform: scale(0.95); opacity: 0.9; }
+    .add-call-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    .cp-add-call {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: white;
+      border: 1.5px dashed #cdb98a;
+      color: #7a6520;
+      border-radius: 12px;
+      padding: 11px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      margin-bottom: 16px;
+      transition: all 0.15s;
+    }
+    .cp-add-call:active { background: #fdf4dc; transform: scale(0.99); }
+    .cp-add-call svg { width: 13px; height: 13px; }
+
+    /* Meal-explanation CTA inside client profile */
+    .cp-meal-cta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #e8f3f5;
+      border: 1px solid #bcdde2;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .cp-meal-cta:active { background: #d8eaee; transform: scale(0.99); }
+    .cp-meal-cta-icon {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: #2A7B8E;
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .cp-meal-cta-icon svg { width: 12px; height: 12px; }
+    .cp-meal-cta-text { flex: 1; font-size: 12px; font-weight: 600; color: #1f5b6a; }
+    .cp-meal-cta-arrow { color: #2A7B8E; font-size: 16px; font-weight: 700; }
+    .cp-meal-cta.scheduled { background: #f3f8f4; border-color: #cfe3d3; }
+    .cp-meal-cta.scheduled .cp-meal-cta-icon { background: #4a7c59; }
+    .cp-meal-cta.scheduled .cp-meal-cta-text { color: #355d40; }
+    .cp-meal-cta.scheduled .cp-meal-cta-arrow { color: #4a7c59; }
+
+    /* Type-coloured labels on schedule card meta */
+    .ctype-weekly { color: #7B5EA7; }
+    .ctype-mealplan { color: #8B6914; }
+    .ctype-mealexplanation { color: #2A7B8E; }
+    .btn-join-sched {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #4a7c59;
+      border: none;
+      flex-shrink: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      margin-left: 4px;
+    }
+    .btn-join-sched:active {
+      transform: scale(0.92);
+      background: #3d6a4b;
+    }
+    .btn-join-sched svg { width: 14px; height: 14px; }
+
+    .schedule-card.user-added { border-left: 3px solid #2d5a3a; }
+    .schedule-card.user-added.ctype-weekly-edge { border-left-color: #7B5EA7; }
+    .schedule-card.user-added.ctype-mealplan-edge { border-left-color: #8B6914; }
+    .schedule-card.user-added.ctype-mealexplanation-edge { border-left-color: #2A7B8E; }
+
+    /* My Board calendar — meal explanation density colour */
+    .mb-cal-day.has-mealx { box-shadow: inset 0 -3px 0 #2A7B8E; }
+    .mb-cal-day.today.has-mealx { box-shadow: 0 0 0 2.5px #2d5a3a, inset 0 -3px 0 #2A7B8E; }
+
+    /* ===== Schedule Call Modal ===== */
+    .sc-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 360;
+      display: none;
+    }
+    .sc-overlay.open { display: flex; }
+    .sc-backdrop {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+    }
+    .sc-sheet {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: #faf7f2;
+      border-radius: 20px 20px 0 0;
+      padding: 18px 18px 24px;
+      animation: slideUp 0.25s ease;
+      max-height: 92%;
+      overflow-y: auto;
+    }
+    .sc-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .sc-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2d2d2d;
+    }
+    .sc-close {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1px solid #e0dbd3;
+      background: white;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      color: #999;
+    }
+    .sc-row { margin-bottom: 12px; }
+    .sc-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 6px;
+    }
+    .sc-input, .sc-select {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1.5px solid #e0dbd3;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-family: inherit;
+      background: white;
+      color: #2d2d2d;
+      outline: none;
+    }
+    .sc-input:focus, .sc-select:focus { border-color: #4a7c59; }
+    .sc-input[disabled], .sc-select[disabled] {
+      background: #f0ebe3;
+      color: #6b6b6b;
+    }
+    .sc-row-2 { display: flex; gap: 10px; }
+    .sc-row-2 > div { flex: 1; min-width: 0; }
+
+    .sc-segmented {
+      display: flex;
+      gap: 0;
+      background: #f0ebe3;
+      border-radius: 10px;
+      padding: 3px;
+    }
+    .sc-segmented-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 8px 6px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      color: #8a7d6b;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .sc-segmented-btn.active {
+      background: white;
+      color: #2d2d2d;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+    .sc-segmented-btn[data-type="weekly"].active { color: #7B5EA7; }
+    .sc-segmented-btn[data-type="mealplan"].active { color: #8B6914; }
+    .sc-segmented-btn[data-type="mealexplanation"].active { color: #2A7B8E; }
+
+    .sc-chip-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .sc-chip {
+      border: 1.5px solid #e0dbd3;
+      background: white;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b6b6b;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .sc-chip.active {
+      background: #2d5a3a;
+      border-color: #2d5a3a;
+      color: white;
+    }
+
+    .sc-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .sc-cancel, .sc-save {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+    }
+    .sc-cancel {
+      background: white;
+      border: 1px solid #e0dbd3;
+      color: #6b6b6b;
+    }
+    .sc-save {
+      background: #2d5a3a;
+      color: white;
+    }
+    .sc-save:disabled {
+      background: #b8c8bc;
+      cursor: not-allowed;
+    }
+    .sc-error {
+      color: #c0392b;
+      font-size: 11px;
+      margin-top: 6px;
+      min-height: 14px;
+    }
+
+    /* ===== Practice Insights (My Board top) ===== */
+    .mb-insights-card {
+      background: white;
+      border: 1px solid #f0ebe3;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .mb-insights-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .mb-insights-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #2d2d2d;
+    }
+    .mb-window-toggle {
+      display: flex;
+      background: #f0ebe3;
+      border-radius: 8px;
+      padding: 2px;
+    }
+    .mb-window-btn {
+      border: none;
+      background: transparent;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      color: #8a7d6b;
+      cursor: pointer;
+    }
+    .mb-window-btn.active {
+      background: white;
+      color: #2d2d2d;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+
+    .mb-kpi-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .mb-kpi-card {
+      flex: 1;
+      background: #faf7f2;
+      border: 1px solid #f0ebe3;
+      border-radius: 10px;
+      padding: 10px;
+      min-width: 0;
+    }
+    .mb-kpi-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: #2d5a3a;
+      line-height: 1.05;
+    }
+    .mb-kpi-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      color: #8a7d6b;
+      margin-top: 4px;
+      line-height: 1.25;
+    }
+    .mb-kpi-sub {
+      font-size: 10px;
+      color: #6b6b6b;
+      margin-top: 3px;
+      font-weight: 600;
+    }
+
+    .mb-segbar-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: #8a7d6b;
+      margin-bottom: 6px;
+    }
+    .mb-segbar {
+      display: flex;
+      width: 100%;
+      height: 10px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #f0ebe3;
+      margin-bottom: 8px;
+    }
+    .mb-segbar-seg {
+      height: 100%;
+      transition: width 0.25s;
+    }
+    .mb-segbar-seg.regular { background: #4a7c59; }
+    .mb-segbar-seg.sporadic { background: #d4a04c; }
+    .mb-segbar-seg.silent { background: #c0392b; }
+
+    .mb-segbar-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 14px;
+    }
+    .mb-legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 4px;
+      border-top: 1px solid #f5f0e8;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .mb-legend-row:first-child { border-top: none; }
+    .mb-legend-row:active { background: #f8f5f0; }
+    .mb-legend-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .mb-legend-dot.regular { background: #4a7c59; }
+    .mb-legend-dot.sporadic { background: #d4a04c; }
+    .mb-legend-dot.silent { background: #c0392b; }
+    .mb-legend-name {
+      flex: 1;
+      font-size: 12px;
+      font-weight: 600;
+      color: #2d2d2d;
+    }
+    .mb-legend-count {
+      font-size: 12px;
+      font-weight: 700;
+      color: #2d2d2d;
+    }
+    .mb-legend-arrow {
+      color: #ccc;
+      font-size: 16px;
+    }
+
+    .mb-calls-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .mb-stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      background: #f0ebe3;
+      color: #6b6b6b;
+    }
+    .mb-stat-pill.done { background: #d4e8d9; color: #2d5a3a; }
+    .mb-stat-pill.missed { background: #fce4e1; color: #c0392b; }
+    .mb-stat-pill.upcoming { background: #e8f3f5; color: #1f5b6a; }
+    .mb-stat-pill.ontime { background: #fdf4dc; color: #7a6520; margin-left: auto; }
+    .mb-stat-pill svg { width: 11px; height: 11px; }
+
+    /* Drilldown sheet (insights bucket list) */
+    .il-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 355;
+      display: none;
+    }
+    .il-overlay.open { display: flex; }
+    .il-backdrop {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+    }
+    .il-sheet {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: #faf7f2;
+      border-radius: 20px 20px 0 0;
+      padding: 18px 18px 24px;
+      animation: slideUp 0.25s ease;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+    .il-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .il-title { font-size: 14px; font-weight: 700; color: #2d2d2d; }
+    .il-close {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      border: 1px solid #e0dbd3;
+      background: white;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      color: #999;
+    }
+    .il-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 4px;
+      border-top: 1px solid #f0ebe3;
+      cursor: pointer;
+    }
+    .il-row:first-of-type { border-top: none; }
+    .il-row:active { background: #f5f0e8; }
+    .il-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 11px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .il-info { flex: 1; min-width: 0; }
+    .il-name { font-size: 13px; font-weight: 700; color: #2d2d2d; }
+    .il-meta { font-size: 10px; color: #888; margin-top: 2px; }
+    .il-empty {
+      padding: 20px 4px;
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+    }
+
+    /* Mode toggle (Confirmed / TBC) at top of modal */
+    .sc-mode-toggle {
+      display: flex;
+      gap: 0;
+      background: #f0ebe3;
+      border-radius: 10px;
+      padding: 3px;
+      margin-bottom: 14px;
+    }
+    .sc-mode-btn {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      color: #8a7d6b;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .sc-mode-btn.active {
+      background: white;
+      color: #2d2d2d;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+    .sc-mode-tbc.active { color: #2A7B8E; }
+
+    /* Hide rows depending on mode */
+    .sc-overlay.mode-tbc .sc-confirmed-only { display: none; }
+    .sc-overlay.mode-confirmed .sc-tbc-only { display: none; }
+
+    /* "Custom date" input only visible when chip selected */
+    .sc-tbc-custom-date { margin-top: 8px; }
+    .sc-tbc-custom-date.hidden { display: none; }
+
+    /* ===== "To Schedule" block (pending calls) ===== */
+    .to-schedule-card {
+      margin: 0 20px 12px;
+      background: #e8f3f5;
+      border-radius: 16px;
+      border: 1px solid #bcdde2;
+      overflow: hidden;
+    }
+    .to-schedule-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 16px 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1f5b6a;
+    }
+    .to-schedule-header svg { flex-shrink: 0; }
+    .to-schedule-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-top: 1px solid #bcdde2;
+    }
+    .ts-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 11px; font-weight: 700; flex-shrink: 0;
+    }
+    .ts-info { flex: 1; min-width: 0; }
+    .ts-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #2d2d2d;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ts-meta {
+      font-size: 9px;
+      color: #6b6b6b;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      margin-top: 2px;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .ts-meta .ts-window { color: #1f5b6a; }
+    .ts-set-btn {
+      background: #2A7B8E;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .ts-set-btn:active { transform: scale(0.96); opacity: 0.9; }
+    .ts-cancel-btn {
+      background: none;
+      border: none;
+      color: #999;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 4px 6px;
+      flex-shrink: 0;
+    }
+    .ts-cancel-btn:hover { color: #c0392b; }
+
+    /* Pending state for the meal-explanation CTA */
+    .cp-meal-cta.pending {
+      background: #fdf4dc;
+      border-color: #f0dda0;
+    }
+    .cp-meal-cta.pending .cp-meal-cta-icon { background: #b8860b; }
+    .cp-meal-cta.pending .cp-meal-cta-text { color: #7a6520; }
+    .cp-meal-cta.pending .cp-meal-cta-arrow { color: #b8860b; }
+
+    /* ===== Call Action Sheet (edit/reschedule/cancel) ===== */
+    .ca-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 365;
+      display: none;
+    }
+    .ca-overlay.open { display: flex; }
+    .ca-backdrop {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+    }
+    .ca-sheet {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: #faf7f2;
+      border-radius: 20px 20px 0 0;
+      padding: 16px 18px 22px;
+      animation: slideUp 0.25s ease;
+    }
+    .ca-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #2d2d2d;
+      margin-bottom: 12px;
+    }
+    .ca-meta {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 14px;
+      font-weight: 500;
+    }
+    .ca-btn {
+      width: 100%;
+      text-align: left;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #e0dbd3;
+      background: white;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: #2d2d2d;
+      cursor: pointer;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ca-btn:active { background: #f5f0e8; }
+    .ca-btn.danger { color: #c0392b; }
+    .ca-btn.danger:active { background: #fce4e1; }
+    .ca-btn.primary {
+      background: #2A7B8E;
+      border-color: #2A7B8E;
+      color: white;
+    }
+    .ca-btn.primary:active { background: #226676; }
+    .ca-btn.hidden { display: none; }
+
   </style>
 </head>
 <body>
@@ -3417,34 +4343,12 @@
     </div>
 
     <!-- Date -->
-    <div class="date-header">Wed · 22 Apr</div>
-
-    <!-- Clock In/Out Bar -->
-    <div class="clock-wrapper">
-      <div class="clock-bar" id="clock-bar">
-        <div class="clock-left">
-          <div class="clock-dot"></div>
-          <span class="clock-label" id="clock-label">Clocked in</span>
-          <span class="clock-time-info" id="clock-time-info">8:00<span class="period">AM</span></span>
-        </div>
-        <div class="clock-right">
-          <span class="clock-duration" id="clock-duration">1h 41m</span>
-          <button class="clock-toggle-btn clickable" id="btn-clock-toggle">
-            <svg id="clock-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
-              <polyline points="16 17 21 12 16 7"/>
-              <line x1="21" y1="12" x2="9" y2="12"/>
-            </svg>
-            <span id="clock-btn-text">Clock out</span>
-          </button>
-        </div>
-      </div>
-      <div class="clock-warning" id="clock-warning">
-        <div class="warning-bar-track">
-          <div class="warning-bar-fill" id="warning-bar-fill" style="width: 0%"></div>
-        </div>
-        <span class="warning-text" id="warning-text"></span>
-      </div>
+    <div class="date-header-row">
+      <div class="date-header">Wed · 22 Apr</div>
+      <button class="add-call-btn clickable" onclick="openScheduleCallModal()" aria-label="Add call">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Call
+      </button>
     </div>
 
     <!-- New Client Card -->
@@ -3460,9 +4364,7 @@
       <div class="new-client-info-tags">
         <span>58 yrs</span>
         <span>Hypertension</span>
-        <span>Week 1</span>
       </div>
-      <div class="new-client-desc">No description added yet — tap to add</div>
       <div class="new-client-schedule">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="2">
           <circle cx="12" cy="12" r="10"/>
@@ -3479,8 +4381,14 @@
       </div>
     </div>
 
+    <!-- Missed Docs Alert -->
+    <div id="missed-docs-block"></div>
+
     <!-- Docs Needed Block -->
     <div id="docs-needed-block"></div>
+
+    <!-- To Schedule Block (pending calls) -->
+    <div id="to-schedule-block"></div>
 
     <!-- Today/Week Toggle -->
     <div class="view-toggle-row">
@@ -3543,7 +4451,7 @@
                 <span>WEEKLY REVIEW</span>
                 <span class="week-pill">Week 3</span>
               </div>
-              <button class="btn-reschedule-small clickable">Reschedule</button>
+              <button class="btn-reschedule-small clickable" onclick="event.stopPropagation(); openScheduleCallModal({ clientId: 'c4', lockClient: true, type: 'weekly', mode: 'tbc', targetWindow: 'this-week' })">Reschedule</button>
             </div>
           </div>
         </div>
@@ -3573,11 +4481,14 @@
               <div class="client-name">Prakash Desai</div>
             </div>
             <div class="client-meta">
-              <span>MEAL PLAN</span>
+              <span>ASSESSMENT</span>
               <span class="meta-separator">·</span>
               <span>1ST</span>
             </div>
           </div>
+          <button class="btn-join-sched clickable" onclick="event.stopPropagation(); alert('Joining call with Prakash Desai...')" aria-label="Join call">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </button>
         </div>
       </div>
 
@@ -3598,27 +4509,12 @@
               <div class="client-name">Meera Iyer</div>
             </div>
             <div class="client-meta">
-              <span>WEEKLY REVIEW</span>
-              <span class="week-pill">Week 4</span>
+              <span>MEAL EXPLANATION</span>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- 1:00 PM - Lunch Break -->
-      <div class="lunch-break-item">
-        <div class="schedule-time-col">
-          <div class="time-start"><span class="schedule-time">1:00</span><span class="schedule-period">PM</span></div>
-          <div class="time-end"><span class="schedule-time">2:00</span><span class="schedule-period">PM</span></div>
-        </div>
-        <div class="timeline-col">
-          <div class="timeline-dot lunch"></div>
-          <div class="timeline-line lunch"></div>
-        </div>
-        <div class="lunch-break-card">
-          <div class="lunch-info">
-            <div class="lunch-title">Lunch Break</div>
-          </div>
+          <button class="btn-join-sched clickable" onclick="event.stopPropagation(); alert('Joining call with Meera Iyer...')" aria-label="Join call">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </button>
         </div>
       </div>
 
@@ -3643,6 +4539,9 @@
               <span class="week-pill">Week 10</span>
             </div>
           </div>
+          <button class="btn-join-sched clickable" onclick="event.stopPropagation(); alert('Joining call with Sudha Narayanan...')" aria-label="Join call">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </button>
         </div>
       </div>
 
@@ -3663,11 +4562,14 @@
               <div class="client-name">Vijay Mehta</div>
             </div>
             <div class="client-meta">
-              <span>MEAL PLAN</span>
+              <span>ASSESSMENT</span>
               <span class="meta-separator">·</span>
               <span>2ND</span>
             </div>
           </div>
+          <button class="btn-join-sched clickable" onclick="event.stopPropagation(); alert('Joining call with Vijay Mehta...')" aria-label="Join call">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </button>
         </div>
       </div>
 
@@ -3692,7 +4594,7 @@
         <div class="week-client-row clickable">
           <div class="week-avatar avatar-brown">AM</div>
           <div class="week-client-name">Arjun Malhotra</div>
-          <span class="week-client-type">Meal Plan</span>
+          <span class="week-client-type">Assessment</span>
         </div>
       </div>
 
@@ -3712,13 +4614,12 @@
         <div class="week-client-row clickable">
           <div class="week-avatar avatar-green">NR</div>
           <div class="week-client-name">Neha Rao</div>
-          <span class="week-client-type">Meal Plan</span>
+          <span class="week-client-type">Assessment</span>
         </div>
         <div class="week-client-row clickable">
           <div class="week-avatar avatar-brown">KP</div>
           <div class="week-client-name">Kavita Patel</div>
-          <span class="week-client-type">Weekly Review</span>
-          <span class="week-pill">Week 8</span>
+          <span class="week-client-type">Meal Explanation</span>
         </div>
       </div>
 
@@ -3739,13 +4640,12 @@
         <div class="week-client-row clickable">
           <div class="week-avatar avatar-brown">PD</div>
           <div class="week-client-name">Prakash Desai</div>
-          <span class="week-client-type">Meal Plan</span>
+          <span class="week-client-type">Assessment</span>
         </div>
         <div class="week-client-row clickable">
           <div class="week-avatar avatar-green">MI</div>
           <div class="week-client-name">Meera Iyer</div>
-          <span class="week-client-type">Weekly Review</span>
-          <span class="week-pill">Week 4</span>
+          <span class="week-client-type">Meal Explanation</span>
         </div>
         <div class="week-client-row clickable">
           <div class="week-avatar avatar-brown">SN</div>
@@ -3756,7 +4656,7 @@
         <div class="week-client-row clickable">
           <div class="week-avatar avatar-brown">VM</div>
           <div class="week-client-name">Vijay Mehta</div>
-          <span class="week-client-type">Meal Plan</span>
+          <span class="week-client-type">Assessment</span>
         </div>
       </div>
 
@@ -3776,7 +4676,7 @@
         <div class="week-client-row clickable">
           <div class="week-avatar avatar-green">RJ</div>
           <div class="week-client-name">Rahul Joshi</div>
-          <span class="week-client-type">Meal Plan</span>
+          <span class="week-client-type">Assessment</span>
         </div>
       </div>
 
@@ -3796,13 +4696,12 @@
         <div class="week-client-row clickable">
           <div class="week-avatar avatar-green">PT</div>
           <div class="week-client-name">Priya Thakur</div>
-          <span class="week-client-type">Weekly Review</span>
-          <span class="week-pill">Week 12</span>
+          <span class="week-client-type">Meal Explanation</span>
         </div>
         <div class="week-client-row clickable">
           <div class="week-avatar avatar-purple">LS</div>
           <div class="week-client-name">Lakshmi Shetty</div>
-          <span class="week-client-type">Meal Plan</span>
+          <span class="week-client-type">Assessment</span>
         </div>
       </div>
 
@@ -3850,21 +4749,6 @@
     <div class="tracking-header">
       <div class="tracking-title">Tracking</div>
       <div class="tracking-subtitle">Wed · 22 Apr · 12 clients</div>
-    </div>
-
-    <div class="tracking-actions-bar">
-      <button class="tracking-action-btn btn-pull clickable" id="btn-retrieve" onclick="retrieveLogs()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg>
-        Retrieve Meal Logs
-      </button>
-      <button class="tracking-action-btn btn-send clickable" onclick="openSendModal()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg>
-        Send Message
-      </button>
-    </div>
-    <div class="tracking-sync-info" id="sync-info">
-      <span><span class="sync-dot green"></span>Last retrieved: Today, 8:45 AM</span>
-      <span><span class="sync-dot blue"></span>Last sent: Today, 7:30 AM</span>
     </div>
 
     <div class="meal-progress-section" id="meal-progress-section"></div>
@@ -3929,10 +4813,21 @@
     </div>
     <div class="clients-header">
       <div class="clients-title">Clients</div>
-      <div class="clients-count" id="clients-count">12 clients</div>
+      <div class="clients-header-right">
+        <div class="clients-count" id="clients-count">12 clients</div>
+        <button class="btn-search-clients" id="btn-search-clients" onclick="toggleClientsSearch()" aria-label="Search clients">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="clients-search-bar" id="clients-search-bar">
+      <svg class="cs-icon" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" class="clients-search-input" id="clients-search-input" placeholder="Search by name or condition..." oninput="onClientsSearchInput(this.value)">
+      <button class="clients-search-clear" id="clients-search-clear" onclick="clearClientsSearch()" aria-label="Clear search">&#10005;</button>
     </div>
     <div class="clients-filter-row">
       <button class="clients-filter-btn active" id="filter-all" onclick="setClientsFilter('all')">All</button>
+      <button class="clients-filter-btn urgent" id="filter-urgent" onclick="setClientsFilter('urgent')">Urgent (<span id="urgent-count">0</span>)</button>
       <button class="clients-filter-btn" id="filter-needs-docs" onclick="setClientsFilter('needs-docs')">Needs Docs (<span id="needs-docs-count">7</span>)</button>
     </div>
     <div class="clients-list" id="clients-list"></div>
@@ -3984,7 +4879,6 @@
       <div class="cp-header">
         <button class="cp-back" onclick="closeClientProfile()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
         <div class="cp-header-title" id="cp-header-name">Client</div>
-        <button class="cp-edit-btn" onclick="openEditDesc()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
       </div>
       <div class="cp-scroll">
         <div class="cp-info-card">
@@ -3994,14 +4888,19 @@
             <div class="cp-client-meta" id="cp-meta">72 yrs · Week 6</div>
             <div class="cp-client-condition" id="cp-condition">Diabetic</div>
           </div>
-          <button class="cp-edit-info" onclick="openEditDesc()">Edit</button>
         </div>
+
+        <!-- Schedule a call FOR this client -->
+        <button class="cp-add-call clickable" onclick="openScheduleCallForCurrentClient()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Schedule Call
+        </button>
 
         <!-- New client only: description + session -->
         <div id="cp-new-client-extras" style="display:none">
           <div class="cp-nc-desc" id="cp-nc-desc">
             <div class="cp-nc-desc-label">DESCRIPTION</div>
-            <div class="cp-nc-desc-text" id="cp-nc-desc-text">No description added yet — tap to add</div>
+            <div class="cp-nc-desc-text" id="cp-nc-desc-text">No description added yet</div>
           </div>
           <div class="cp-nc-session">
             <div class="cp-nc-session-row">
@@ -4022,22 +4921,116 @@
         <div class="cp-section-label" style="margin-top:8px">YOUR UPLOADS</div>
         <div id="cp-upload-analysis"></div>
         <div id="cp-upload-mealplan"></div>
+        <div id="cp-meal-explanation-cta"></div>
+
+        <div class="cp-section-label" style="margin-top:14px">MEAL HISTORY <span class="cp-system-tag">· Last 7 days</span></div>
+        <div id="cp-meal-history"></div>
       </div>
     </div>
   </div>
 
-  <!-- Edit Description Modal -->
-  <div class="edit-desc-overlay" id="edit-desc-overlay">
-    <div class="edit-desc-backdrop" onclick="closeEditDesc()"></div>
-    <div class="edit-desc-sheet">
-      <div class="edit-desc-header">
-        <div class="edit-desc-title">Edit Description</div>
-        <button class="edit-desc-close" onclick="closeEditDesc()">&#10005;</button>
+  <!-- Schedule Call Modal -->
+  <div class="sc-overlay mode-confirmed" id="sc-overlay">
+    <div class="sc-backdrop" onclick="closeScheduleCallModal()"></div>
+    <div class="sc-sheet">
+      <div class="sc-header">
+        <div class="sc-title" id="sc-title">Schedule a call</div>
+        <button class="sc-close" onclick="closeScheduleCallModal()">&#10005;</button>
       </div>
-      <textarea class="edit-desc-input" id="edit-desc-input" placeholder="Enter condition or description..."></textarea>
-      <button class="edit-desc-save" onclick="saveEditDesc()">Save</button>
+
+      <div class="sc-mode-toggle" id="sc-mode-toggle">
+        <button type="button" class="sc-mode-btn sc-mode-confirmed active" onclick="scSetMode('confirmed')">Confirmed time</button>
+        <button type="button" class="sc-mode-btn sc-mode-tbc" onclick="scSetMode('tbc')">Time TBC</button>
+      </div>
+
+      <div class="sc-row">
+        <div class="sc-label">Client</div>
+        <select class="sc-select" id="sc-client"></select>
+      </div>
+
+      <div class="sc-row">
+        <div class="sc-label">Call type</div>
+        <div class="sc-segmented" id="sc-type-seg">
+          <button type="button" class="sc-segmented-btn active" data-type="weekly" onclick="scSetType('weekly')">Weekly</button>
+          <button type="button" class="sc-segmented-btn" data-type="mealplan" onclick="scSetType('mealplan')">Assessment</button>
+          <button type="button" class="sc-segmented-btn" data-type="mealexplanation" onclick="scSetType('mealexplanation')">Meal Explanation</button>
+        </div>
+      </div>
+
+      <!-- Confirmed-mode fields -->
+      <div class="sc-row sc-row-2 sc-confirmed-only">
+        <div>
+          <div class="sc-label">Date</div>
+          <input type="date" class="sc-input" id="sc-date">
+        </div>
+        <div>
+          <div class="sc-label">Time</div>
+          <input type="time" class="sc-input" id="sc-time" step="900">
+        </div>
+      </div>
+
+      <div class="sc-row sc-confirmed-only">
+        <div class="sc-label">Duration</div>
+        <div class="sc-chip-row" id="sc-duration-row">
+          <button type="button" class="sc-chip" data-min="15" onclick="scSetDuration(15)">15 min</button>
+          <button type="button" class="sc-chip active" data-min="30" onclick="scSetDuration(30)">30 min</button>
+          <button type="button" class="sc-chip" data-min="45" onclick="scSetDuration(45)">45 min</button>
+          <button type="button" class="sc-chip" data-min="60" onclick="scSetDuration(60)">60 min</button>
+        </div>
+      </div>
+
+      <!-- TBC-mode fields -->
+      <div class="sc-row sc-tbc-only">
+        <div class="sc-label">Target by</div>
+        <div class="sc-chip-row" id="sc-window-row">
+          <button type="button" class="sc-chip active" data-window="this-week" onclick="scSetWindow('this-week')">This week</button>
+          <button type="button" class="sc-chip" data-window="next-week" onclick="scSetWindow('next-week')">Next week</button>
+          <button type="button" class="sc-chip" data-window="custom" onclick="scSetWindow('custom')">Custom date</button>
+        </div>
+        <div class="sc-tbc-custom-date hidden" id="sc-tbc-custom-wrap">
+          <input type="date" class="sc-input" id="sc-tbc-date">
+        </div>
+      </div>
+
+      <div class="sc-row">
+        <div class="sc-label">Notes (optional)</div>
+        <input type="text" class="sc-input" id="sc-notes" placeholder="e.g. Discuss BP readings">
+      </div>
+
+      <div class="sc-error" id="sc-error"></div>
+
+      <div class="sc-actions">
+        <button class="sc-cancel" onclick="closeScheduleCallModal()">Cancel</button>
+        <button class="sc-save" id="sc-save-btn" onclick="saveScheduledCall()">Add Call</button>
+      </div>
     </div>
   </div>
+
+  <!-- Call Action Sheet (tap a scheduled card) -->
+  <div class="ca-overlay" id="ca-overlay">
+    <div class="ca-backdrop" onclick="closeCallActions()"></div>
+    <div class="ca-sheet">
+      <div class="ca-title" id="ca-title">Scheduled call</div>
+      <div class="ca-meta" id="ca-meta"></div>
+      <button class="ca-btn primary hidden" id="ca-btn-confirm-time" onclick="confirmTimeForCurrentCall()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Confirm time
+      </button>
+      <button class="ca-btn" id="ca-btn-edit" onclick="editCurrentCall()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Edit / Reschedule
+      </button>
+      <button class="ca-btn" onclick="viewCurrentCallClient()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        View client
+      </button>
+      <button class="ca-btn danger" onclick="cancelCurrentCall()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 01-2 2H9a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+        Cancel call
+      </button>
+    </div>
+  </div>
+
 
   <!-- ===== MY BOARD SCREEN ===== -->
   <div class="screen-myboard" id="screen-myboard">
@@ -4057,6 +5050,29 @@
     </div>
 
     <div class="mb-content">
+      <!-- Practice Insights -->
+      <div class="mb-section">
+        <div class="mb-section-label">PRACTICE INSIGHTS</div>
+        <div class="mb-insights-card">
+          <div class="mb-insights-head">
+            <div class="mb-insights-title" id="mb-insights-title">Last 7 days</div>
+            <div class="mb-window-toggle">
+              <button class="mb-window-btn active" data-window="7d" onclick="setInsightsWindow('7d')">7d</button>
+              <button class="mb-window-btn" data-window="30d" onclick="setInsightsWindow('30d')">30d</button>
+            </div>
+          </div>
+
+          <div class="mb-kpi-row" id="mb-kpi-row"></div>
+
+          <div class="mb-segbar-label">Meal logging</div>
+          <div class="mb-segbar" id="mb-segbar"></div>
+          <div class="mb-segbar-legend" id="mb-segbar-legend"></div>
+
+          <div class="mb-segbar-label">Calls in window</div>
+          <div class="mb-calls-row" id="mb-calls-row"></div>
+        </div>
+      </div>
+
       <!-- Variable Pay Section -->
       <div class="mb-section">
         <div class="mb-section-label">VARIABLE PAY</div>
@@ -4103,6 +5119,18 @@
     </div>
   </div>
 
+  <!-- Insights Drilldown Sheet -->
+  <div class="il-overlay" id="il-overlay">
+    <div class="il-backdrop" onclick="closeInsightsList()"></div>
+    <div class="il-sheet">
+      <div class="il-header">
+        <div class="il-title" id="il-title">Clients</div>
+        <button class="il-close" onclick="closeInsightsList()">&#10005;</button>
+      </div>
+      <div id="il-list"></div>
+    </div>
+  </div>
+
   <!-- Apply Leave Modal -->
   <div class="apply-leave-overlay" id="apply-leave-overlay">
     <div class="apply-leave-backdrop" onclick="closeApplyLeave()"></div>
@@ -4146,6 +5174,21 @@
       <div class="review-title">Review</div>
       <div class="review-date">Wed · 22 Apr · <span id="review-client-count">0</span> messages</div>
     </div>
+    <div class="tracking-actions-bar">
+      <button class="tracking-action-btn btn-pull clickable" id="btn-retrieve" onclick="retrieveLogs()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg>
+        Retrieve Meal Logs
+      </button>
+      <button class="tracking-action-btn btn-send clickable" onclick="openSendModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg>
+        Send Message
+      </button>
+    </div>
+    <div class="tracking-sync-info" id="sync-info">
+      <span><span class="sync-dot green"></span>Last retrieved: Today, 8:45 AM</span>
+      <span><span class="sync-dot blue"></span>Last sent: Today, 7:30 AM</span>
+    </div>
+    <div id="not-logged-alert"></div>
     <div class="review-stats">
       <span class="review-stats-text" id="review-stats-text">0 reviewed · 0 remaining</span>
       <div class="review-stats-bar">
@@ -4155,13 +5198,65 @@
     <div class="card-stack" id="card-stack"></div>
     <div class="swipe-legend" id="swipe-legend">
       <div class="legend-item"><div class="legend-dot red"></div>← Off Plan</div>
-      <div class="legend-item"><div class="legend-dot blue"></div>↑ Didn't Log</div>
       <div class="legend-item"><div class="legend-dot green"></div>On Plan →</div>
     </div>
     <div class="review-empty" id="review-empty" style="display: none;">
       <div class="review-empty-icon">&#10003;</div>
       <div class="review-empty-title">All caught up!</div>
       <div class="review-empty-sub">No more meals to review right now</div>
+    </div>
+  </div>
+
+  <!-- FAB: Add new client (visible only on Clients tab) -->
+  <button class="fab-add-client" id="fab-add-client" onclick="openAddClientModal()" aria-label="Add new client">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+  </button>
+
+  <!-- Add Client Modal -->
+  <div class="ac-overlay" id="ac-overlay">
+    <div class="ac-backdrop" onclick="closeAddClientModal()"></div>
+    <div class="ac-sheet">
+      <div class="ac-header">
+        <div class="ac-title">Add New Client</div>
+        <button class="ac-close" onclick="closeAddClientModal()">&#10005;</button>
+      </div>
+
+      <div class="ac-row">
+        <div class="ac-label">Name</div>
+        <input type="text" class="ac-input" id="ac-name" placeholder="e.g. Priya Sharma">
+      </div>
+
+      <div class="ac-row ac-row-2">
+        <div>
+          <div class="ac-label">Age</div>
+          <input type="number" class="ac-input" id="ac-age" min="1" max="120" placeholder="e.g. 45">
+        </div>
+        <div>
+          <div class="ac-label">Starting week</div>
+          <input type="number" class="ac-input" id="ac-week" min="1" value="1">
+        </div>
+      </div>
+
+      <div class="ac-row">
+        <div class="ac-label">Condition</div>
+        <input type="text" class="ac-input" id="ac-condition" placeholder="e.g. Diabetic, PCOS, Weight loss">
+      </div>
+
+      <div class="ac-row">
+        <div class="ac-label">Avatar colour</div>
+        <div class="ac-avatar-row" id="ac-avatar-row">
+          <div class="ac-avatar-pick green active"  data-color="avatar-green"  onclick="acPickAvatar('avatar-green')"></div>
+          <div class="ac-avatar-pick brown"          data-color="avatar-brown"  onclick="acPickAvatar('avatar-brown')"></div>
+          <div class="ac-avatar-pick purple"         data-color="avatar-purple" onclick="acPickAvatar('avatar-purple')"></div>
+        </div>
+      </div>
+
+      <div class="ac-error" id="ac-error"></div>
+
+      <div class="ac-actions">
+        <button class="ac-cancel" onclick="closeAddClientModal()">Cancel</button>
+        <button class="ac-save"   onclick="saveNewClient()">Add Client</button>
+      </div>
     </div>
   </div>
 
@@ -4226,12 +5321,12 @@
   const screens = {};
   let currentScreen = 'schedule';
 
-  // Add click listeners for future interactivity
-  document.querySelectorAll('.schedule-card').forEach(card => {
+  // Tap a hardcoded schedule timeline card → open that client's profile
+  document.querySelectorAll('.schedule-card[data-client]').forEach(card => {
     card.addEventListener('click', () => {
-      const client = card.dataset.client;
-      console.log(`Navigate to client: ${client}`);
-      // Will be connected to client detail screens later
+      const slug = card.dataset.client;
+      const c = getClientBySlug(slug);
+      if (c) openClientProfile(c.id);
     });
   });
 
@@ -4261,6 +5356,9 @@
       } else if (tab === 'myboard') {
         document.getElementById('screen-myboard').classList.add('active');
       }
+
+      // FAB visibility (Schedule + Clients tabs)
+      document.getElementById('fab-add-client').classList.toggle('visible', tab === 'clients' || tab === 'schedule');
     });
   });
 
@@ -4288,108 +5386,6 @@
     e.stopPropagation();
     console.log('Navigate to: Reschedule - Prakash Desai');
   });
-
-  // Clock In/Out Toggle Logic
-  let isClockedIn = true;
-  let clockedMinutes = 101; // 1h 41m
-  const REQUIRED_HOURS = 8;
-  const REQUIRED_MINUTES = REQUIRED_HOURS * 60;
-  let timerInterval = null;
-  let clockInTime = '8:00';
-  let clockInPeriod = 'AM';
-
-  function formatDuration(mins) {
-    const h = Math.floor(mins / 60);
-    const m = mins % 60;
-    if (h === 0) return `${m}m`;
-    return `${h}h ${m}m`;
-  }
-
-  function getCurrentTime() {
-    const now = new Date();
-    let hours = now.getHours();
-    const mins = now.getMinutes();
-    const period = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12 || 12;
-    const mStr = mins < 10 ? '0' + mins : mins;
-    return { time: `${hours}:${mStr}`, period };
-  }
-
-  function updateClockDisplay() {
-    const bar = document.getElementById('clock-bar');
-    const label = document.getElementById('clock-label');
-    const timeInfo = document.getElementById('clock-time-info');
-    const duration = document.getElementById('clock-duration');
-    const btn = document.getElementById('btn-clock-toggle');
-    const btnText = document.getElementById('clock-btn-text');
-    const icon = document.getElementById('clock-icon');
-    const warning = document.getElementById('clock-warning');
-    const warningText = document.getElementById('warning-text');
-    const warningFill = document.getElementById('warning-bar-fill');
-
-    duration.textContent = formatDuration(clockedMinutes);
-
-    if (isClockedIn) {
-      bar.classList.remove('clocked-out');
-      label.textContent = 'Clocked in';
-      timeInfo.innerHTML = clockInTime + '<span class="period">' + clockInPeriod + '</span>';
-      btnText.textContent = 'Clock out';
-      btn.classList.remove('clock-in');
-      icon.innerHTML = '<path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>';
-      warning.classList.remove('visible');
-    } else {
-      bar.classList.add('clocked-out');
-      label.textContent = 'Clocked out';
-      const now = getCurrentTime();
-      timeInfo.innerHTML = clockInTime + '<span class="period">' + clockInPeriod + '</span>' +
-        ' <span class="time-separator">–</span> ' +
-        now.time + '<span class="period">' + now.period + '</span>';
-      btnText.textContent = 'Clock in';
-      btn.classList.add('clock-in');
-      icon.innerHTML = '<path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>';
-
-      // Show warning if under 8 hours
-      if (clockedMinutes < REQUIRED_MINUTES) {
-        const remaining = REQUIRED_MINUTES - clockedMinutes;
-        const pct = Math.round((clockedMinutes / REQUIRED_MINUTES) * 100);
-        warningFill.style.width = pct + '%';
-        warningText.textContent = formatDuration(remaining) + ' left to 8h';
-        warning.classList.add('visible');
-      } else {
-        warning.classList.remove('visible');
-      }
-    }
-  }
-
-  function startTimer() {
-    if (timerInterval) clearInterval(timerInterval);
-    timerInterval = setInterval(() => {
-      if (isClockedIn) {
-        clockedMinutes++;
-        document.getElementById('clock-duration').textContent = formatDuration(clockedMinutes);
-      }
-    }, 60000);
-  }
-
-  document.getElementById('btn-clock-toggle')?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (isClockedIn) {
-      // Clocking out
-      isClockedIn = false;
-      if (timerInterval) clearInterval(timerInterval);
-    } else {
-      // Clocking back in — reset for new shift
-      isClockedIn = true;
-      const now = getCurrentTime();
-      clockInTime = now.time;
-      clockInPeriod = now.period;
-      clockedMinutes = 0;
-      startTimer();
-    }
-    updateClockDisplay();
-  });
-
-  startTimer();
 
   // ===== WHATSAPP BULK ACTIONS =====
   const waIcon14w = '<svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg>';
@@ -5062,9 +6058,6 @@
   window.closeMealSummary = closeMealSummary;
 
   // ===== MEAL PROGRESS =====
-  const mealDoneState = { b: false, l: false, d: false };
-  let pendingMealKey = null;
-
   function getMealProgress(mk) {
     const ckeys = Object.keys(clients);
     let total = 0, reviewed = 0, unreviewedClients = [];
@@ -5090,40 +6083,22 @@
 
     ['b', 'l', 'd'].forEach(key => {
       const p = getMealProgress(key);
-      const isDone = mealDoneState[key] || (p.total > 0 && p.reviewed === p.total);
-      if (p.total > 0 && p.reviewed === p.total) mealDoneState[key] = true;
 
       if (p.allFuture) {
         html += '<div class="mpr-row upcoming"><div class="mpr-icon '+key+'">'+key.toUpperCase()+'</div><div class="mpr-info"><div class="mpr-name">'+labels[key]+'</div><div class="mpr-count">Upcoming</div></div><div class="mpr-action"><span class="mpr-upcoming-label">Not yet</span></div></div>';
-      } else if (isDone) {
-        html += '<div class="mpr-row"><div class="mpr-icon '+key+'">'+key.toUpperCase()+'</div><div class="mpr-info"><div class="mpr-name">'+labels[key]+'</div><div class="mpr-count">'+p.reviewed+' of '+p.total+' reviewed</div><div class="mpr-bar-bg"><div class="mpr-bar-fill '+key+'" style="width:100%"></div></div></div><div class="mpr-action"><button class="mpr-done-btn completed">&#10003; Done</button></div></div>';
       } else {
+        const left = p.total - p.reviewed;
+        const isDone = left === 0;
         const pct = p.total > 0 ? Math.round((p.reviewed / p.total) * 100) : 0;
-        html += '<div class="mpr-row"><div class="mpr-icon '+key+'">'+key.toUpperCase()+'</div><div class="mpr-info"><div class="mpr-name">'+labels[key]+'</div><div class="mpr-count">'+p.reviewed+' of '+p.total+' reviewed</div><div class="mpr-bar-bg"><div class="mpr-bar-fill '+key+'" style="width:'+pct+'%"></div></div></div><div class="mpr-action"><button class="mpr-done-btn" onclick="tryMarkMealDone(\''+key+'\')">Mark Done</button></div></div>';
-        if (pendingMealKey === key) {
-          html += '<div class="mpr-pending-list"><div class="mpr-pending-title">Pending review ('+p.unreviewedClients.length+')</div>';
-          p.unreviewedClients.forEach(c => {
-            html += '<div class="mpr-pending-client"><div class="mpr-pending-avatar '+c.avatar+'">'+c.initials+'</div><div class="mpr-pending-name">'+c.name+'</div></div>';
-          });
-          html += '</div>';
-        }
+        const statusHtml = isDone
+          ? '<span class="mpr-status done">&#10003; All reviewed</span>'
+          : '<span class="mpr-status left">'+left+' left</span>';
+        html += '<div class="mpr-row"><div class="mpr-icon '+key+'">'+key.toUpperCase()+'</div><div class="mpr-info"><div class="mpr-name">'+labels[key]+'</div><div class="mpr-count">'+p.reviewed+' of '+p.total+' reviewed</div><div class="mpr-bar-bg"><div class="mpr-bar-fill '+key+'" style="width:'+pct+'%"></div></div></div><div class="mpr-action">'+statusHtml+'</div></div>';
       }
     });
 
     section.innerHTML = html;
   }
-
-  function tryMarkMealDone(mk) {
-    const p = getMealProgress(mk);
-    if (p.reviewed === p.total) {
-      mealDoneState[mk] = true;
-      pendingMealKey = null;
-    } else {
-      pendingMealKey = pendingMealKey === mk ? null : mk;
-    }
-    renderMealProgress();
-  }
-  window.tryMarkMealDone = tryMarkMealDone;
 
   renderMealProgress();
 
@@ -5170,7 +6145,6 @@
     // Swipe overlays
     html += '<div class="swipe-overlay on-plan">ON PLAN</div>';
     html += '<div class="swipe-overlay off-plan">OFF PLAN</div>';
-    html += '<div class="swipe-overlay not-logged">DIDN\'T LOG</div>';
 
     // Header
     html += '<div class="sc-header">';
@@ -5231,7 +6205,70 @@
     });
   }
 
+  // ===== Not-Logged alert (Review screen top) =====
+  const mealFullName = { b: 'Breakfast', l: 'Lunch', d: 'Dinner' };
+  const nudgedKeys = new Set();
+
+  function getNotLoggedItems() {
+    const items = [];
+    Object.keys(clients).forEach(clientId => {
+      const c = clients[clientId];
+      ['b', 'l', 'd'].forEach(mealKey => {
+        const meal = c.meals[mealKey];
+        const key = clientId + ':' + mealKey;
+        if (!meal.logged && meal.status !== 'future' && !nudgedKeys.has(key)) {
+          items.push({
+            clientId, mealKey, key,
+            name: c.name, initials: c.initials, avatar: c.avatar,
+            mealLabel: mealFullName[mealKey]
+          });
+        }
+      });
+    });
+    return items;
+  }
+
+  function renderNotLoggedAlert() {
+    const block = document.getElementById('not-logged-alert');
+    if (!block) return;
+    const items = getNotLoggedItems();
+    if (items.length === 0) { block.innerHTML = ''; return; }
+
+    const colors = { 'avatar-green': '#4a7c59', 'avatar-brown': '#a08870', 'avatar-purple': '#7b6b9e' };
+    const rows = items.map(it => {
+      const bg = colors[it.avatar] || '#888';
+      return `<div class="not-logged-item" data-key="${it.key}">
+        <div class="nl-avatar" style="background:${bg}">${it.initials}</div>
+        <div class="nl-info">
+          <div class="nl-name">${it.name}</div>
+          <div class="nl-meal">${it.mealLabel} · not logged</div>
+        </div>
+        <button class="nl-nudge-btn" onclick="nudgeMissedLog('${it.key}', '${it.name}', '${it.mealLabel}')">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.256-.16-2.867.852.852-2.867-.16-.256A8 8 0 1112 20z"/></svg>
+          Nudge
+        </button>
+      </div>`;
+    }).join('');
+
+    block.innerHTML = `<div class="not-logged-card">
+      <div class="not-logged-header">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7a6520" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Not logged today · ${items.length} meal${items.length !== 1 ? 's' : ''}
+      </div>
+      ${rows}
+    </div>`;
+  }
+  window.renderNotLoggedAlert = renderNotLoggedAlert;
+
+  function nudgeMissedLog(key, name, mealLabel) {
+    nudgedKeys.add(key);
+    renderNotLoggedAlert();
+    alert('WhatsApp nudge sent to ' + name + ' about ' + mealLabel + '.');
+  }
+  window.nudgeMissedLog = nudgeMissedLog;
+
   function renderReviewCards() {
+    renderNotLoggedAlert();
     if (reviewCards.length === 0 && reviewedCount === 0) generateReviewCards();
 
     const stack = document.getElementById('card-stack');
@@ -5309,27 +6346,18 @@
 
       const onPlanOverlay = el.querySelector('.swipe-overlay.on-plan');
       const offPlanOverlay = el.querySelector('.swipe-overlay.off-plan');
-      const notLoggedOverlay = el.querySelector('.swipe-overlay.not-logged');
 
       const absX = Math.abs(currentX);
-      const absY = Math.abs(currentY);
 
-      if (currentY < -30 && absY > absX) {
-        onPlanOverlay.style.opacity = '0';
-        offPlanOverlay.style.opacity = '0';
-        notLoggedOverlay.style.opacity = Math.min(absY / 100, 1);
-      } else if (currentX > 30) {
+      if (currentX > 30) {
         onPlanOverlay.style.opacity = Math.min(absX / 100, 1);
         offPlanOverlay.style.opacity = '0';
-        notLoggedOverlay.style.opacity = '0';
       } else if (currentX < -30) {
         onPlanOverlay.style.opacity = '0';
         offPlanOverlay.style.opacity = Math.min(absX / 100, 1);
-        notLoggedOverlay.style.opacity = '0';
       } else {
         onPlanOverlay.style.opacity = '0';
         offPlanOverlay.style.opacity = '0';
-        notLoggedOverlay.style.opacity = '0';
       }
     }
 
@@ -5338,13 +6366,10 @@
       isDragging = false;
 
       const absX = Math.abs(currentX);
-      const absY = Math.abs(currentY);
       const threshold = 50;
 
       let action = null;
-      if (currentY < -threshold && absY > absX) {
-        action = 'up';
-      } else if (currentX > threshold) {
+      if (currentX > threshold) {
         action = 'right';
       } else if (currentX < -threshold) {
         action = 'left';
@@ -5357,7 +6382,6 @@
       if (action) {
         if (action === 'right') el.classList.add('fly-right');
         else if (action === 'left') el.classList.add('fly-left');
-        else if (action === 'up') el.classList.add('fly-up');
 
         setTimeout(() => {
           processSwipe(card, action);
@@ -5367,7 +6391,6 @@
         el.style.transform = '';
         el.querySelector('.swipe-overlay.on-plan').style.opacity = '0';
         el.querySelector('.swipe-overlay.off-plan').style.opacity = '0';
-        el.querySelector('.swipe-overlay.not-logged').style.opacity = '0';
         setTimeout(() => el.classList.remove('snap-back'), 300);
       }
       el.style.overflowY = 'auto';
@@ -5475,6 +6498,42 @@
 
   let currentProfileClient = null;
   let clientsFilter = 'all';
+  let clientsSearch = '';
+
+  function toggleClientsSearch() {
+    const bar = document.getElementById('clients-search-bar');
+    const btn = document.getElementById('btn-search-clients');
+    const input = document.getElementById('clients-search-input');
+    const opening = !bar.classList.contains('open');
+    bar.classList.toggle('open', opening);
+    btn.classList.toggle('active', opening);
+    if (opening) {
+      setTimeout(() => input.focus(), 50);
+    } else {
+      clientsSearch = '';
+      input.value = '';
+      document.getElementById('clients-search-clear').classList.remove('visible');
+      renderClientsList();
+    }
+  }
+  window.toggleClientsSearch = toggleClientsSearch;
+
+  function onClientsSearchInput(value) {
+    clientsSearch = value.trim().toLowerCase();
+    document.getElementById('clients-search-clear').classList.toggle('visible', clientsSearch.length > 0);
+    renderClientsList();
+  }
+  window.onClientsSearchInput = onClientsSearchInput;
+
+  function clearClientsSearch() {
+    const input = document.getElementById('clients-search-input');
+    input.value = '';
+    clientsSearch = '';
+    document.getElementById('clients-search-clear').classList.remove('visible');
+    input.focus();
+    renderClientsList();
+  }
+  window.clearClientsSearch = clearClientsSearch;
 
   function clientNeedsUpload(c) {
     return !c.analysisPdf || !c.mealPlanPdf;
@@ -5485,23 +6544,116 @@
     return '';
   }
 
+  // ===== Add New Client modal =====
+  let acAvatar = 'avatar-green';
+  let nextClientNumericId = 13;
+
+  function openAddClientModal() {
+    document.getElementById('ac-name').value = '';
+    document.getElementById('ac-age').value = '';
+    document.getElementById('ac-condition').value = '';
+    document.getElementById('ac-week').value = '1';
+    document.getElementById('ac-error').textContent = '';
+    acPickAvatar('avatar-green');
+    document.getElementById('ac-overlay').classList.add('open');
+    setTimeout(() => document.getElementById('ac-name').focus(), 80);
+  }
+  window.openAddClientModal = openAddClientModal;
+
+  function closeAddClientModal() {
+    document.getElementById('ac-overlay').classList.remove('open');
+  }
+  window.closeAddClientModal = closeAddClientModal;
+
+  function acPickAvatar(color) {
+    acAvatar = color;
+    document.querySelectorAll('#ac-avatar-row .ac-avatar-pick').forEach(el => {
+      el.classList.toggle('active', el.dataset.color === color);
+    });
+  }
+  window.acPickAvatar = acPickAvatar;
+
+  function makeInitials(name) {
+    const parts = name.trim().split(/\s+/).filter(Boolean);
+    if (parts.length === 0) return '?';
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+
+  function saveNewClient() {
+    const errEl = document.getElementById('ac-error');
+    errEl.textContent = '';
+    const name = document.getElementById('ac-name').value.trim();
+    const age = parseInt(document.getElementById('ac-age').value, 10);
+    const condition = document.getElementById('ac-condition').value.trim();
+    const week = parseInt(document.getElementById('ac-week').value, 10) || 1;
+
+    if (!name) { errEl.textContent = 'Name is required.'; return; }
+    if (!Number.isFinite(age) || age < 1 || age > 120) { errEl.textContent = 'Enter a valid age.'; return; }
+    if (!condition) { errEl.textContent = 'Condition is required.'; return; }
+
+    const newClient = {
+      id: 'c' + (nextClientNumericId++),
+      name,
+      initials: makeInitials(name),
+      avatar: acAvatar,
+      age,
+      condition,
+      week,
+      docs: [],
+      analysisPdf: null,
+      mealPlanPdf: null
+    };
+    allClients.push(newClient);
+
+    closeAddClientModal();
+    renderClientsList();
+    setClientsFilter('all');
+    renderDocsNeededBlock();
+  }
+  window.saveNewClient = saveNewClient;
+
   function setClientsFilter(filter) {
     clientsFilter = filter;
     document.getElementById('filter-all').classList.toggle('active', filter === 'all');
+    document.getElementById('filter-urgent').classList.toggle('active', filter === 'urgent');
     document.getElementById('filter-needs-docs').classList.toggle('active', filter === 'needs-docs');
     renderClientsList();
   }
   window.setClientsFilter = setClientsFilter;
 
+  // Hardcoded for the prototype: clients who missed today's call
+  const missedCallClientIds = new Set(['c4']); // Anita Kulkarni
+
+  function getClientUrgency(c) {
+    if (missedCallClientIds.has(c.id)) {
+      return { rank: 0, label: 'Missed call' };
+    }
+    const md = missedDocsClients.find(m => m.id === c.id);
+    if (md && clientNeedsUpload(c)) {
+      const days = md.daysOverdue === 1 ? '1d overdue' : md.daysOverdue + 'd overdue';
+      return { rank: 1, label: 'Docs ' + days };
+    }
+    return null;
+  }
+
   function renderClientsList() {
     const list = document.getElementById('clients-list');
     const needsDocsCount = allClients.filter(c => clientNeedsUpload(c)).length;
-    // Update filter badge count
-    const countEl = document.getElementById('needs-docs-count');
-    if (countEl) countEl.textContent = needsDocsCount;
+    const urgentCount = allClients.filter(c => getClientUrgency(c)).length;
+    // Update filter badge counts
+    const ndEl = document.getElementById('needs-docs-count');
+    if (ndEl) ndEl.textContent = needsDocsCount;
+    const urEl = document.getElementById('urgent-count');
+    if (urEl) urEl.textContent = urgentCount;
 
-    // Sort: missing docs first, then alphabetical
+    // Sort: urgent (by rank) → missing docs → alphabetical
     const sorted = [...allClients].sort((a, b) => {
+      const ua = getClientUrgency(a);
+      const ub = getClientUrgency(b);
+      if (ua && !ub) return -1;
+      if (!ua && ub) return 1;
+      if (ua && ub && ua.rank !== ub.rank) return ua.rank - ub.rank;
       const aMissing = clientNeedsUpload(a) ? 0 : 1;
       const bMissing = clientNeedsUpload(b) ? 0 : 1;
       if (aMissing !== bMissing) return aMissing - bMissing;
@@ -5509,18 +6661,28 @@
     });
 
     // Filter
-    const filtered = clientsFilter === 'needs-docs'
-      ? sorted.filter(c => clientNeedsUpload(c))
-      : sorted;
+    let filtered;
+    if (clientsFilter === 'urgent') filtered = sorted.filter(c => getClientUrgency(c));
+    else if (clientsFilter === 'needs-docs') filtered = sorted.filter(c => clientNeedsUpload(c));
+    else filtered = sorted;
+
+    if (clientsSearch) {
+      filtered = filtered.filter(c =>
+        c.name.toLowerCase().includes(clientsSearch) ||
+        (c.condition && c.condition.toLowerCase().includes(clientsSearch))
+      );
+    }
 
     document.getElementById('clients-count').textContent = filtered.length + ' clients';
     list.innerHTML = filtered.map(c => {
+      const urgency = getClientUrgency(c);
       const missing = clientNeedsUpload(c);
-      const warnTag = missing
-        ? `<span class="cl-needs-upload"><span class="warn-dot"></span>${getMissingLabel(c)}</span>`
-        : '';
+      const tags = [];
+      if (urgency) tags.push(`<span class="cl-urgent"><span class="warn-dot"></span>${urgency.label}</span>`);
+      if (missing && !urgency) tags.push(`<span class="cl-needs-upload"><span class="warn-dot"></span>${getMissingLabel(c)}</span>`);
+      const cls = urgency ? ' has-urgent' : (missing ? ' has-warning' : '');
       return `
-      <div class="client-list-item${missing ? ' has-warning' : ''}" onclick="openClientProfile('${c.id}')">
+      <div class="client-list-item${cls}" onclick="openClientProfile('${c.id}')">
         <div class="cl-avatar ${c.avatar}">${c.initials}</div>
         <div class="cl-info">
           <div class="cl-name">${c.name}</div>
@@ -5528,7 +6690,7 @@
             <span>${c.age} yrs</span>
             <span class="cl-condition">${c.condition}</span>
             <span class="cl-week">Week ${c.week}</span>
-            ${warnTag}
+            ${tags.join('')}
           </div>
         </div>
         <div class="cl-chevron">›</div>
@@ -5579,6 +6741,8 @@
 
     renderUploadCard('cp-upload-analysis', 'Analysis PDF', c.analysisPdf, c.id, 'analysisPdf');
     renderUploadCard('cp-upload-mealplan', 'Meal Plan', c.mealPlanPdf, c.id, 'mealPlanPdf');
+    renderMealExplanationCta(c.id);
+    renderProfileMealHistory(c.id);
 
     document.getElementById('client-profile-overlay').classList.add('open');
   }
@@ -5588,41 +6752,6 @@
     document.getElementById('client-profile-overlay').classList.remove('open');
   }
   window.closeClientProfile = closeClientProfile;
-
-  function openEditDesc() {
-    if (!currentProfileClient) return;
-    document.getElementById('edit-desc-input').value = currentProfileClient.condition;
-    document.getElementById('edit-desc-overlay').classList.add('open');
-    document.getElementById('edit-desc-input').focus();
-  }
-  window.openEditDesc = openEditDesc;
-
-  function closeEditDesc() {
-    document.getElementById('edit-desc-overlay').classList.remove('open');
-  }
-  window.closeEditDesc = closeEditDesc;
-
-  function saveEditDesc() {
-    if (!currentProfileClient) return;
-    const newCondition = document.getElementById('edit-desc-input').value.trim();
-    if (!newCondition) return;
-
-    currentProfileClient.condition = newCondition;
-    document.getElementById('cp-condition').textContent = newCondition;
-    renderClientsList();
-
-    // Sync with tracking screen client data
-    for (const key in clients) {
-      if (clients[key].name === currentProfileClient.name) {
-        const parts = clients[key].meta.split(' · ');
-        if (parts.length >= 2) parts[1] = newCondition;
-        clients[key].meta = parts.join(' · ');
-      }
-    }
-
-    closeEditDesc();
-  }
-  window.saveEditDesc = saveEditDesc;
 
   const fileIconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>';
   const uploadIconSvg = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>';
@@ -5665,6 +6794,8 @@
       renderClientsList();
       updateScheduleUploadWarnings();
       renderDocsNeededBlock();
+      renderMissedDocsBlock();
+      renderMealExplanationCta(clientId);
     }, 800);
   }
   window.simulateUpload = simulateUpload;
@@ -5691,22 +6822,6 @@
         }
       }
     });
-    // Also update new client card if Prakash Desai needs docs
-    const newClientCard = document.getElementById('card-new-client');
-    if (newClientCard) {
-      newClientCard.querySelectorAll('.sched-upload-warn').forEach(el => el.remove());
-      const prakash = allClients.find(c => c.name === 'Prakash Desai');
-      if (prakash && clientNeedsUpload(prakash)) {
-        const schedRow = newClientCard.querySelector('.new-client-schedule');
-        if (schedRow) {
-          const warn = document.createElement('span');
-          warn.className = 'sched-upload-warn';
-          warn.style.marginLeft = '6px';
-          warn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#b8860b" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' + getMissingLabel(prakash);
-          schedRow.appendChild(warn);
-        }
-      }
-    }
   }
 
   // Schedule data for each client
@@ -5726,6 +6841,40 @@
   };
   const clientNextSession = {};
   for (const k in clientSessionInfo) clientNextSession[k] = clientSessionInfo[k].date;
+
+  // Past sessions where docs were never uploaded — for the prototype, hardcoded demo
+  const missedDocsClients = [
+    { id: 'c11', sessionWas: '21 Apr', daysOverdue: 1 },
+    { id: 'c9',  sessionWas: '18 Apr', daysOverdue: 4 }
+  ];
+
+  function renderMissedDocsBlock() {
+    const block = document.getElementById('missed-docs-block');
+    if (!block) return;
+    const colors = { 'avatar-green': '#4a7c59', 'avatar-brown': '#8B6914', 'avatar-purple': '#7B5EA7' };
+    const rows = missedDocsClients
+      .map(m => {
+        const c = allClients.find(x => x.id === m.id);
+        if (!c || !clientNeedsUpload(c)) return null;
+        const bg = colors[c.avatar] || '#888';
+        const overdue = m.daysOverdue === 1 ? '1 day overdue' : m.daysOverdue + ' days overdue';
+        return `<div class="missed-docs-item" onclick="openClientProfile('${c.id}')">
+          <div class="md-avatar" style="background:${bg}">${c.initials}</div>
+          <div class="md-name">${c.name} <span style="font-weight:500;color:#888;font-size:11px">· ${m.sessionWas}</span></div>
+          <span class="md-overdue">${overdue}</span>
+        </div>`;
+      })
+      .filter(Boolean);
+    if (rows.length === 0) { block.innerHTML = ''; return; }
+    block.innerHTML = `<div class="missed-docs-card">
+      <div class="missed-docs-header">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c0392b" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Missed docs · ${rows.length} client${rows.length !== 1 ? 's' : ''}
+      </div>
+      ${rows.join('')}
+    </div>`;
+  }
+  window.renderMissedDocsBlock = renderMissedDocsBlock;
 
   function renderDocsNeededBlock() {
     const block = document.getElementById('docs-needed-block');
@@ -5766,36 +6915,36 @@
 
   // ===== MY BOARD =====
   const mbCalendarData = {
-    1:[{name:'Neha Rao',initials:'NR',avatar:'avatar-green',type:'Meal Plan'}],
+    1:[{name:'Neha Rao',initials:'NR',avatar:'avatar-green',type:'Assessment'}],
     2:[{name:'Kavita Patel',initials:'KP',avatar:'avatar-brown',type:'Weekly Review'}],
     3:[],
-    4:[{name:'Sanjay Patil',initials:'SP',avatar:'avatar-brown',type:'Weekly Review'},{name:'Priya Thakur',initials:'PT',avatar:'avatar-green',type:'Meal Plan'}],
+    4:[{name:'Sanjay Patil',initials:'SP',avatar:'avatar-brown',type:'Weekly Review'},{name:'Priya Thakur',initials:'PT',avatar:'avatar-green',type:'Assessment'}],
     5:[{name:'Vikram Kumar',initials:'VK',avatar:'avatar-brown',type:'Weekly Review'}],
     6:[],
-    7:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Arjun Malhotra',initials:'AM',avatar:'avatar-brown',type:'Meal Plan'}],
-    8:[{name:'Deepa Gupta',initials:'DG',avatar:'avatar-purple',type:'Weekly Review'},{name:'Rahul Joshi',initials:'RJ',avatar:'avatar-green',type:'Meal Plan'},{name:'Anita Kulkarni',initials:'AK',avatar:'avatar-purple',type:'Weekly Review'}],
-    9:[{name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Meal Plan'},{name:'Meera Iyer',initials:'MI',avatar:'avatar-green',type:'Weekly Review'},{name:'Sudha Narayanan',initials:'SN',avatar:'avatar-brown',type:'Weekly Review'}],
-    10:[{name:'Vijay Mehta',initials:'VM',avatar:'avatar-brown',type:'Meal Plan'},{name:'Lakshmi Shetty',initials:'LS',avatar:'avatar-purple',type:'Weekly Review'}],
+    7:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Arjun Malhotra',initials:'AM',avatar:'avatar-brown',type:'Assessment'}],
+    8:[{name:'Deepa Gupta',initials:'DG',avatar:'avatar-purple',type:'Weekly Review'},{name:'Rahul Joshi',initials:'RJ',avatar:'avatar-green',type:'Assessment'},{name:'Anita Kulkarni',initials:'AK',avatar:'avatar-purple',type:'Weekly Review'}],
+    9:[{name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Assessment'},{name:'Meera Iyer',initials:'MI',avatar:'avatar-green',type:'Weekly Review'},{name:'Sudha Narayanan',initials:'SN',avatar:'avatar-brown',type:'Weekly Review'}],
+    10:[{name:'Vijay Mehta',initials:'VM',avatar:'avatar-brown',type:'Assessment'},{name:'Lakshmi Shetty',initials:'LS',avatar:'avatar-purple',type:'Weekly Review'}],
     11:[{name:'Sanjay Patil',initials:'SP',avatar:'avatar-brown',type:'Weekly Review'},{name:'Priya Thakur',initials:'PT',avatar:'avatar-green',type:'Weekly Review'}],
     12:[{name:'Vikram Kumar',initials:'VK',avatar:'avatar-brown',type:'Weekly Review'}],
     13:[],
-    14:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Arjun Malhotra',initials:'AM',avatar:'avatar-brown',type:'Meal Plan'}],
-    15:[{name:'Anita Kulkarni',initials:'AK',avatar:'avatar-purple',type:'Weekly Review'},{name:'Neha Rao',initials:'NR',avatar:'avatar-green',type:'Meal Plan'},{name:'Kavita Patel',initials:'KP',avatar:'avatar-brown',type:'Weekly Review'}],
-    16:[{name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Meal Plan'},{name:'Meera Iyer',initials:'MI',avatar:'avatar-green',type:'Weekly Review'},{name:'Sudha Narayanan',initials:'SN',avatar:'avatar-brown',type:'Weekly Review'},{name:'Vijay Mehta',initials:'VM',avatar:'avatar-brown',type:'Meal Plan'}],
-    17:[{name:'Deepa Gupta',initials:'DG',avatar:'avatar-purple',type:'Weekly Review'},{name:'Rahul Joshi',initials:'RJ',avatar:'avatar-green',type:'Meal Plan'}],
-    18:[{name:'Sanjay Patil',initials:'SP',avatar:'avatar-brown',type:'Weekly Review'},{name:'Priya Thakur',initials:'PT',avatar:'avatar-green',type:'Weekly Review'},{name:'Lakshmi Shetty',initials:'LS',avatar:'avatar-purple',type:'Meal Plan'}],
+    14:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Arjun Malhotra',initials:'AM',avatar:'avatar-brown',type:'Assessment'}],
+    15:[{name:'Anita Kulkarni',initials:'AK',avatar:'avatar-purple',type:'Weekly Review'},{name:'Neha Rao',initials:'NR',avatar:'avatar-green',type:'Assessment'},{name:'Kavita Patel',initials:'KP',avatar:'avatar-brown',type:'Weekly Review'}],
+    16:[{name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Assessment'},{name:'Meera Iyer',initials:'MI',avatar:'avatar-green',type:'Weekly Review'},{name:'Sudha Narayanan',initials:'SN',avatar:'avatar-brown',type:'Weekly Review'},{name:'Vijay Mehta',initials:'VM',avatar:'avatar-brown',type:'Assessment'}],
+    17:[{name:'Deepa Gupta',initials:'DG',avatar:'avatar-purple',type:'Weekly Review'},{name:'Rahul Joshi',initials:'RJ',avatar:'avatar-green',type:'Assessment'}],
+    18:[{name:'Sanjay Patil',initials:'SP',avatar:'avatar-brown',type:'Weekly Review'},{name:'Priya Thakur',initials:'PT',avatar:'avatar-green',type:'Weekly Review'},{name:'Lakshmi Shetty',initials:'LS',avatar:'avatar-purple',type:'Assessment'}],
     19:[{name:'Vikram Kumar',initials:'VK',avatar:'avatar-brown',type:'Weekly Review'}],
-    20:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Arjun Malhotra',initials:'AM',avatar:'avatar-brown',type:'Meal Plan'}],
-    21:[{name:'Anita Kulkarni',initials:'AK',avatar:'avatar-purple',type:'Weekly Review'},{name:'Neha Rao',initials:'NR',avatar:'avatar-green',type:'Meal Plan'},{name:'Kavita Patel',initials:'KP',avatar:'avatar-brown',type:'Weekly Review'}],
-    22:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Meal Plan'},{name:'Meera Iyer',initials:'MI',avatar:'avatar-green',type:'Weekly Review'},{name:'Sudha Narayanan',initials:'SN',avatar:'avatar-brown',type:'Weekly Review'},{name:'Vijay Mehta',initials:'VM',avatar:'avatar-brown',type:'Meal Plan'}],
-    23:[{name:'Deepa Gupta',initials:'DG',avatar:'avatar-purple',type:'Weekly Review'},{name:'Rahul Joshi',initials:'RJ',avatar:'avatar-green',type:'Meal Plan'}],
-    24:[{name:'Sanjay Patil',initials:'SP',avatar:'avatar-brown',type:'Weekly Review'},{name:'Priya Thakur',initials:'PT',avatar:'avatar-green',type:'Weekly Review'},{name:'Lakshmi Shetty',initials:'LS',avatar:'avatar-purple',type:'Meal Plan'}],
+    20:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Arjun Malhotra',initials:'AM',avatar:'avatar-brown',type:'Assessment'}],
+    21:[{name:'Anita Kulkarni',initials:'AK',avatar:'avatar-purple',type:'Weekly Review'},{name:'Neha Rao',initials:'NR',avatar:'avatar-green',type:'Assessment'},{name:'Kavita Patel',initials:'KP',avatar:'avatar-brown',type:'Weekly Review'}],
+    22:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Assessment'},{name:'Meera Iyer',initials:'MI',avatar:'avatar-green',type:'Weekly Review'},{name:'Sudha Narayanan',initials:'SN',avatar:'avatar-brown',type:'Weekly Review'},{name:'Vijay Mehta',initials:'VM',avatar:'avatar-brown',type:'Assessment'}],
+    23:[{name:'Deepa Gupta',initials:'DG',avatar:'avatar-purple',type:'Weekly Review'},{name:'Rahul Joshi',initials:'RJ',avatar:'avatar-green',type:'Assessment'}],
+    24:[{name:'Sanjay Patil',initials:'SP',avatar:'avatar-brown',type:'Weekly Review'},{name:'Priya Thakur',initials:'PT',avatar:'avatar-green',type:'Weekly Review'},{name:'Lakshmi Shetty',initials:'LS',avatar:'avatar-purple',type:'Assessment'}],
     25:[{name:'Vikram Kumar',initials:'VK',avatar:'avatar-brown',type:'Weekly Review'}],
     26:[],
-    27:[{name:'Neha Rao',initials:'NR',avatar:'avatar-green',type:'Meal Plan'},{name:'Arjun Malhotra',initials:'AM',avatar:'avatar-brown',type:'Meal Plan'}],
+    27:[{name:'Neha Rao',initials:'NR',avatar:'avatar-green',type:'Assessment'},{name:'Arjun Malhotra',initials:'AM',avatar:'avatar-brown',type:'Assessment'}],
     28:[{name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review'},{name:'Kavita Patel',initials:'KP',avatar:'avatar-brown',type:'Weekly Review'}],
-    29:[{name:'Anita Kulkarni',initials:'AK',avatar:'avatar-purple',type:'Weekly Review'},{name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Meal Plan'},{name:'Meera Iyer',initials:'MI',avatar:'avatar-green',type:'Weekly Review'}],
-    30:[{name:'Sudha Narayanan',initials:'SN',avatar:'avatar-brown',type:'Weekly Review'},{name:'Vijay Mehta',initials:'VM',avatar:'avatar-brown',type:'Meal Plan'}]
+    29:[{name:'Anita Kulkarni',initials:'AK',avatar:'avatar-purple',type:'Weekly Review'},{name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Assessment'},{name:'Meera Iyer',initials:'MI',avatar:'avatar-green',type:'Weekly Review'}],
+    30:[{name:'Sudha Narayanan',initials:'SN',avatar:'avatar-brown',type:'Weekly Review'},{name:'Vijay Mehta',initials:'VM',avatar:'avatar-brown',type:'Assessment'}]
   };
 
   const MB_TODAY = 22;
@@ -5803,7 +6952,7 @@
 
   const mbPayData = [
     {name:'Rukmini Shah',initials:'RS',avatar:'avatar-green',type:'Weekly Review',amount:200},
-    {name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Meal Plan',amount:150}
+    {name:'Prakash Desai',initials:'PD',avatar:'avatar-brown',type:'Assessment',amount:150}
   ];
   const mbMonthTotal = 4800;
 
@@ -5816,11 +6965,162 @@
   const mbLeaveTotal = 12;
 
   function renderMyBoard() {
+    renderInsights();
     renderPayCard();
     renderCalendar();
     renderDayDetail(mbSelectedDay);
     renderLeaves();
   }
+
+  // ===== PRACTICE INSIGHTS =====
+  // Each client → bucket per window. Pre-assigned for plausible demo data;
+  // in a real app this would be derived from meal-log timestamps.
+  const insightsBuckets = {
+    '7d': {
+      regular:  ['c1','c3','c5','c7','c8','c10'],
+      sporadic: ['c2','c6','c9','c12'],
+      silent:   ['c4','c11']
+    },
+    '30d': {
+      regular:  ['c1','c3','c5','c7','c8','c10','c12'],
+      sporadic: ['c2','c6','c9'],
+      silent:   ['c4','c11']
+    }
+  };
+  const insightsCalls = {
+    '7d':  { done: 10, missed: 2, upcoming: 4 },
+    '30d': { done: 38, missed: 6, upcoming: 12 }
+  };
+  const insightsActive = { '7d': { active: 12, total: 12 }, '30d': { active: 12, total: 12 } };
+  let insightsWindow = '7d';
+
+  function bucketLabel(bucket) {
+    return bucket === 'regular' ? 'Regular' : bucket === 'sporadic' ? 'Sporadic' : 'Silent';
+  }
+  function bucketSubtitle(bucket, win) {
+    const cadence = win === '7d' ? 'week' : 'month';
+    if (bucket === 'regular')  return '5+ logs / ' + cadence;
+    if (bucket === 'sporadic') return '2–4 logs / ' + cadence;
+    return '0–1 logs / ' + cadence;
+  }
+
+  function renderInsights() {
+    const win = insightsWindow;
+    const buckets = insightsBuckets[win];
+    const calls = insightsCalls[win];
+    const active = insightsActive[win];
+
+    const reg = buckets.regular.length;
+    const spo = buckets.sporadic.length;
+    const sil = buckets.silent.length;
+    const totalClients = reg + spo + sil;
+    const logging = reg + spo;
+    const loggingPct = Math.round((logging / totalClients) * 100);
+
+    const completedCalls = calls.done + calls.missed;
+    const onTimePct = completedCalls > 0 ? Math.round((calls.done / completedCalls) * 100) : 0;
+
+    document.getElementById('mb-insights-title').textContent =
+      win === '7d' ? 'Last 7 days' : 'Last 30 days';
+    document.querySelectorAll('.mb-window-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.window === win);
+    });
+
+    // KPI row
+    document.getElementById('mb-kpi-row').innerHTML = `
+      <div class="mb-kpi-card">
+        <div class="mb-kpi-num">${active.active}<span style="font-size:14px;color:#8a7d6b">/${active.total}</span></div>
+        <div class="mb-kpi-label">Active clients</div>
+        <div class="mb-kpi-sub">${active.total - active.active} paused</div>
+      </div>
+      <div class="mb-kpi-card">
+        <div class="mb-kpi-num">${logging}<span style="font-size:14px;color:#8a7d6b">/${totalClients}</span></div>
+        <div class="mb-kpi-label">Logging meals</div>
+        <div class="mb-kpi-sub">${loggingPct}%</div>
+      </div>
+      <div class="mb-kpi-card">
+        <div class="mb-kpi-num">${calls.done}<span style="font-size:14px;color:#8a7d6b">/${completedCalls}</span></div>
+        <div class="mb-kpi-label">Calls attended</div>
+        <div class="mb-kpi-sub">${onTimePct}%</div>
+      </div>
+    `;
+
+    // Segmented bar
+    const total = reg + spo + sil || 1;
+    document.getElementById('mb-segbar').innerHTML = `
+      <div class="mb-segbar-seg regular"  style="width:${(reg/total)*100}%"></div>
+      <div class="mb-segbar-seg sporadic" style="width:${(spo/total)*100}%"></div>
+      <div class="mb-segbar-seg silent"   style="width:${(sil/total)*100}%"></div>
+    `;
+
+    // Legend rows (tappable)
+    const legendRows = [
+      { key: 'regular',  count: reg },
+      { key: 'sporadic', count: spo },
+      { key: 'silent',   count: sil }
+    ].map(r => `
+      <div class="mb-legend-row" onclick="openInsightsList('${r.key}')">
+        <span class="mb-legend-dot ${r.key}"></span>
+        <div class="mb-legend-name">${bucketLabel(r.key)}<span style="font-weight:500;color:#888;font-size:10px;margin-left:6px">${bucketSubtitle(r.key, win)}</span></div>
+        <span class="mb-legend-count">${r.count}</span>
+        <span class="mb-legend-arrow">›</span>
+      </div>
+    `).join('');
+    document.getElementById('mb-segbar-legend').innerHTML = legendRows;
+
+    // Calls row
+    document.getElementById('mb-calls-row').innerHTML = `
+      <span class="mb-stat-pill done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>${calls.done} done</span>
+      <span class="mb-stat-pill missed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>${calls.missed} missed</span>
+      <span class="mb-stat-pill upcoming"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${calls.upcoming} upcoming</span>
+      <span class="mb-stat-pill ontime">${onTimePct}% on-time</span>
+    `;
+  }
+  window.renderInsights = renderInsights;
+
+  function setInsightsWindow(win) {
+    insightsWindow = win;
+    renderInsights();
+  }
+  window.setInsightsWindow = setInsightsWindow;
+
+  function openInsightsList(bucket) {
+    const win = insightsWindow;
+    const ids = insightsBuckets[win][bucket] || [];
+    const clients = ids.map(id => allClients.find(c => c.id === id)).filter(Boolean);
+    document.getElementById('il-title').textContent =
+      bucketLabel(bucket) + ' loggers · ' + clients.length + ' client' + (clients.length !== 1 ? 's' : '');
+
+    const list = document.getElementById('il-list');
+    if (clients.length === 0) {
+      list.innerHTML = '<div class="il-empty">No clients in this group.</div>';
+    } else {
+      const colors = { 'avatar-green': '#4a7c59', 'avatar-brown': '#8B6914', 'avatar-purple': '#7B5EA7' };
+      list.innerHTML = clients.map(c => `
+        <div class="il-row" onclick="openClientFromInsights('${c.id}')">
+          <div class="il-avatar" style="background:${colors[c.avatar] || '#888'}">${c.initials}</div>
+          <div class="il-info">
+            <div class="il-name">${escapeHtml(c.name)}</div>
+            <div class="il-meta">${c.age} yrs · ${escapeHtml(c.condition)} · Week ${c.week}</div>
+          </div>
+          <span style="color:#ccc;font-size:16px">›</span>
+        </div>
+      `).join('');
+    }
+    document.getElementById('il-overlay').classList.add('open');
+  }
+  window.openInsightsList = openInsightsList;
+
+  function closeInsightsList() {
+    document.getElementById('il-overlay').classList.remove('open');
+  }
+  window.closeInsightsList = closeInsightsList;
+
+  function openClientFromInsights(clientId) {
+    closeInsightsList();
+    setTimeout(() => openClientProfile(clientId), 60);
+  }
+  window.openClientFromInsights = openClientFromInsights;
 
   function renderPayCard() {
     const list = document.getElementById('mb-pay-list');
@@ -5927,6 +7227,677 @@
   renderClientsList();
   updateScheduleUploadWarnings();
   renderDocsNeededBlock();
+  renderMissedDocsBlock();
+  // Show FAB on initial load — Schedule is the default active tab
+  document.getElementById('fab-add-client').classList.add('visible');
+
+  // ===========================================================
+  // ===== CALL SCHEDULING =====================================
+  // ===========================================================
+  const callTypeMeta = {
+    weekly:           { label: 'WEEKLY REVIEW',    cls: 'ctype-weekly',          short: 'Weekly Review' },
+    mealplan:         { label: 'ASSESSMENT',       cls: 'ctype-mealplan',        short: 'Assessment' },
+    mealexplanation:  { label: 'MEAL EXPLANATION', cls: 'ctype-mealexplanation', short: 'Meal Explanation' }
+  };
+
+  // Treat Apr 22 2025 as the prototype's "today"
+  const PROTO_TODAY_ISO = '2025-04-22';
+
+  let nextCallId = 1;
+  const scheduledCalls = []; // user-added entries only
+
+  // Modal local state
+  let scState = {
+    editingId: null,
+    type: 'weekly',
+    durationMin: 30,
+    lockedClientId: null,
+    mode: 'confirmed',          // 'confirmed' | 'tbc'
+    targetWindow: 'this-week'   // 'this-week' | 'next-week' | 'custom'
+  };
+  let activeCallActionId = null;
+
+  function windowLabel(win, customDate) {
+    if (win === 'this-week') return 'This week';
+    if (win === 'next-week') return 'Next week';
+    if (win === 'custom' && customDate) return 'By ' + fmtDateLabel(customDate);
+    return 'When confirmed';
+  }
+
+  // ---------- helpers ----------
+  function fmtClock(hhmm) {
+    if (!hhmm) return '';
+    const [h, m] = hhmm.split(':').map(Number);
+    const period = h >= 12 ? 'PM' : 'AM';
+    const h12 = h % 12 || 12;
+    return h12 + ':' + (m < 10 ? '0' + m : m) + ' ' + period;
+  }
+  function addMinutes(hhmm, mins) {
+    const [h, m] = hhmm.split(':').map(Number);
+    const total = h * 60 + m + mins;
+    const nh = Math.floor((total / 60) % 24);
+    const nm = total % 60;
+    return (nh < 10 ? '0' + nh : nh) + ':' + (nm < 10 ? '0' + nm : nm);
+  }
+  function fmtDateLabel(iso) {
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const d = new Date(iso + 'T00:00:00');
+    if (iso === PROTO_TODAY_ISO) return 'Today';
+    return d.getDate() + ' ' + months[d.getMonth()];
+  }
+
+  // ---------- Modal open / pre-fill ----------
+  function openScheduleCallModal(opts) {
+    opts = opts || {};
+    scState.editingId = opts.editingId || null;
+    scState.lockedClientId = opts.lockClient ? opts.clientId : null;
+
+    // Populate client dropdown
+    const sel = document.getElementById('sc-client');
+    const sortedClients = [...allClients].sort((a, b) => a.name.localeCompare(b.name));
+    sel.innerHTML = '<option value="">Select client…</option>' +
+      sortedClients.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    sel.value = opts.clientId || '';
+    sel.disabled = !!scState.lockedClientId;
+
+    // Type
+    const initialType = opts.type || 'weekly';
+    scSetType(initialType);
+
+    // Date
+    document.getElementById('sc-date').value = opts.date || PROTO_TODAY_ISO;
+
+    // Time
+    document.getElementById('sc-time').value = opts.startTime || '10:00';
+
+    // Duration
+    scSetDuration(opts.durationMin || 30);
+
+    // Notes
+    document.getElementById('sc-notes').value = opts.notes || '';
+
+    // Target window (TBC mode)
+    scSetWindow(opts.targetWindow || 'this-week');
+    document.getElementById('sc-tbc-date').value = opts.targetCustomDate || '';
+
+    // Mode (must be applied AFTER setting both confirmed + tbc fields so visibility is right)
+    scSetMode(opts.mode || 'confirmed');
+
+    document.getElementById('sc-error').textContent = '';
+    const isEdit = !!scState.editingId;
+    const isConvert = !!opts.convertingFromPending;
+    document.getElementById('sc-title').textContent =
+      isConvert ? 'Confirm time' : (isEdit ? 'Edit call' : 'Schedule a call');
+    document.getElementById('sc-save-btn').textContent =
+      isConvert ? 'Confirm' : (isEdit ? 'Save changes' : 'Add Call');
+
+    document.getElementById('sc-overlay').classList.add('open');
+  }
+  window.openScheduleCallModal = openScheduleCallModal;
+
+  function scSetMode(mode) {
+    scState.mode = mode;
+    const overlay = document.getElementById('sc-overlay');
+    overlay.classList.toggle('mode-confirmed', mode === 'confirmed');
+    overlay.classList.toggle('mode-tbc', mode === 'tbc');
+    document.querySelector('.sc-mode-confirmed').classList.toggle('active', mode === 'confirmed');
+    document.querySelector('.sc-mode-tbc').classList.toggle('active', mode === 'tbc');
+  }
+  window.scSetMode = scSetMode;
+
+  function scSetWindow(win) {
+    scState.targetWindow = win;
+    document.querySelectorAll('#sc-window-row .sc-chip').forEach(c => {
+      c.classList.toggle('active', c.dataset.window === win);
+    });
+    const wrap = document.getElementById('sc-tbc-custom-wrap');
+    if (wrap) wrap.classList.toggle('hidden', win !== 'custom');
+  }
+  window.scSetWindow = scSetWindow;
+
+  function closeScheduleCallModal() {
+    document.getElementById('sc-overlay').classList.remove('open');
+  }
+  window.closeScheduleCallModal = closeScheduleCallModal;
+
+  function scSetType(type) {
+    scState.type = type;
+    document.querySelectorAll('#sc-type-seg .sc-segmented-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.type === type);
+    });
+  }
+  window.scSetType = scSetType;
+
+  function scSetDuration(mins) {
+    scState.durationMin = mins;
+    document.querySelectorAll('#sc-duration-row .sc-chip').forEach(c => {
+      c.classList.toggle('active', Number(c.dataset.min) === mins);
+    });
+  }
+  window.scSetDuration = scSetDuration;
+
+  // Entry point used by Client Profile
+  function openScheduleCallForCurrentClient() {
+    if (!currentProfileClient) return;
+    closeClientProfile();
+    setTimeout(() => {
+      openScheduleCallModal({
+        clientId: currentProfileClient.id,
+        lockClient: true
+      });
+    }, 60);
+  }
+  window.openScheduleCallForCurrentClient = openScheduleCallForCurrentClient;
+
+  // Entry point used by meal-explanation CTA — default to TBC mode
+  function openMealExplanationCallForClient(clientId) {
+    closeClientProfile();
+    setTimeout(() => {
+      openScheduleCallModal({
+        clientId: clientId,
+        lockClient: true,
+        type: 'mealexplanation',
+        mode: 'tbc',
+        targetWindow: 'this-week'
+      });
+    }, 60);
+  }
+  window.openMealExplanationCallForClient = openMealExplanationCallForClient;
+
+  // Convert a pending call → confirmed (opens modal pre-filled in confirmed mode)
+  function confirmTimeForCall(callId) {
+    const call = scheduledCalls.find(c => c.id === callId);
+    if (!call) return;
+    openScheduleCallModal({
+      editingId: call.id,
+      clientId: call.clientId,
+      lockClient: true,
+      type: call.type,
+      mode: 'confirmed',
+      date: PROTO_TODAY_ISO,
+      startTime: '10:00',
+      durationMin: 30,
+      notes: call.notes,
+      convertingFromPending: true
+    });
+  }
+  window.confirmTimeForCall = confirmTimeForCall;
+
+  // ---------- Save / validate ----------
+  function saveScheduledCall() {
+    const errEl = document.getElementById('sc-error');
+    errEl.textContent = '';
+    const clientId = document.getElementById('sc-client').value;
+    const notes = document.getElementById('sc-notes').value.trim();
+
+    if (!clientId) { errEl.textContent = 'Pick a client.'; return; }
+
+    let payload;
+    if (scState.mode === 'confirmed') {
+      const date = document.getElementById('sc-date').value;
+      const time = document.getElementById('sc-time').value;
+      if (!date) { errEl.textContent = 'Pick a date.'; return; }
+      if (!time) { errEl.textContent = 'Pick a time.'; return; }
+
+      // Conflict check (against confirmed calls only — soft warn)
+      const conflict = scheduledCalls.find(c =>
+        c.id !== scState.editingId &&
+        c.status === 'scheduled' &&
+        c.date === date &&
+        c.startTime === time
+      );
+      if (conflict) {
+        const other = allClients.find(x => x.id === conflict.clientId);
+        const ok = window.confirm('Overlaps with ' + (other ? other.name : 'another call') + ' at ' + fmtClock(time) + '. Schedule anyway?');
+        if (!ok) return;
+      }
+      payload = {
+        clientId, type: scState.type,
+        status: 'scheduled',
+        date, startTime: time,
+        durationMin: scState.durationMin,
+        notes,
+        targetWindow: null, targetCustomDate: null
+      };
+    } else { // tbc
+      let customDate = null;
+      if (scState.targetWindow === 'custom') {
+        customDate = document.getElementById('sc-tbc-date').value;
+        if (!customDate) { errEl.textContent = 'Pick a target date.'; return; }
+      }
+      payload = {
+        clientId, type: scState.type,
+        status: 'pending',
+        date: null, startTime: null, durationMin: null,
+        notes,
+        targetWindow: scState.targetWindow,
+        targetCustomDate: customDate
+      };
+    }
+
+    if (scState.editingId) {
+      const existing = scheduledCalls.find(c => c.id === scState.editingId);
+      if (existing) Object.assign(existing, payload);
+    } else {
+      scheduledCalls.push(Object.assign({ id: nextCallId++ }, payload));
+    }
+
+    closeScheduleCallModal();
+    renderScheduledCallsOnTimeline();
+    renderCalendar();
+    renderToScheduleBlock();
+    if (currentProfileClient && currentProfileClient.id === clientId) {
+      renderMealExplanationCta(clientId);
+    }
+  }
+  window.saveScheduledCall = saveScheduledCall;
+
+  // ---------- Timeline rendering (Schedule screen, "Today" only) ----------
+  function parseScheduleItemStartMinutes(itemEl) {
+    const start = itemEl.querySelector('.time-start');
+    if (!start) return Infinity;
+    const t = start.querySelector('.schedule-time')?.textContent || '0:00';
+    const p = start.querySelector('.schedule-period')?.textContent || 'AM';
+    const [hh, mm] = t.split(':').map(Number);
+    let h = hh % 12;
+    if (p === 'PM') h += 12;
+    return h * 60 + (mm || 0);
+  }
+
+  function renderScheduledCallsOnTimeline() {
+    const container = document.querySelector('.schedule');
+    if (!container) return;
+
+    // Remove previously rendered user-added items
+    container.querySelectorAll('.schedule-item.user-added-item').forEach(el => el.remove());
+
+    const todays = scheduledCalls.filter(c => c.date === PROTO_TODAY_ISO && c.status === 'scheduled');
+    todays.forEach(call => {
+      const c = allClients.find(x => x.id === call.clientId);
+      if (!c) return;
+      const meta = callTypeMeta[call.type];
+      const endTime = addMinutes(call.startTime, call.durationMin);
+
+      const item = document.createElement('div');
+      item.className = 'schedule-item user-added-item';
+      item.dataset.callId = call.id;
+      item.innerHTML = `
+        <div class="schedule-time-col">
+          <div class="time-start"><span class="schedule-time">${fmtClock(call.startTime).split(' ')[0]}</span><span class="schedule-period">${fmtClock(call.startTime).split(' ')[1]}</span></div>
+          <div class="time-end"><span class="schedule-time">${fmtClock(endTime).split(' ')[0]}</span><span class="schedule-period">${fmtClock(endTime).split(' ')[1]}</span></div>
+        </div>
+        <div class="timeline-col">
+          <div class="timeline-dot"></div>
+          <div class="timeline-line"></div>
+        </div>
+        <div class="schedule-card user-added clickable ${meta.cls}-edge" data-call-id="${call.id}">
+          <div class="client-avatar ${c.avatar}">${c.initials}</div>
+          <div class="client-info">
+            <div class="client-name-row">
+              <div class="client-name">${c.name}</div>
+            </div>
+            <div class="client-meta">
+              <span class="${meta.cls}">${meta.label}</span>
+              ${c.week ? `<span class="meta-separator">·</span><span class="week-pill">Week ${c.week}</span>` : ''}
+            </div>
+            ${call.notes ? `<div class="client-meta" style="text-transform:none;font-weight:500;color:#888;margin-top:3px">${escapeHtml(call.notes)}</div>` : ''}
+          </div>
+          <button class="btn-join-sched clickable" data-join-call onclick="event.stopPropagation(); alert('Joining call with ${escapeHtml(c.name)}...')" aria-label="Join call">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </button>
+        </div>
+      `;
+      item.querySelector('.schedule-card').addEventListener('click', (e) => {
+        if (e.target.closest('[data-join-call]')) return;
+        openCallActions(call.id);
+      });
+
+      // Insert sorted by start minutes; ignore current-time-indicator nodes
+      const startMin = parseScheduleItemStartMinutes(item);
+      const siblings = Array.from(container.children).filter(n =>
+        n.classList && (n.classList.contains('schedule-item') || n.classList.contains('lunch-break-item'))
+      );
+      let inserted = false;
+      for (const sib of siblings) {
+        if (parseScheduleItemStartMinutes(sib) > startMin) {
+          container.insertBefore(item, sib);
+          inserted = true;
+          break;
+        }
+      }
+      if (!inserted) container.appendChild(item);
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, ch => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[ch]));
+  }
+
+  // ---------- Calendar integration ----------
+  // Inject user-added calls into mbCalendarData as derived rows; we re-derive on each render.
+  const baseMbCalendarData = JSON.parse(JSON.stringify(mbCalendarData));
+  function rebuildMbCalendarData() {
+    // Reset to base
+    for (const k in mbCalendarData) delete mbCalendarData[k];
+    for (const k in baseMbCalendarData) mbCalendarData[k] = baseMbCalendarData[k].slice();
+
+    scheduledCalls.forEach(call => {
+      if (call.status !== 'scheduled') return;
+      const d = new Date(call.date + 'T00:00:00');
+      // Calendar only shows April 2025
+      if (d.getFullYear() !== 2025 || d.getMonth() !== 3) return;
+      const day = d.getDate();
+      const c = allClients.find(x => x.id === call.clientId);
+      if (!c) return;
+      const meta = callTypeMeta[call.type];
+      mbCalendarData[day] = mbCalendarData[day] || [];
+      mbCalendarData[day].push({
+        name: c.name, initials: c.initials, avatar: c.avatar,
+        type: meta.short,
+        callType: call.type,
+        userAdded: true,
+        callId: call.id
+      });
+    });
+  }
+
+  // Wrap renderCalendar / renderDayDetail to refresh from base + user-added before each render
+  const _origRenderCalendar = renderCalendar;
+  renderCalendar = function() {
+    rebuildMbCalendarData();
+    _origRenderCalendar();
+    // Add a small bottom-border on days with a meal-explanation call
+    document.querySelectorAll('.mb-cal-day[data-day]').forEach(cell => {
+      const day = Number(cell.dataset.day);
+      const list = mbCalendarData[day] || [];
+      if (list.some(x => x.callType === 'mealexplanation')) {
+        cell.classList.add('has-mealx');
+      } else {
+        cell.classList.remove('has-mealx');
+      }
+    });
+  };
+  window.selectCalDay = function(day) {
+    mbSelectedDay = day;
+    renderCalendar();
+    renderDayDetail(day);
+  };
+
+  // ---------- Meal explanation CTA inside Client Profile ----------
+  function findMealExplanationCallForClient(clientId) {
+    return scheduledCalls.find(c =>
+      c.clientId === clientId && c.type === 'mealexplanation' &&
+      (c.status === 'scheduled' || c.status === 'pending')
+    );
+  }
+
+  function renderMealExplanationCta(clientId) {
+    const el = document.getElementById('cp-meal-explanation-cta');
+    if (!el) return;
+    const c = allClients.find(x => x.id === clientId);
+    if (!c || !c.mealPlanPdf) { el.innerHTML = ''; return; }
+
+    const existing = findMealExplanationCallForClient(clientId);
+    if (existing && existing.status === 'scheduled') {
+      const dateLabel = fmtDateLabel(existing.date);
+      el.innerHTML = `
+        <div class="cp-meal-cta scheduled" onclick="openCallActionsFromProfile(${existing.id})">
+          <div class="cp-meal-cta-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="cp-meal-cta-text">Meal explanation: ${dateLabel} · ${fmtClock(existing.startTime)}</div>
+          <div class="cp-meal-cta-arrow">›</div>
+        </div>`;
+    } else if (existing && existing.status === 'pending') {
+      const win = windowLabel(existing.targetWindow, existing.targetCustomDate);
+      el.innerHTML = `
+        <div class="cp-meal-cta pending" onclick="confirmTimeFromProfile(${existing.id})">
+          <div class="cp-meal-cta-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="cp-meal-cta-text">Pending meal explanation · ${escapeHtml(win)} — tap to confirm time</div>
+          <div class="cp-meal-cta-arrow">›</div>
+        </div>`;
+    } else {
+      el.innerHTML = `
+        <div class="cp-meal-cta" onclick="openMealExplanationCallForClient('${clientId}')">
+          <div class="cp-meal-cta-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+          <div class="cp-meal-cta-text">Schedule meal explanation call</div>
+          <div class="cp-meal-cta-arrow">›</div>
+        </div>`;
+    }
+  }
+  window.renderMealExplanationCta = renderMealExplanationCta;
+
+  // Render last 7 days of meal logs inside the client profile overlay.
+  // Reuses the seeded mealHistory generator so each client has stable values.
+  function renderProfileMealHistory(clientId) {
+    const el = document.getElementById('cp-meal-history');
+    if (!el) return;
+
+    // Map allClients id (c1…) → tracking-clients id (tc-1…) by name, so the
+    // 7 tracking clients show their live "today" data; others fall back to mock.
+    const c = allClients.find(x => x.id === clientId);
+    let historyKey = clientId;
+    if (c) {
+      const tcMatch = Object.keys(clients).find(k => clients[k].name === c.name);
+      if (tcMatch) historyKey = tcMatch;
+    }
+    const history = generateMealHistory(historyKey);
+
+    const today = new Date();
+    const days = [];
+    for (let d = 0; d < 7; d++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - d);
+      const key = date.toISOString().split('T')[0];
+      days.push({ key, date });
+    }
+
+    const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const mealLetter = { b: 'B', l: 'L', d: 'D' };
+
+    let totalSlots = 0, loggedSlots = 0;
+    const rows = days.map((day, idx) => {
+      const data = history[day.key] || {};
+      const pills = ['b', 'l', 'd'].map(m => {
+        const cell = data[m];
+        totalSlots++;
+        let cls = 'meal-dot future';
+        if (cell) {
+          if (cell.logged) loggedSlots++;
+          cls = 'meal-dot ' + (cell.status || 'unreviewed');
+        }
+        return `<div class="${cls}">${mealLetter[m]}</div>`;
+      }).join('');
+      const isToday = idx === 0;
+      const dateStr = (isToday ? 'Today · ' : dayNames[day.date.getDay()] + ' ') + day.date.getDate() + ' ' + months[day.date.getMonth()];
+      return `<div class="cp-mh-row">
+        <span class="cp-mh-date${isToday ? ' today' : ''}">${dateStr}</span>
+        <div class="cp-mh-pills">${pills}</div>
+      </div>`;
+    }).join('');
+
+    const pct = totalSlots > 0 ? Math.round((loggedSlots / totalSlots) * 100) : 0;
+    el.innerHTML = `
+      <div class="cp-mh-summary">
+        <span><strong>${loggedSlots}</strong> / ${totalSlots} logged</span>
+        <span><strong>${pct}%</strong> adherence</span>
+      </div>
+      <div class="cp-mh-card">${rows}</div>
+    `;
+  }
+  window.renderProfileMealHistory = renderProfileMealHistory;
+
+  function confirmTimeFromProfile(callId) {
+    closeClientProfile();
+    setTimeout(() => confirmTimeForCall(callId), 60);
+  }
+  window.confirmTimeFromProfile = confirmTimeFromProfile;
+
+  // ---------- "To Schedule" block (pending calls) on Schedule screen ----------
+  const avatarColors = { 'avatar-green': '#4a7c59', 'avatar-brown': '#8B6914', 'avatar-purple': '#7B5EA7' };
+
+  function renderToScheduleBlock() {
+    const block = document.getElementById('to-schedule-block');
+    if (!block) return;
+    const pending = scheduledCalls.filter(c => c.status === 'pending');
+    if (pending.length === 0) { block.innerHTML = ''; return; }
+
+    const rows = pending.map(call => {
+      const c = allClients.find(x => x.id === call.clientId);
+      if (!c) return '';
+      const meta = callTypeMeta[call.type];
+      const win = windowLabel(call.targetWindow, call.targetCustomDate);
+      const bg = avatarColors[c.avatar] || '#888';
+      return `
+        <div class="to-schedule-item">
+          <div class="ts-avatar" style="background:${bg}">${c.initials}</div>
+          <div class="ts-info">
+            <div class="ts-name">${escapeHtml(c.name)}</div>
+            <div class="ts-meta">
+              <span class="${meta.cls}">${meta.label}</span>
+              <span class="meta-separator">·</span>
+              <span class="ts-window">${escapeHtml(win)}</span>
+            </div>
+          </div>
+          <button class="ts-set-btn" onclick="confirmTimeForCall(${call.id})">Set time</button>
+          <button class="ts-cancel-btn" onclick="cancelPendingCall(${call.id})" aria-label="Remove">&#10005;</button>
+        </div>`;
+    }).join('');
+
+    block.innerHTML = `<div class="to-schedule-card">
+      <div class="to-schedule-header">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1f5b6a" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        To schedule (${pending.length})
+      </div>
+      ${rows}
+    </div>`;
+  }
+  window.renderToScheduleBlock = renderToScheduleBlock;
+
+  function cancelPendingCall(callId) {
+    if (!window.confirm('Remove this pending call?')) return;
+    const idx = scheduledCalls.findIndex(c => c.id === callId);
+    if (idx < 0) return;
+    const call = scheduledCalls[idx];
+    scheduledCalls.splice(idx, 1);
+    renderToScheduleBlock();
+    if (currentProfileClient && currentProfileClient.id === call.clientId) {
+      renderMealExplanationCta(call.clientId);
+    }
+  }
+  window.cancelPendingCall = cancelPendingCall;
+
+  // ---------- Call action sheet (edit / view client / cancel) ----------
+  function openCallActions(callId) {
+    const call = scheduledCalls.find(c => c.id === callId);
+    if (!call) return;
+    activeCallActionId = callId;
+    const c = allClients.find(x => x.id === call.clientId);
+    const meta = callTypeMeta[call.type];
+    document.getElementById('ca-title').textContent = (c ? c.name : 'Client') + ' — ' + meta.short;
+    let metaText;
+    if (call.status === 'pending') {
+      metaText = 'Pending · ' + windowLabel(call.targetWindow, call.targetCustomDate);
+    } else {
+      metaText = fmtDateLabel(call.date) + ' · ' + fmtClock(call.startTime) + ' · ' + call.durationMin + ' min';
+    }
+    if (call.notes) metaText += ' · ' + call.notes;
+    document.getElementById('ca-meta').textContent = metaText;
+
+    // Show "Confirm time" only for pending calls; relabel Edit accordingly.
+    const isPending = call.status === 'pending';
+    document.getElementById('ca-btn-confirm-time').classList.toggle('hidden', !isPending);
+    const editBtn = document.getElementById('ca-btn-edit');
+    editBtn.lastChild.nodeValue && (editBtn.lastChild.nodeValue = ''); // clear stray text node
+    editBtn.innerHTML = (isPending
+      ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit details'
+      : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2d2d2d" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit / Reschedule');
+
+    document.getElementById('ca-overlay').classList.add('open');
+  }
+  window.openCallActions = openCallActions;
+
+  function confirmTimeForCurrentCall() {
+    const id = activeCallActionId;
+    if (!id) return;
+    closeCallActions();
+    setTimeout(() => confirmTimeForCall(id), 60);
+  }
+  window.confirmTimeForCurrentCall = confirmTimeForCurrentCall;
+
+  function openCallActionsFromProfile(callId) {
+    closeClientProfile();
+    setTimeout(() => openCallActions(callId), 60);
+  }
+  window.openCallActionsFromProfile = openCallActionsFromProfile;
+
+  function closeCallActions() {
+    document.getElementById('ca-overlay').classList.remove('open');
+    activeCallActionId = null;
+  }
+  window.closeCallActions = closeCallActions;
+
+  function editCurrentCall() {
+    const call = scheduledCalls.find(c => c.id === activeCallActionId);
+    if (!call) return;
+    closeCallActions();
+    setTimeout(() => {
+      openScheduleCallModal({
+        editingId: call.id,
+        clientId: call.clientId,
+        lockClient: false,
+        type: call.type,
+        mode: call.status === 'pending' ? 'tbc' : 'confirmed',
+        date: call.date || PROTO_TODAY_ISO,
+        startTime: call.startTime || '10:00',
+        durationMin: call.durationMin || 30,
+        notes: call.notes,
+        targetWindow: call.targetWindow || 'this-week',
+        targetCustomDate: call.targetCustomDate || ''
+      });
+    }, 60);
+  }
+  window.editCurrentCall = editCurrentCall;
+
+  function viewCurrentCallClient() {
+    const call = scheduledCalls.find(c => c.id === activeCallActionId);
+    if (!call) return;
+    closeCallActions();
+    setTimeout(() => openClientProfile(call.clientId), 60);
+  }
+  window.viewCurrentCallClient = viewCurrentCallClient;
+
+  function cancelCurrentCall() {
+    const id = activeCallActionId;
+    if (!id) return;
+    if (!window.confirm('Cancel this call?')) return;
+    const idx = scheduledCalls.findIndex(c => c.id === id);
+    if (idx >= 0) {
+      const call = scheduledCalls[idx];
+      scheduledCalls.splice(idx, 1);
+      closeCallActions();
+      renderScheduledCallsOnTimeline();
+      renderCalendar();
+      renderToScheduleBlock();
+      if (currentProfileClient && currentProfileClient.id === call.clientId) {
+        renderMealExplanationCta(call.clientId);
+      }
+    }
+  }
+  window.cancelCurrentCall = cancelCurrentCall;
+
+  // Initial render so any preset entries appear
+  renderScheduledCallsOnTimeline();
+  rebuildMbCalendarData();
+  renderToScheduleBlock();
+
 </script>
 
 </body>
