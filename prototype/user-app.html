@@ -171,29 +171,27 @@
     /* Meal hook (compact yellow card) */
     .meal-hook { gap: 10px; }
     .meal-hook .hook-text { flex: 1; display: flex; flex-direction: column; }
-    .meal-hook .hook-eyebrow {
+    .meal-hook .tracked-pill {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      background: #f4b400;
-      color: #4a2e00;
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      padding: 3px 8px 3px 7px;
+      gap: 6px;
+      background: linear-gradient(135deg, #1f6b4a 0%, #2d8a63 100%);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 11px 5px 9px;
       border-radius: 999px;
       margin-bottom: 8px;
-      text-transform: uppercase;
       width: fit-content;
-      box-shadow: 0 0 0 0 rgba(244,180,0,0.55);
-      animation: badge-pulse 2.2s ease-out infinite;
+      box-shadow: 0 3px 10px rgba(31,107,74,0.25);
+      letter-spacing: 0.01em;
     }
-    .meal-hook .hook-eyebrow .spark { font-size: 11px; }
-    @keyframes badge-pulse {
-      0%   { box-shadow: 0 0 0 0 rgba(244,180,0,0.55); }
-      70%  { box-shadow: 0 0 0 8px rgba(244,180,0,0); }
-      100% { box-shadow: 0 0 0 0 rgba(244,180,0,0); }
+    .meal-hook .tracked-pill .num {
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: -0.01em;
     }
+    .meal-hook .tracked-pill .leaf { font-size: 13px; line-height: 1; }
     .meal-hook .hook-title {
       font-size: 17px;
       font-weight: 700;
@@ -599,41 +597,75 @@
     .pdf-preview-meta .name { color: #111; font-weight: 600; flex: 1; }
     .pdf-preview-meta svg { width: 14px; height: 14px; color: #d6336c; }
 
-    /* Health tips */
-    .tip-card {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 14px;
-      border-radius: 14px;
-      margin-bottom: 10px;
+    /* Key daily habits block */
+    .habits-card {
+      background: #d8eded;
+      border-radius: 16px;
+      padding: 16px 16px 14px;
+      margin-bottom: 12px;
     }
-    .tip-card.green { background: #e8f3ec; }
-    .tip-card.peach { background: #fdebd9; }
-    .tip-card.blue  { background: #e3eef9; }
-    .tip-card.lilac { background: #efe6f6; }
-    .tip-emoji {
-      font-size: 26px;
-      flex-shrink: 0;
-      width: 40px;
-      height: 40px;
+    .habits-card .h-title {
       display: flex;
       align-items: center;
-      justify-content: center;
-      background: rgba(255,255,255,0.7);
-      border-radius: 50%;
-    }
-    .tip-body { flex: 1; }
-    .tip-title {
-      font-size: 15px;
+      gap: 8px;
+      font-size: 16px;
       font-weight: 700;
-      color: #111;
-      margin-bottom: 3px;
+      color: #0f4e34;
+      margin-bottom: 10px;
     }
-    .tip-text {
+    .habits-card .h-title .star {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #1f6b4a;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+    .habits-list {
+      background: #fff;
+      border-radius: 12px;
+      padding: 10px 14px;
+      list-style: none;
+      counter-reset: habit;
+    }
+    .habits-list li {
+      counter-increment: habit;
+      font-size: 14px;
+      color: #1f1f1f;
+      padding: 8px 0 8px 24px;
+      position: relative;
+      line-height: 1.4;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .habits-list li:last-child { border-bottom: none; }
+    .habits-list li::before {
+      content: counter(habit) ".";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      font-weight: 700;
+      color: #1f6b4a;
+      font-size: 14px;
+    }
+
+    /* Important notes block */
+    .note-card {
+      background: #fff;
+      border: 1.5px solid #b9dec7;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
       font-size: 13px;
-      color: #4b5563;
+      color: #333;
       line-height: 1.45;
+    }
+    .note-card .lbl {
+      color: #1f6b4a;
+      font-weight: 700;
+      margin-right: 4px;
     }
 
     /* Meal plan PDF mock */
@@ -681,36 +713,138 @@
     .pdf-h1 { font-size: 20px; font-weight: 800; color: #111; margin-top: 4px; letter-spacing: -0.01em; }
     .pdf-meta { font-size: 11px; color: #6b7280; margin-top: 4px; }
 
-    .pdf-meal { margin-bottom: 14px; }
-    .pdf-meal-h {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #f4faf6;
-      padding: 8px 10px;
-      border-radius: 6px;
-      margin-bottom: 8px;
+    .pdf-section-h {
+      font-size: 15px;
+      font-weight: 800;
+      color: #1f6b4a;
+      margin: 4px 0 10px;
+      letter-spacing: -0.01em;
     }
-    .pdf-meal-name { font-size: 13px; font-weight: 700; color: #1f6b4a; }
-    .pdf-meal-time { font-size: 11px; color: #6b7280; font-weight: 500; }
-    .pdf-meal ul { list-style: none; padding-left: 4px; }
-    .pdf-meal li {
+
+    /* PDF meal table (matches reference page 2) */
+    .pdf-table {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      margin-bottom: 18px;
+    }
+    .pdf-table-head {
+      display: grid;
+      grid-template-columns: 80px 90px 1fr;
+      background: #1f6b4a;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 9px 10px;
+      gap: 8px;
+    }
+    .pdf-row {
+      display: grid;
+      grid-template-columns: 80px 90px 1fr;
+      gap: 8px;
+      padding: 12px 10px;
+      background: #fff;
+      align-items: start;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .pdf-row.alt { background: #fff7d6; }
+    .pdf-row:last-child { border-bottom: none; }
+    .pdf-row .timing-time {
+      font-size: 12px;
+      font-weight: 700;
+      color: #111;
+    }
+    .pdf-row .timing-meal {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+    .pdf-pill {
+      display: inline-block;
+      background: #d8ece0;
+      color: #0f4e34;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 8px;
+      border-radius: 6px;
+      line-height: 1.2;
+      text-align: center;
+    }
+    .pdf-options {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .pdf-options li {
       font-size: 12px;
       color: #333;
-      padding: 4px 0 4px 16px;
+      padding: 2px 0 2px 12px;
       position: relative;
       line-height: 1.4;
     }
-    .pdf-meal li::before {
-      content: "";
+    .pdf-options li::before {
+      content: "•";
       position: absolute;
-      left: 4px;
-      top: 10px;
-      width: 5px;
-      height: 5px;
-      background: #1f6b4a;
-      border-radius: 50%;
+      left: 0;
+      top: 0;
+      color: #1f6b4a;
+      font-weight: 700;
     }
+
+    /* PDF guidelines block */
+    .pdf-guidelines { margin-top: 8px; }
+    .pdf-guide-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      background: #fff;
+    }
+    .pdf-guide-h {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1f6b4a;
+      margin-bottom: 8px;
+    }
+    .pdf-guide-h .mark {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .pdf-guide-card.include .mark { background: #1f6b4a; }
+    .pdf-guide-card.avoid .mark   { background: #c0392b; }
+    .pdf-guide-card.avoid .pdf-guide-h { color: #c0392b; }
+    .pdf-guide-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .pdf-guide-card li {
+      font-size: 12px;
+      color: #333;
+      padding: 3px 0 3px 14px;
+      position: relative;
+      line-height: 1.4;
+    }
+    .pdf-guide-card li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: 1px;
+      color: #1f6b4a;
+      font-weight: 700;
+    }
+    .pdf-guide-card.avoid li::before { color: #c0392b; }
+
     .pdf-footer {
       margin-top: 16px;
       padding-top: 12px;
@@ -1035,7 +1169,7 @@
       <!-- Meal hook -->
       <div class="task-card yellow meal-hook" id="mealHook" onclick="openPage('mealPage')">
         <div class="hook-text">
-          <span class="hook-eyebrow"><span class="spark">✨</span> New</span>
+          <span class="tracked-pill"><span class="leaf">🌱</span> <span class="num">14 days</span> tracked</span>
           <div class="hook-title">Meal tracking</div>
           <div class="hook-sub">Good health begins with knowing what's on your plate.</div>
         </div>
@@ -1234,19 +1368,28 @@
               <div class="pdf-sheet">
                 <div class="pdf-header">
                   <div class="pdf-brand">KineticAge Nutrition</div>
-                  <div class="pdf-h1">Akshat's Weekly Meal Plan</div>
-                  <div class="pdf-meta">Prepared by Dr. Orika · Week of May 4, 2026</div>
+                  <div class="pdf-h1">Meal Plan Details</div>
+                  <div class="pdf-meta">Prepared by Dr. Orika · May 4, 2026</div>
                 </div>
-                <div class="pdf-meal">
-                  <div class="pdf-meal-h">
-                    <div class="pdf-meal-name">🌅 Breakfast</div>
-                    <div class="pdf-meal-time">7:30 – 8:30 AM</div>
+                <div class="pdf-section-h">Meal Plan Details</div>
+                <div class="pdf-table">
+                  <div class="pdf-table-head">
+                    <div>Timing</div>
+                    <div>Meal Type</div>
+                    <div>Nutritious Options</div>
                   </div>
-                  <ul>
-                    <li>Vegetable poha with peanuts (1 medium bowl)</li>
-                    <li>1 boiled egg or 1 tbsp roasted chana</li>
-                    <li>Warm water with lemon</li>
-                  </ul>
+                  <div class="pdf-row">
+                    <div>
+                      <div class="timing-time">7-8 AM</div>
+                      <div class="timing-meal">Breakfast</div>
+                    </div>
+                    <div><span class="pdf-pill">Balanced Fuel</span></div>
+                    <ul class="pdf-options">
+                      <li>Glass warm water with lemon</li>
+                      <li>Soaked almonds</li>
+                      <li>Bowl oats porridge</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1258,26 +1401,25 @@
             <div class="pdf-preview-meta">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               <div class="name">Akshat-Meal-Plan.pdf</div>
-              <div>Page 1 of 1</div>
+              <div>Page 1 of 2</div>
             </div>
           </div>
 
-          <div class="page-section-title">Your nutritionist</div>
-          <button class="page-action call">
-            <div class="icon-wrap">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-              </svg>
-            </div>
-            <div class="copy">
-              <div class="a-title">Request a call from nutritionist</div>
-              <div class="a-sub">We'll arrange a callback at your preferred time</div>
-            </div>
-            <div class="chev">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
-          </button>
+          <div class="note-card">
+            <span class="lbl">Important Note:</span>
+            Eat dinner before 8 PM and avoid late-night snacking. Take medicines on time.
+          </div>
 
+          <div class="habits-card">
+            <div class="h-title"><span class="star">✦</span> Key Daily Habits</div>
+            <ol class="habits-list">
+              <li>Drink 8 glasses of water through the day.</li>
+              <li>Have one fresh seasonal fruit (orange, apple or guava).</li>
+              <li>Walk for at least 10 minutes after every meal.</li>
+            </ol>
+          </div>
+
+          <div class="page-section-title">Your nutritionist</div>
           <button class="page-action wa">
             <div class="icon-wrap">
               <svg viewBox="0 0 24 24" fill="currentColor">
@@ -1293,39 +1435,6 @@
             </div>
           </button>
 
-          <div class="page-section-title">Health tips</div>
-
-          <div class="tip-card green">
-            <div class="tip-emoji">💧</div>
-            <div class="tip-body">
-              <div class="tip-title">Start with water</div>
-              <div class="tip-text">A glass of water before each meal helps digestion and keeps you feeling full.</div>
-            </div>
-          </div>
-
-          <div class="tip-card peach">
-            <div class="tip-emoji">🥗</div>
-            <div class="tip-body">
-              <div class="tip-title">A fistful of greens</div>
-              <div class="tip-text">Add a small bowl of vegetables to lunch and dinner — fibre keeps you light.</div>
-            </div>
-          </div>
-
-          <div class="tip-card blue">
-            <div class="tip-emoji">🚶</div>
-            <div class="tip-body">
-              <div class="tip-title">Walk after dinner</div>
-              <div class="tip-text">A gentle 10-minute walk helps blood sugar settle and improves sleep.</div>
-            </div>
-          </div>
-
-          <div class="tip-card lilac">
-            <div class="tip-emoji">🍵</div>
-            <div class="tip-body">
-              <div class="tip-title">Cut down on added sugar</div>
-              <div class="tip-text">Try unsweetened tea or buttermilk in place of sugary drinks.</div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -1352,70 +1461,82 @@
             <div class="pdf-sheet">
               <div class="pdf-header">
                 <div class="pdf-brand">KineticAge Nutrition</div>
-                <div class="pdf-h1">Akshat's Weekly Meal Plan</div>
-                <div class="pdf-meta">Prepared by Dr. Orika · Week of May 4, 2026</div>
+                <div class="pdf-h1">Meal Plan Details</div>
+                <div class="pdf-meta">Prepared by Dr. Orika · May 4, 2026</div>
               </div>
 
-              <div class="pdf-meal">
-                <div class="pdf-meal-h">
-                  <div class="pdf-meal-name">🌅 Breakfast</div>
-                  <div class="pdf-meal-time">7:30 – 8:30 AM</div>
+              <div class="pdf-section-h">Meal Plan Details</div>
+              <div class="pdf-table">
+                <div class="pdf-table-head">
+                  <div>Timing</div>
+                  <div>Meal Type</div>
+                  <div>Nutritious Options</div>
                 </div>
-                <ul>
-                  <li>Vegetable poha with peanuts (1 medium bowl)</li>
-                  <li>1 boiled egg or 1 tbsp roasted chana</li>
-                  <li>Warm water with lemon</li>
-                </ul>
-              </div>
-
-              <div class="pdf-meal">
-                <div class="pdf-meal-h">
-                  <div class="pdf-meal-name">🥪 Mid-morning</div>
-                  <div class="pdf-meal-time">10:30 – 11:00 AM</div>
+                <div class="pdf-row">
+                  <div>
+                    <div class="timing-time">7-8 AM</div>
+                    <div class="timing-meal">Breakfast</div>
+                  </div>
+                  <div><span class="pdf-pill">Balanced Fuel</span></div>
+                  <ul class="pdf-options">
+                    <li>Glass warm water with lemon</li>
+                    <li>Soaked almonds</li>
+                    <li>Bowl oats porridge</li>
+                  </ul>
                 </div>
-                <ul>
-                  <li>1 seasonal fruit (apple, papaya or guava)</li>
-                  <li>4 – 5 soaked almonds</li>
-                </ul>
-              </div>
-
-              <div class="pdf-meal">
-                <div class="pdf-meal-h">
-                  <div class="pdf-meal-name">☀️ Lunch</div>
-                  <div class="pdf-meal-time">1:00 – 2:00 PM</div>
+                <div class="pdf-row alt">
+                  <div>
+                    <div class="timing-time">12-1 PM</div>
+                    <div class="timing-meal">Lunch</div>
+                  </div>
+                  <div><span class="pdf-pill">Power Plate</span></div>
+                  <ul class="pdf-options">
+                    <li>2 multigrain rotis</li>
+                    <li>1 katori dal + 1 katori sabzi</li>
+                    <li>Cucumber and tomato salad</li>
+                    <li>1 small bowl curd</li>
+                  </ul>
                 </div>
-                <ul>
-                  <li>2 multigrain rotis</li>
-                  <li>1 katori dal + 1 katori sabzi</li>
-                  <li>Cucumber and tomato salad</li>
-                  <li>1 small bowl curd</li>
-                </ul>
-              </div>
-
-              <div class="pdf-meal">
-                <div class="pdf-meal-h">
-                  <div class="pdf-meal-name">🍵 Evening</div>
-                  <div class="pdf-meal-time">4:30 – 5:00 PM</div>
+                <div class="pdf-row">
+                  <div>
+                    <div class="timing-time">7-8 PM</div>
+                    <div class="timing-meal">Dinner</div>
+                  </div>
+                  <div><span class="pdf-pill">Light &amp; Early</span></div>
+                  <ul class="pdf-options">
+                    <li>1 bowl vegetable khichdi</li>
+                    <li>Steamed vegetables on the side</li>
+                    <li>Warm turmeric milk before bed</li>
+                  </ul>
                 </div>
-                <ul>
-                  <li>Green tea or buttermilk</li>
-                  <li>2 whole-grain biscuits or roasted makhana</li>
-                </ul>
               </div>
 
-              <div class="pdf-meal">
-                <div class="pdf-meal-h">
-                  <div class="pdf-meal-name">🌙 Dinner</div>
-                  <div class="pdf-meal-time">7:30 – 8:30 PM</div>
+              <div class="pdf-section-h">Guidelines to Follow</div>
+              <div class="pdf-guidelines">
+                <div class="pdf-guide-card include">
+                  <div class="pdf-guide-h"><span class="mark">✓</span> Foods to Include</div>
+                  <ul>
+                    <li>Sabji bhaat</li>
+                    <li>Maach bhaat</li>
+                    <li>Karele ki sabji</li>
+                    <li>Whole grains — multigrain roti, brown rice</li>
+                    <li>Seasonal fruits and leafy greens</li>
+                    <li>Curd, buttermilk, sprouts</li>
+                  </ul>
                 </div>
-                <ul>
-                  <li>1 bowl vegetable khichdi or 1 roti + sabzi</li>
-                  <li>Steamed vegetables on the side</li>
-                  <li>Warm turmeric milk before bed (optional)</li>
-                </ul>
+                <div class="pdf-guide-card avoid">
+                  <div class="pdf-guide-h"><span class="mark">✕</span> Foods to Limit or Avoid</div>
+                  <ul>
+                    <li>Chicken chawal (heavy combinations)</li>
+                    <li>Orange juice and sugary drinks</li>
+                    <li>Apple a day on empty stomach</li>
+                    <li>Deep-fried snacks and namkeen</li>
+                    <li>Excess salt and processed food</li>
+                  </ul>
+                </div>
               </div>
 
-              <div class="pdf-footer">Page 1 of 1 · KineticAge · Personalised plan — please follow as advised.</div>
+              <div class="pdf-footer">KineticAge · Personalised plan — please follow as advised by Dr. Orika.</div>
             </div>
           </div>
         </div>
