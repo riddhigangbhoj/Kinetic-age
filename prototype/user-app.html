@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KineticAge User App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #e9eef1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #111;
+    }
+
+    .phone-frame {
+      width: 393px;
+      height: 852px;
+      background: #ffffff;
+      border-radius: 44px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.18), 0 0 0 2px #1a1a1a, 0 0 0 6px #333;
+    }
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-bottom: 96px;
+      background: #ffffff;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+    }
+    .screen::-webkit-scrollbar { display: none; }
+
+    /* Status bar */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 22px 4px;
+      height: 32px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #111;
+    }
+    .status-left { display: flex; align-items: center; gap: 6px; }
+    .status-left .dot { width: 3px; height: 3px; background: #555; border-radius: 50%; display: inline-block; margin-left: 4px; }
+    .status-icons { display: flex; align-items: center; gap: 6px; }
+    .status-icons svg { width: 14px; height: 14px; }
+    .battery-pill {
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 4px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 22px 14px;
+    }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: linear-gradient(135deg, #d4a373, #8b5a3c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+      overflow: hidden;
+    }
+    .greeting-label { font-size: 14px; color: #6b7280; line-height: 1.1; }
+    .greeting-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+    .bell-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+    }
+    .bell-btn svg { width: 26px; height: 26px; }
+
+    /* Generative status card */
+    .gen-card {
+      margin: 8px 18px 20px;
+      background: #d8ece0;
+      border: 2px solid #1f6b4a;
+      border-radius: 18px;
+      padding: 18px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 96px;
+    }
+    .gen-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1f6b4a;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+    .gen-text .sparkle {
+      display: inline-block;
+      margin-left: 4px;
+      vertical-align: top;
+      font-size: 16px;
+    }
+    .mic-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(31, 107, 74, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-left: 10px;
+    }
+    .mic-btn svg { width: 26px; height: 26px; color: #1f6b4a; }
+
+    /* Section title */
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+      padding: 6px 22px 12px;
+      letter-spacing: -0.01em;
+    }
+
+    /* Task cards */
+    .task-card {
+      margin: 0 18px 16px;
+      border-radius: 18px;
+      padding: 18px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .task-card.pink { background: #fbe4e8; }
+    .task-card.purple { background: #ece2f6; }
+    .task-card.yellow {
+      background: linear-gradient(135deg, #fff7d6 0%, #ffe9a8 100%);
+      padding: 16px 16px;
+      align-items: stretch;
+    }
+
+    /* Meal hook (compact yellow card) */
+    .meal-hook { gap: 10px; }
+    .meal-hook .hook-text { flex: 1; display: flex; flex-direction: column; }
+    .meal-hook .hook-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #f4b400;
+      color: #4a2e00;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      padding: 3px 8px 3px 7px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      width: fit-content;
+      box-shadow: 0 0 0 0 rgba(244,180,0,0.55);
+      animation: badge-pulse 2.2s ease-out infinite;
+    }
+    .meal-hook .hook-eyebrow .spark { font-size: 11px; }
+    @keyframes badge-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(244,180,0,0.55); }
+      70%  { box-shadow: 0 0 0 8px rgba(244,180,0,0); }
+      100% { box-shadow: 0 0 0 0 rgba(244,180,0,0); }
+    }
+    .meal-hook .hook-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.25;
+      margin-bottom: 3px;
+    }
+    .meal-hook .hook-sub {
+      font-size: 12px;
+      color: #6b5a1f;
+      line-height: 1.35;
+      margin-bottom: 10px;
+    }
+    .meal-chips {
+      display: flex;
+      gap: 6px;
+      margin-top: auto;
+    }
+    .meal-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255,255,255,0.6);
+      border: 1px dashed #c79a1a;
+      color: #6b5a1f;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+    .meal-illus {
+      width: 96px;
+      height: 96px;
+      flex-shrink: 0;
+      align-self: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .meal-illus svg { width: 100%; height: 100%; }
+
+    /* Make yellow card tappable */
+    .task-card.yellow { cursor: pointer; transition: transform 0.15s ease; }
+    .task-card.yellow:active { transform: scale(0.98); }
+
+    /* Full-page overlay (sub-page) */
+    .app-page {
+      position: absolute;
+      inset: 0;
+      background: #ffffff;
+      border-radius: 44px;
+      overflow: hidden;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+    }
+    .app-page.open { transform: translateX(0); }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 16px 12px;
+      background: #fff;
+      border-bottom: 1px solid #f0f0f0;
+      flex-shrink: 0;
+    }
+    .back-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .back-btn svg { width: 20px; height: 20px; color: #111; }
+    .page-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+      letter-spacing: -0.01em;
+    }
+    .page-content {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 18px 18px 36px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .page-content::-webkit-scrollbar { display: none; }
+
+    /* Action rows */
+    .page-action {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 14px;
+      border: 1.5px solid #ebebeb;
+      border-radius: 14px;
+      background: #fff;
+      width: 100%;
+      cursor: pointer;
+      margin-bottom: 12px;
+      transition: background 0.15s ease, border-color 0.15s ease;
+      text-align: left;
+    }
+    .page-action:active { background: #f0f0f0; border-color: #1f6b4a; }
+    .page-action .icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .page-action.plan .icon-wrap { background: #fff4cc; }
+    .page-action.plan .icon-wrap svg { color: #b07a00; }
+    .page-action.chat .icon-wrap { background: #d8ece0; }
+    .page-action.chat .icon-wrap svg { color: #1f6b4a; }
+    .page-action.call .icon-wrap { background: #e3eef9; }
+    .page-action.call .icon-wrap svg { color: #1c64b0; }
+    .page-action.wa   .icon-wrap { background: #dff5e3; }
+    .page-action.wa   .icon-wrap svg { color: #25d366; }
+    .page-action svg { width: 24px; height: 24px; }
+    .page-action .copy { flex: 1; }
+    .page-action .a-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 2px;
+    }
+    .page-action .a-sub {
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.35;
+    }
+    .page-action .chev { color: #9ca3af; flex-shrink: 0; }
+    .page-action .chev svg { width: 18px; height: 18px; }
+
+    /* Section heading inside page */
+    .page-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #6b7280;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 22px 4px 10px;
+    }
+    .page-section-title .by {
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 500;
+      color: #9ca3af;
+      margin-left: 6px;
+      font-size: 11px;
+    }
+
+    /* Calorie card */
+    .calorie-card {
+      background: linear-gradient(135deg, #d8ece0 0%, #b9dec7 100%);
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .calorie-left .lbl {
+      font-size: 11px;
+      font-weight: 700;
+      color: #1f6b4a;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .calorie-left .num {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0f4e34;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .calorie-left .num .unit {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1f6b4a;
+      margin-left: 4px;
+    }
+    .calorie-left .sub {
+      font-size: 11px;
+      color: #1f6b4a;
+      margin-top: 4px;
+    }
+    .calorie-ring {
+      width: 56px;
+      height: 56px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .calorie-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .calorie-ring .track { fill: none; stroke: rgba(255,255,255,0.6); stroke-width: 8; }
+    .calorie-ring .fill  { fill: none; stroke: #1f6b4a; stroke-width: 8; stroke-linecap: round; }
+    .calorie-ring .pct {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #0f4e34;
+    }
+
+    /* Macro cards */
+    .macro-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .macro-card {
+      background: #f8f8f8;
+      border-radius: 14px;
+      padding: 12px 10px 12px;
+      text-align: center;
+    }
+    .macro-card.carbs { background: #fff4cc; }
+    .macro-card.protein { background: #fbe4e8; }
+    .macro-card.fats { background: #ece2f6; }
+    .macro-emoji { font-size: 18px; line-height: 1; margin-bottom: 4px; }
+    .macro-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .macro-value {
+      font-size: 18px;
+      font-weight: 800;
+      color: #111;
+      letter-spacing: -0.01em;
+    }
+    .macro-value .unit {
+      font-size: 11px;
+      font-weight: 600;
+      color: #6b7280;
+      margin-left: 1px;
+    }
+    .macro-bar {
+      height: 4px;
+      background: rgba(0,0,0,0.08);
+      border-radius: 2px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+    .macro-bar > span {
+      display: block;
+      height: 100%;
+      border-radius: 2px;
+    }
+    .macro-card.carbs .macro-bar > span   { background: #e0a800; }
+    .macro-card.protein .macro-bar > span { background: #d6336c; }
+    .macro-card.fats .macro-bar > span    { background: #7b3fbf; }
+
+    /* Streak */
+    .streak-card {
+      background: linear-gradient(135deg, #fff8e8 0%, #ffe2c2 100%);
+      border-radius: 16px;
+      padding: 14px 14px 12px;
+      margin-bottom: 4px;
+    }
+    .streak-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .streak-flame {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #b75100;
+    }
+    .streak-flame .fire { font-size: 22px; }
+    .streak-sub {
+      font-size: 12px;
+      color: #6b5a1f;
+      font-weight: 500;
+    }
+    .streak-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+    .streak-day {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .streak-day .lbl {
+      font-size: 10px;
+      font-weight: 600;
+      color: #6b5a1f;
+    }
+    .streak-day .pill {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid #ffd9a8;
+    }
+    .streak-day.done .pill {
+      background: #1f6b4a;
+      border-color: #1f6b4a;
+      color: #fff;
+    }
+    .streak-day.done .pill svg { width: 14px; height: 14px; color: #fff; }
+    .streak-day.today .pill {
+      background: #fff;
+      border: 2px dashed #b75100;
+      color: #b75100;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    .streak-day.future .pill {
+      background: rgba(255,255,255,0.5);
+      border-color: #f3dfb8;
+    }
+    .streak-day.future .lbl { color: #b8a06e; }
+
+    /* PDF preview block (clipped) */
+    .pdf-preview {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid #ececec;
+      background: #f0f0f0;
+      margin-bottom: 4px;
+    }
+    .pdf-preview-clip {
+      max-height: 220px;
+      overflow: hidden;
+      padding: 14px 14px 0;
+      background: #f0f0f0;
+    }
+    .pdf-preview .pdf-sheet {
+      transform: scale(0.92);
+      transform-origin: top center;
+      pointer-events: none;
+    }
+    .pdf-fade {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 90px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0), #ffffff 80%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 12px;
+    }
+    .pdf-fade .open-btn {
+      background: #1f6b4a;
+      color: #fff;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 16px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 14px rgba(31,107,74,0.3);
+    }
+    .pdf-fade .open-btn svg { width: 14px; height: 14px; }
+    .pdf-preview-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #fff;
+      border-top: 1px solid #ececec;
+      font-size: 12px;
+      color: #6b7280;
+    }
+    .pdf-preview-meta .name { color: #111; font-weight: 600; flex: 1; }
+    .pdf-preview-meta svg { width: 14px; height: 14px; color: #d6336c; }
+
+    /* Health tips */
+    .tip-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 14px;
+      margin-bottom: 10px;
+    }
+    .tip-card.green { background: #e8f3ec; }
+    .tip-card.peach { background: #fdebd9; }
+    .tip-card.blue  { background: #e3eef9; }
+    .tip-card.lilac { background: #efe6f6; }
+    .tip-emoji {
+      font-size: 26px;
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
+    }
+    .tip-body { flex: 1; }
+    .tip-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 3px;
+    }
+    .tip-text {
+      font-size: 13px;
+      color: #4b5563;
+      line-height: 1.45;
+    }
+
+    /* Meal plan PDF mock */
+    .pdf-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: #f7f7f7;
+      border-bottom: 1px solid #ececec;
+      font-size: 12px;
+      color: #6b7280;
+      font-weight: 500;
+    }
+    .pdf-toolbar .pdf-name { display: flex; align-items: center; gap: 6px; color: #111; font-weight: 600; }
+    .pdf-toolbar .pdf-page { color: #6b7280; }
+    .pdf-share {
+      background: #1f6b4a;
+      color: #fff;
+      border: none;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .pdf-share svg { width: 12px; height: 12px; }
+
+    .pdf-page {
+      background: #f0f0f0;
+      padding: 18px 14px 28px;
+      min-height: 100%;
+    }
+    .pdf-sheet {
+      background: #fff;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+      border-radius: 4px;
+      padding: 22px 18px;
+    }
+    .pdf-header { text-align: center; padding-bottom: 14px; border-bottom: 2px solid #1f6b4a; margin-bottom: 16px; }
+    .pdf-brand { font-size: 11px; color: #1f6b4a; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+    .pdf-h1 { font-size: 20px; font-weight: 800; color: #111; margin-top: 4px; letter-spacing: -0.01em; }
+    .pdf-meta { font-size: 11px; color: #6b7280; margin-top: 4px; }
+
+    .pdf-meal { margin-bottom: 14px; }
+    .pdf-meal-h {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f4faf6;
+      padding: 8px 10px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+    .pdf-meal-name { font-size: 13px; font-weight: 700; color: #1f6b4a; }
+    .pdf-meal-time { font-size: 11px; color: #6b7280; font-weight: 500; }
+    .pdf-meal ul { list-style: none; padding-left: 4px; }
+    .pdf-meal li {
+      font-size: 12px;
+      color: #333;
+      padding: 4px 0 4px 16px;
+      position: relative;
+      line-height: 1.4;
+    }
+    .pdf-meal li::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 10px;
+      width: 5px;
+      height: 5px;
+      background: #1f6b4a;
+      border-radius: 50%;
+    }
+    .pdf-footer {
+      margin-top: 16px;
+      padding-top: 12px;
+      border-top: 1px dashed #d4d4d4;
+      font-size: 10px;
+      color: #9ca3af;
+      text-align: center;
+    }
+
+    .task-text { flex: 1; }
+    .task-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      color: #5a4a6e;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .task-title-small {
+      font-size: 16px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 6px;
+    }
+    .task-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+    .task-desc {
+      font-size: 13px;
+      color: #4b5563;
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+    .view-details {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1f6b4a;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .view-details svg { width: 14px; height: 14px; }
+
+    /* Progress ring */
+    .ring-wrap {
+      width: 110px;
+      height: 110px;
+      flex-shrink: 0;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ring-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .ring-track { fill: none; stroke: #f7d3d9; stroke-width: 10; }
+    .ring-fill { fill: none; stroke: #d6336c; stroke-width: 10; stroke-linecap: round; }
+    .ring-label {
+      position: absolute;
+      text-align: center;
+      line-height: 1.15;
+    }
+    .ring-label .num {
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+    }
+    .ring-label .sub {
+      font-size: 11px;
+      color: #4b5563;
+      margin-top: 1px;
+    }
+
+    /* Medicine icon */
+    .med-icon-wrap {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: #dccef0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .med-icon-wrap svg { width: 56px; height: 56px; }
+
+    /* Share & greet */
+    .share-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 22px 10px;
+    }
+    .share-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #111;
+      letter-spacing: -0.01em;
+    }
+    .call-fab {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #f0f0f0;
+    }
+    .call-fab svg { width: 22px; height: 22px; color: #1f6b4a; }
+
+    .greet-scroll {
+      display: flex;
+      gap: 12px;
+      padding: 4px 18px 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+    .greet-scroll::-webkit-scrollbar { display: none; }
+    .greet-card {
+      width: 150px;
+      height: 150px;
+      border-radius: 14px;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      text-align: center;
+      padding: 12px;
+    }
+    .greet-bday {
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,200,80,0.5), transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(255,150,200,0.4), transparent 40%),
+        linear-gradient(135deg, #1a1a2e, #2a2a4e);
+    }
+    .greet-bday .label {
+      font-family: 'Inter', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #ff6b9d, #ffd166, #06d6a0, #4cc9f0, #b388ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
+    .greet-morning {
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.35)),
+        linear-gradient(180deg, #f4a261 0%, #e76f51 60%, #2a4858 100%);
+    }
+    .greet-morning .label {
+      font-family: 'Brush Script MT', cursive;
+      font-style: italic;
+      font-size: 22px;
+      font-weight: 600;
+    }
+    .greet-morning .sub {
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+    .greet-diwali {
+      background:
+        radial-gradient(circle at 50% 30%, rgba(255,200,100,0.3), transparent 50%),
+        linear-gradient(180deg, #2d1b3d 0%, #4a2c5a 100%);
+      color: #ffd9a8;
+    }
+    .greet-diwali .label {
+      font-family: 'Georgia', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .greet-diwali .top { font-size: 11px; font-style: italic; margin-bottom: 4px; }
+    .greet-diwali .body { font-size: 7px; margin-top: 6px; line-height: 1.3; opacity: 0.85; font-weight: 400; }
+
+    /* Bottom nav */
+    .bottom-nav {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #1f6b4a;
+      padding: 14px 12px 16px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-radius: 0 0 44px 44px;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      flex: 1;
+    }
+    .nav-item svg { width: 24px; height: 24px; }
+    .nav-item.active {
+      background: rgba(255,255,255,0.18);
+    }
+
+    /* Phone home indicator (Samsung-style) */
+    .home-indicator {
+      position: absolute;
+      bottom: 6px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 60px;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .home-indicator .bar { width: 18px; height: 2px; background: #555; border-radius: 2px; }
+    .home-indicator svg { width: 14px; height: 14px; color: #555; }
+    .home-indicator .square { width: 12px; height: 12px; border: 1.5px solid #555; border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <div class="phone-frame">
+    <div class="screen">
+
+      <!-- Status bar -->
+      <div class="status-bar">
+        <div class="status-left">
+          <span>5:32</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.37 0 0 5.37 0 12a11.94 11.94 0 0 0 1.64 6L0 24l6.18-1.62A11.94 11.94 0 0 0 12 24c6.63 0 12-5.37 12-12a11.94 11.94 0 0 0-3.48-8.52z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/></svg>
+          <span class="dot"></span>
+        </div>
+        <div class="status-icons">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z"/><line x1="2" y1="2" x2="22" y2="22" stroke="currentColor" stroke-width="2"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.86a10 10 0 0 1 14 0"/><path d="M8.5 16.43a5 5 0 0 1 7 0"/><circle cx="12" cy="20" r="1"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="14" width="3" height="6"/><rect x="7" y="10" width="3" height="10"/><rect x="12" y="6" width="3" height="14"/><rect x="17" y="2" width="3" height="18"/></svg>
+          <span class="battery-pill">32</span>
+        </div>
+      </div>
+
+      <!-- Header -->
+      <div class="header">
+        <div class="header-left">
+          <div class="avatar">A</div>
+          <div>
+            <div class="greeting-label">Welcome,</div>
+            <div class="greeting-name">Akshat Saxena 🙏</div>
+          </div>
+        </div>
+        <button class="bell-btn" aria-label="Notifications">
+          <svg viewBox="0 0 24 24" fill="#1f6b4a" stroke="#1f6b4a" stroke-width="1.5" stroke-linejoin="round">
+            <path d="M12 2a6 6 0 0 0-6 6v3.5c0 1-.4 2-1.1 2.7L4 15h16l-.9-.8A3.8 3.8 0 0 1 18 11.5V8a6 6 0 0 0-6-6z"/>
+            <path d="M10 19a2 2 0 0 0 4 0" fill="none" stroke="#1f6b4a"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Generative status card -->
+      <div class="gen-card">
+        <div class="gen-text">
+          Now make<br>
+          Generative status
+          <span class="sparkle">✨</span>
+        </div>
+        <div class="mic-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="2" width="6" height="12" rx="3"/>
+            <path d="M5 11a7 7 0 0 0 14 0"/>
+            <line x1="12" y1="18" x2="12" y2="22"/>
+            <line x1="8" y1="22" x2="16" y2="22"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Today's Task -->
+      <h2 class="section-title">Today's Task</h2>
+
+      <!-- Workout card -->
+      <div class="task-card pink">
+        <div class="task-text">
+          <div class="task-title-small">Keep Going! 💪</div>
+          <div class="task-title">2/3 Sessions Done</div>
+          <div class="task-desc">You've smashed 2 workouts this week. Keep the momentum going!</div>
+          <a href="#" class="view-details">View Details
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="ring-wrap">
+          <svg viewBox="0 0 100 100">
+            <circle class="ring-track" cx="50" cy="50" r="42"/>
+            <circle class="ring-fill" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="88"/>
+          </svg>
+          <div class="ring-label">
+            <div class="num">2 workouts</div>
+            <div class="sub">Completed</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal hook -->
+      <div class="task-card yellow meal-hook" id="mealHook" onclick="openPage('mealPage')">
+        <div class="hook-text">
+          <span class="hook-eyebrow"><span class="spark">✨</span> New</span>
+          <div class="hook-title">Meal tracking</div>
+          <div class="hook-sub">Good health begins with knowing what's on your plate.</div>
+        </div>
+        <div class="meal-illus">
+          <svg viewBox="0 0 100 100" fill="none">
+            <!-- bowl shadow -->
+            <ellipse cx="50" cy="84" rx="36" ry="4" fill="rgba(0,0,0,0.08)"/>
+            <!-- food layer (back) leafy green -->
+            <path d="M18 56 Q26 40 38 46 Q46 36 56 44 Q68 36 76 48 Q86 44 84 60 L16 60 Q14 56 18 56 Z" fill="#7cb342"/>
+            <!-- avocado / grain accents -->
+            <circle cx="34" cy="52" r="5" fill="#aed581"/>
+            <circle cx="66" cy="50" r="4.5" fill="#c5e1a5"/>
+            <!-- tomatoes -->
+            <circle cx="44" cy="56" r="4" fill="#e53935"/>
+            <circle cx="58" cy="55" r="4.5" fill="#ef5350"/>
+            <circle cx="50" cy="50" r="3.5" fill="#ff7043"/>
+            <!-- egg yolk -->
+            <ellipse cx="40" cy="48" rx="6" ry="4.5" fill="#fff8e1"/>
+            <circle cx="40" cy="48" r="2.5" fill="#ffb300"/>
+            <!-- bowl -->
+            <path d="M12 60 H88 A38 38 0 0 1 12 60 Z" fill="#1f6b4a"/>
+            <path d="M12 60 H88" stroke="#144e35" stroke-width="2"/>
+            <!-- bowl rim highlight -->
+            <path d="M20 64 Q50 70 80 64" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" fill="none"/>
+            <!-- steam -->
+            <path d="M40 28 q-3 4 0 8 q3 4 0 8" stroke="#cfd8dc" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.7"/>
+            <path d="M52 22 q-3 5 0 10 q3 5 0 10" stroke="#cfd8dc" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.7"/>
+            <path d="M64 28 q-3 4 0 8 q3 4 0 8" stroke="#cfd8dc" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.7"/>
+            <!-- sparkle -->
+            <path d="M82 22 l1.5 -3 l1.5 3 l3 1.5 l-3 1.5 l-1.5 3 l-1.5 -3 l-3 -1.5 z" fill="#ffd54f"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Medicine card -->
+      <div class="task-card purple">
+        <div class="task-text">
+          <div class="task-eyebrow">Track your medicine</div>
+          <div class="task-title">Medicine Tracker</div>
+          <div class="task-desc">Add your medicine to stay on top of your daily doses.</div>
+          <a href="#" class="view-details">View Details
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+        <div class="med-icon-wrap">
+          <svg viewBox="0 0 64 64" fill="none">
+            <!-- pill capsule -->
+            <g transform="rotate(-30 32 28)">
+              <rect x="14" y="20" width="36" height="16" rx="8" fill="#7b3fbf"/>
+              <rect x="14" y="20" width="18" height="16" rx="8" fill="#a06bd6"/>
+            </g>
+            <!-- round pill -->
+            <circle cx="42" cy="44" r="10" fill="#7b3fbf"/>
+            <path d="M35 44 L49 44" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+            <!-- sparkles -->
+            <path d="M14 14 l1.5 -1.5 M14 14 l-1.5 1.5 M14 14 l1.5 1.5 M14 14 l-1.5 -1.5" stroke="#a06bd6" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="20" cy="10" r="1.2" fill="#a06bd6"/>
+            <circle cx="50" cy="14" r="1.2" fill="#a06bd6"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Share & Greet -->
+      <div class="share-row">
+        <h2 class="share-title">Share &amp; Greet</h2>
+        <div class="call-fab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            <line x1="19" y1="5" x2="19" y2="9"/>
+            <line x1="17" y1="7" x2="21" y2="7"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="greet-scroll">
+        <div class="greet-card greet-bday">
+          <div class="label">HAPPY<br>BIRTHDAY</div>
+        </div>
+        <div class="greet-card greet-morning">
+          <div>
+            <div class="label">Good morning</div>
+            <div class="sub">RISE AND SHINE</div>
+          </div>
+        </div>
+        <div class="greet-card greet-diwali">
+          <div>
+            <div class="top">Happy</div>
+            <div class="label">DIWALI</div>
+            <div class="body">May this festival of lights bring joy and prosperity to your life.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom nav -->
+      <div class="bottom-nav">
+        <button class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V9.5z"/></svg>
+          Home
+        </button>
+        <button class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Event
+        </button>
+        <button class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 17 9 11 13 15 21 7"/><polyline points="14 7 21 7 21 14"/></svg>
+          Activity
+        </button>
+        <button class="nav-item">
+          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          Library
+        </button>
+        <button class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M6.5 19a6 6 0 0 1 11 0"/></svg>
+          Profile
+        </button>
+      </div>
+
+      <!-- Meal tracking page -->
+      <div class="app-page" id="mealPage">
+        <div class="page-header">
+          <button class="back-btn" onclick="closePage('mealPage')" aria-label="Back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="page-title">Meal tracking</div>
+        </div>
+        <div class="page-content">
+
+          <div class="page-section-title" style="margin-top: 0;">Daily targets <span class="by">set by Dr. Orika</span></div>
+
+          <div class="calorie-card">
+            <div class="calorie-left">
+              <div class="lbl">Recommended intake</div>
+              <div class="num">1,800<span class="unit">kcal / day</span></div>
+            </div>
+          </div>
+
+          <div class="macro-row">
+            <div class="macro-card carbs">
+              <div class="macro-label">Carbs</div>
+              <div class="macro-value">220<span class="unit">g</span></div>
+              <div class="macro-bar"><span style="width:60%"></span></div>
+            </div>
+            <div class="macro-card protein">
+              <div class="macro-label">Protein</div>
+              <div class="macro-value">75<span class="unit">g</span></div>
+              <div class="macro-bar"><span style="width:55%"></span></div>
+            </div>
+            <div class="macro-card fats">
+              <div class="macro-label">Fats</div>
+              <div class="macro-value">55<span class="unit">g</span></div>
+              <div class="macro-bar"><span style="width:45%"></span></div>
+            </div>
+          </div>
+
+          <div class="page-section-title">This week's logging</div>
+          <div class="streak-card">
+            <div class="streak-top">
+              <div class="streak-flame"><span class="fire">🔥</span> 4 day streak</div>
+              <div class="streak-sub">Keep it going!</div>
+            </div>
+            <div class="streak-days">
+              <div class="streak-day done">
+                <div class="lbl">Mon</div>
+                <div class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              </div>
+              <div class="streak-day done">
+                <div class="lbl">Tue</div>
+                <div class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              </div>
+              <div class="streak-day done">
+                <div class="lbl">Wed</div>
+                <div class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              </div>
+              <div class="streak-day done">
+                <div class="lbl">Thu</div>
+                <div class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+              </div>
+              <div class="streak-day today">
+                <div class="lbl">Fri</div>
+                <div class="pill">•</div>
+              </div>
+              <div class="streak-day future">
+                <div class="lbl">Sat</div>
+                <div class="pill"></div>
+              </div>
+              <div class="streak-day future">
+                <div class="lbl">Sun</div>
+                <div class="pill"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-section-title">My meal plan</div>
+          <div class="pdf-preview" onclick="openPage('planPage')">
+            <div class="pdf-preview-clip">
+              <div class="pdf-sheet">
+                <div class="pdf-header">
+                  <div class="pdf-brand">KineticAge Nutrition</div>
+                  <div class="pdf-h1">Akshat's Weekly Meal Plan</div>
+                  <div class="pdf-meta">Prepared by Dr. Orika · Week of May 4, 2026</div>
+                </div>
+                <div class="pdf-meal">
+                  <div class="pdf-meal-h">
+                    <div class="pdf-meal-name">🌅 Breakfast</div>
+                    <div class="pdf-meal-time">7:30 – 8:30 AM</div>
+                  </div>
+                  <ul>
+                    <li>Vegetable poha with peanuts (1 medium bowl)</li>
+                    <li>1 boiled egg or 1 tbsp roasted chana</li>
+                    <li>Warm water with lemon</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="pdf-fade">
+              <button class="open-btn">View full plan
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+            <div class="pdf-preview-meta">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <div class="name">Akshat-Meal-Plan.pdf</div>
+              <div>Page 1 of 1</div>
+            </div>
+          </div>
+
+          <div class="page-section-title">Your nutritionist</div>
+          <button class="page-action call">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <div class="copy">
+              <div class="a-title">Request a call from nutritionist</div>
+              <div class="a-sub">We'll arrange a callback at your preferred time</div>
+            </div>
+            <div class="chev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+
+          <button class="page-action wa">
+            <div class="icon-wrap">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.52 3.48A11.94 11.94 0 0 0 12 0C5.37 0 0 5.37 0 12a11.94 11.94 0 0 0 1.64 6L0 24l6.18-1.62A11.94 11.94 0 0 0 12 24c6.63 0 12-5.37 12-12a11.94 11.94 0 0 0-3.48-8.52zM12 22a9.94 9.94 0 0 1-5.1-1.4l-.36-.21-3.67.96.98-3.58-.24-.37A9.94 9.94 0 1 1 22 12a9.94 9.94 0 0 1-10 10zm5.47-7.43c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15s-.77.97-.94 1.17-.35.22-.65.07a8.18 8.18 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.07c-.17-.3 0-.46.13-.6.13-.13.3-.34.45-.51.15-.17.2-.3.3-.5s.05-.37-.02-.52c-.07-.15-.67-1.6-.91-2.2-.24-.58-.49-.5-.67-.5h-.57a1.1 1.1 0 0 0-.8.37 3.32 3.32 0 0 0-1.04 2.47 5.78 5.78 0 0 0 1.21 3.06 13.21 13.21 0 0 0 5.05 4.46c.71.3 1.26.49 1.69.63a4.07 4.07 0 0 0 1.86.12 3.05 3.05 0 0 0 2-1.41 2.48 2.48 0 0 0 .17-1.42c-.07-.13-.27-.2-.57-.35z"/>
+              </svg>
+            </div>
+            <div class="copy">
+              <div class="a-title">Connect on WhatsApp</div>
+              <div class="a-sub">Chat directly with Dr. Orika</div>
+            </div>
+            <div class="chev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </button>
+
+          <div class="page-section-title">Health tips</div>
+
+          <div class="tip-card green">
+            <div class="tip-emoji">💧</div>
+            <div class="tip-body">
+              <div class="tip-title">Start with water</div>
+              <div class="tip-text">A glass of water before each meal helps digestion and keeps you feeling full.</div>
+            </div>
+          </div>
+
+          <div class="tip-card peach">
+            <div class="tip-emoji">🥗</div>
+            <div class="tip-body">
+              <div class="tip-title">A fistful of greens</div>
+              <div class="tip-text">Add a small bowl of vegetables to lunch and dinner — fibre keeps you light.</div>
+            </div>
+          </div>
+
+          <div class="tip-card blue">
+            <div class="tip-emoji">🚶</div>
+            <div class="tip-body">
+              <div class="tip-title">Walk after dinner</div>
+              <div class="tip-text">A gentle 10-minute walk helps blood sugar settle and improves sleep.</div>
+            </div>
+          </div>
+
+          <div class="tip-card lilac">
+            <div class="tip-emoji">🍵</div>
+            <div class="tip-body">
+              <div class="tip-title">Cut down on added sugar</div>
+              <div class="tip-text">Try unsweetened tea or buttermilk in place of sugary drinks.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meal plan PDF viewer page -->
+      <div class="app-page" id="planPage">
+        <div class="page-header">
+          <button class="back-btn" onclick="closePage('planPage')" aria-label="Back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="page-title">My meal plan</div>
+        </div>
+        <div class="pdf-toolbar">
+          <div class="pdf-name">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#d6336c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Akshat-Meal-Plan.pdf
+          </div>
+          <button class="pdf-share">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            Share
+          </button>
+        </div>
+        <div class="page-content" style="padding:0; background:#f0f0f0;">
+          <div class="pdf-page">
+            <div class="pdf-sheet">
+              <div class="pdf-header">
+                <div class="pdf-brand">KineticAge Nutrition</div>
+                <div class="pdf-h1">Akshat's Weekly Meal Plan</div>
+                <div class="pdf-meta">Prepared by Dr. Orika · Week of May 4, 2026</div>
+              </div>
+
+              <div class="pdf-meal">
+                <div class="pdf-meal-h">
+                  <div class="pdf-meal-name">🌅 Breakfast</div>
+                  <div class="pdf-meal-time">7:30 – 8:30 AM</div>
+                </div>
+                <ul>
+                  <li>Vegetable poha with peanuts (1 medium bowl)</li>
+                  <li>1 boiled egg or 1 tbsp roasted chana</li>
+                  <li>Warm water with lemon</li>
+                </ul>
+              </div>
+
+              <div class="pdf-meal">
+                <div class="pdf-meal-h">
+                  <div class="pdf-meal-name">🥪 Mid-morning</div>
+                  <div class="pdf-meal-time">10:30 – 11:00 AM</div>
+                </div>
+                <ul>
+                  <li>1 seasonal fruit (apple, papaya or guava)</li>
+                  <li>4 – 5 soaked almonds</li>
+                </ul>
+              </div>
+
+              <div class="pdf-meal">
+                <div class="pdf-meal-h">
+                  <div class="pdf-meal-name">☀️ Lunch</div>
+                  <div class="pdf-meal-time">1:00 – 2:00 PM</div>
+                </div>
+                <ul>
+                  <li>2 multigrain rotis</li>
+                  <li>1 katori dal + 1 katori sabzi</li>
+                  <li>Cucumber and tomato salad</li>
+                  <li>1 small bowl curd</li>
+                </ul>
+              </div>
+
+              <div class="pdf-meal">
+                <div class="pdf-meal-h">
+                  <div class="pdf-meal-name">🍵 Evening</div>
+                  <div class="pdf-meal-time">4:30 – 5:00 PM</div>
+                </div>
+                <ul>
+                  <li>Green tea or buttermilk</li>
+                  <li>2 whole-grain biscuits or roasted makhana</li>
+                </ul>
+              </div>
+
+              <div class="pdf-meal">
+                <div class="pdf-meal-h">
+                  <div class="pdf-meal-name">🌙 Dinner</div>
+                  <div class="pdf-meal-time">7:30 – 8:30 PM</div>
+                </div>
+                <ul>
+                  <li>1 bowl vegetable khichdi or 1 roti + sabzi</li>
+                  <li>Steamed vegetables on the side</li>
+                  <li>Warm turmeric milk before bed (optional)</li>
+                </ul>
+              </div>
+
+              <div class="pdf-footer">Page 1 of 1 · KineticAge · Personalised plan — please follow as advised.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Samsung-style home indicator -->
+      <div class="home-indicator">
+        <div class="bar"></div>
+        <div style="width:14px;height:14px;border:1.5px solid #555;border-radius:3px;"></div>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+
+    </div>
+  </div>
+  <script>
+    function openPage(id) {
+      document.getElementById(id).classList.add('open');
+    }
+    function closePage(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+  </script>
+</body>
+</html>
