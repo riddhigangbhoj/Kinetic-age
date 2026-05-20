@@ -1,0 +1,3415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kinetic Age — Admin Panel · Nutrition</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1f2937;
+    background: #ffffff;
+    font-size: 13px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: 56px 1fr;
+    grid-template-areas:
+      "logo  topbar"
+      "sidebar main";
+    height: 100vh;
+  }
+
+  /* ---------- Logo cell ---------- */
+  .logo-cell {
+    grid-area: logo;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 16px;
+    border-bottom: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+    background: #ffffff;
+  }
+  .logo-mark {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f97316, #111827);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 12px;
+    letter-spacing: 0.3px;
+  }
+  .logo-text { line-height: 1.15; }
+  .logo-text .name { font-weight: 600; font-size: 13px; color: #111827; }
+  .logo-text .sub  { font-size: 11px; color: #6b7280; }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    grid-area: topbar;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #ffffff;
+  }
+  .icon-btn {
+    width: 32px; height: 32px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .icon-btn:hover { background: #f3f4f6; color: #111827; }
+
+  .search {
+    flex: 1;
+    max-width: 520px;
+    position: relative;
+  }
+  .search input {
+    width: 100%;
+    height: 36px;
+    padding: 0 12px 0 36px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #f9fafb;
+    font-size: 13px;
+    color: #111827;
+    outline: none;
+  }
+  .search input::placeholder { color: #9ca3af; }
+  .search input:focus { background: #fff; border-color: #d1d5db; }
+  .search .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    pointer-events: none;
+  }
+
+  .topbar-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .user-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: #374151;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .user-meta { line-height: 1.15; text-align: left; }
+  .user-meta .nm { font-weight: 600; font-size: 13px; color: #111827; }
+  .user-meta .rl { font-size: 11px; color: #6b7280; }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    grid-area: sidebar;
+    border-right: 1px solid #e5e7eb;
+    background: #ffffff;
+    padding: 12px 8px;
+    overflow-y: auto;
+  }
+  .nav-heading {
+    padding: 8px 12px 6px;
+    font-size: 11px;
+    color: #6b7280;
+    text-transform: capitalize;
+  }
+  .nav-list { list-style: none; }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    color: #374151;
+    cursor: pointer;
+    font-size: 13px;
+    user-select: none;
+  }
+  .nav-item:hover { background: #f3f4f6; }
+  .nav-item .icon { color: #6b7280; display: inline-flex; }
+  .nav-item.active {
+    background: #f1ecfb;
+    color: #6d4cc9;
+  }
+  .nav-item.active .icon { color: #6d4cc9; }
+
+  /* ---------- Main ---------- */
+  .main {
+    grid-area: main;
+    overflow: auto;
+    padding: 20px 24px;
+    background: #ffffff;
+  }
+  .page-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 14px;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 24px;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 16px;
+  }
+  .tab {
+    padding: 10px 2px;
+    font-size: 13px;
+    color: #6b7280;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .tab:hover { color: #374151; }
+  .tab.active {
+    color: #2563eb;
+    border-bottom-color: #2563eb;
+    font-weight: 500;
+  }
+
+  /* Calendar controls */
+  .cal-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .seg {
+    display: inline-flex;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .seg button {
+    border: none;
+    background: transparent;
+    padding: 7px 14px;
+    font-size: 13px;
+    color: #374151;
+    cursor: pointer;
+  }
+  .seg button + button { border-left: 1px solid #e5e7eb; }
+  .seg button.active {
+    background: #111827;
+    color: #fff;
+  }
+
+  .nav-center {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 auto;
+  }
+  .nav-center .arrow {
+    width: 30px; height: 30px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    color: #374151;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-center .arrow:hover { background: #f9fafb; }
+  .nav-center .month-label {
+    font-size: 14px;
+    color: #111827;
+    font-weight: 500;
+    min-width: 110px;
+    text-align: center;
+  }
+  .today-btn {
+    padding: 7px 14px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #374151;
+    cursor: pointer;
+  }
+  .today-btn:hover { background: #f9fafb; }
+
+  .nut-select {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #374151;
+    cursor: pointer;
+  }
+  .nut-select:hover { background: #f9fafb; }
+
+  /* New clients strip */
+  .new-clients {
+    margin-bottom: 20px;
+  }
+  .nc-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .nc-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+  }
+  .nc-sub {
+    font-size: 12px;
+    color: #6b7280;
+  }
+  .nc-row {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+  .nc-row::-webkit-scrollbar { height: 6px; }
+  .nc-row::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 3px; }
+
+  .client-card {
+    flex: 0 0 320px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cc-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .cc-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: #e6efff;
+    color: #2563eb;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .cc-name-wrap { flex: 1; min-width: 0; }
+  .cc-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.2;
+  }
+  .cc-age {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 2px;
+  }
+  .cc-tags {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .pill {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .pill-week {
+    background: #eef4ff;
+    color: #1e40af;
+  }
+  .pill-comp {
+    background: #fff4e0;
+    color: #b45309;
+  }
+  .pill-reg {
+    background: #e9f7ef;
+    color: #15803d;
+  }
+  .pill-reassess {
+    background: #ede9fe;
+    color: #6d28d9;
+  }
+  .pill-zaiba {
+    background: #fce7f3;
+    color: #be185d;
+  }
+  .pill-fresh {
+    background: #d1fae5;
+    color: #15803d;
+  }
+
+  .cc-avatar.reassess { background: #ede9fe; color: #6d28d9; }
+  .cc-avatar.fresh    { background: #d1fae5; color: #15803d; }
+  .cc-assigned {
+    font-size: 11px;
+    color: #6d28d9;
+    font-weight: 500;
+    margin-top: 3px;
+  }
+  .cc-assigned.system { color: #475569; }
+
+  .nc-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn-sm-primary {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    background: #2563eb;
+    color: #fff;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .btn-sm-primary:hover { background: #1d4ed8; }
+
+  .btn-view-client {
+    width: 100%;
+    padding: 7px 12px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    color: #2563eb;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+  .btn-view-client:hover { background: #eff6ff; border-color: #93c5fd; }
+
+  .cc-health {
+    background: #f7f8fa;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .cc-health-icon {
+    width: 28px; height: 28px;
+    background: #fff;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #2563eb;
+    flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .cc-health-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #9ca3af;
+    letter-spacing: 0.6px;
+  }
+  .cc-health-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111827;
+    margin-top: 2px;
+  }
+
+  .cc-call {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 4px;
+    border-top: 1px dashed #eef0f3;
+    padding-top: 10px;
+  }
+  .cc-call-icon {
+    width: 28px; height: 28px;
+    background: #eef4ff;
+    color: #2563eb;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .cc-call-meta { line-height: 1.25; }
+  .cc-call-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: #9ca3af;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .cc-call-time {
+    font-size: 13px;
+    color: #111827;
+    font-weight: 600;
+    margin-top: 1px;
+  }
+
+  /* Calendar grid */
+  .cal-wrap {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .cal-head, .cal-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .cal-head .col {
+    padding: 8px 10px;
+    font-size: 12px;
+    color: #6b7280;
+    border-bottom: 1px solid #e5e7eb;
+    background: #fafafa;
+  }
+  .cal-row .cell {
+    min-height: 96px;
+    border-right: 1px solid #f0f0f1;
+    border-bottom: 1px solid #f0f0f1;
+    padding: 6px 8px 8px;
+    background: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .cal-row .cell:last-child { border-right: none; }
+  .cal-row:last-child .cell { border-bottom: none; }
+  .cell.out { background: #fafafa; }
+  .cell.out .day-num { color: #c4c4cb; }
+
+  .day-num {
+    font-size: 12px;
+    color: #374151;
+    line-height: 1;
+    margin-bottom: 2px;
+    align-self: flex-start;
+    padding: 4px 5px;
+    min-width: 22px;
+    text-align: center;
+  }
+  .day-num.today {
+    background: #2563eb;
+    color: #fff;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+
+  .entry {
+    font-size: 11.5px;
+    color: #374151;
+    padding: 2px 6px;
+    border-left: 3px solid #2563eb;
+    background: #f3f4f6;
+    border-radius: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    line-height: 1.4;
+  }
+  .entry:hover { background: #e5e7eb; }
+  .more {
+    font-size: 11.5px;
+    color: #6b7280;
+    padding: 1px 6px;
+    cursor: pointer;
+  }
+  .more:hover { color: #2563eb; }
+
+  /* Week view */
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+  .week-col {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .week-col-head {
+    padding: 8px 6px 10px;
+    text-align: center;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 4px;
+  }
+  .week-col-head .dow {
+    font-size: 11px;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .week-col-head .dnum {
+    font-size: 16px;
+    color: #111827;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .week-col-head .dnum.today {
+    background: #2563eb;
+    color: #fff;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px auto 0;
+  }
+  .wblock {
+    font-size: 11.5px;
+    color: #1f2937;
+    padding: 8px 9px;
+    border-radius: 5px;
+    line-height: 1.25;
+    min-height: 86px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+    word-break: break-word;
+    background: #f3f4f6;
+  }
+  .wb-row1 {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 4px;
+  }
+  .wb-name {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #111827;
+    flex: 1;
+    line-height: 1.25;
+  }
+  .wb-type {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    align-self: flex-start;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.55);
+    color: #4b5563;
+  }
+  .wb-type.t-weekly     { color: #15803d; background: rgba(22, 163, 74, 0.18); }
+  .wb-type.t-assessment { color: #6d28d9; background: rgba(168, 85, 247, 0.18); }
+  .wb-type.t-meal       { color: #b45309; background: rgba(245, 158, 11, 0.20); }
+  .wb-type.t-reass      { color: #be185d; background: rgba(236, 72, 153, 0.18); }
+  .wb-type.t-monthly    { color: #1e40af; background: rgba(59, 130, 246, 0.18); }
+  .wb-type.t-other      { color: #4b5563; background: rgba(107, 114, 128, 0.18); }
+  .wb-menu-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #4b5563;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .wb-menu-btn:hover { background: rgba(0,0,0,0.08); }
+  .wb-status {
+    font-size: 10px;
+    color: #4b5563;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .wb-status .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #16a34a;
+    flex-shrink: 0;
+  }
+  .wblock.client-inactive .wb-status .dot { background: #6b7280; }
+  .wblock.client-paused .wb-status .dot { background: #f59e0b; }
+  .wblock.not-tracking .wb-status .dot-track { background: #ef4444; }
+  .wb-status .dot-track {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #2563eb;
+    flex-shrink: 0;
+    margin-left: 4px;
+  }
+  .wb-actions {
+    display: flex;
+    gap: 3px;
+    margin-top: auto;
+  }
+  .wb-action {
+    flex: 1;
+    border: none;
+    background: rgba(255,255,255,0.7);
+    border-radius: 3px;
+    padding: 4px 0;
+    cursor: pointer;
+    color: #374151;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wb-action:hover { background: #fff; }
+  .wb-action.done { color: #15803d; }
+  .wb-action.resch { color: #b45309; }
+  .wb-action.miss { color: #b91c1c; }
+
+  .wblock.call-done { opacity: 0.72; }
+  .wblock.call-done .wb-name { text-decoration: line-through; color: #6b7280; }
+  .wblock.call-rescheduled .wb-name::after { content: ' · rescheduled'; font-weight: 400; color: #b45309; font-size: 10px; }
+  .wblock.call-missed .wb-name::after { content: ' · missed'; font-weight: 400; color: #b91c1c; font-size: 10px; }
+
+  /* Block dropdown menu */
+  .wb-popup {
+    position: absolute;
+    top: 28px;
+    right: 6px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+    min-width: 160px;
+    z-index: 50;
+    padding: 4px;
+    display: none;
+  }
+  .wb-popup.open { display: block; }
+  .wb-popup-label {
+    font-size: 10px;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 8px 2px;
+  }
+  .wb-popup-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    font-size: 12px;
+    color: #374151;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .wb-popup-item:hover { background: #f3f4f6; }
+  .wb-popup-item .check {
+    width: 12px;
+    color: #2563eb;
+    visibility: hidden;
+  }
+  .wb-popup-item.is-on { color: #2563eb; font-weight: 500; }
+  .wb-popup-item.is-on .check { visibility: visible; }
+  .wb-popup-sep {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 4px 0;
+  }
+
+  /* Modal */
+  .modal-bk {
+    position: fixed;
+    inset: 0;
+    background: rgba(17,24,39,0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+  .modal-bk.open { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 10px;
+    width: 440px;
+    max-width: 92vw;
+    padding: 18px 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+  }
+  .modal h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+  }
+  .modal .sub {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 4px 0 12px;
+  }
+  .modal textarea {
+    width: 100%;
+    min-height: 70px;
+    padding: 8px 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 13px;
+    resize: vertical;
+    outline: none;
+    color: #111827;
+  }
+  .modal textarea:focus { border-color: #2563eb; }
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .btn {
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    cursor: pointer;
+    color: #374151;
+  }
+  .btn:hover { background: #f9fafb; }
+  .btn-primary {
+    background: #2563eb;
+    color: #fff;
+    border-color: #2563eb;
+  }
+  .btn-primary:hover { background: #1d4ed8; }
+
+  .modal-row { margin-bottom: 10px; }
+  .modal-row label {
+    display: block;
+    font-size: 11px;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .modal input[type="date"] {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 13px;
+    color: #111827;
+    outline: none;
+  }
+  .modal input[type="date"]:focus { border-color: #2563eb; }
+
+  /* Pending + streak indicators on block status line */
+  .wb-status { flex-wrap: wrap; }
+  .wb-status .streak {
+    color: #b91c1c;
+    font-weight: 700;
+    background: rgba(255,255,255,0.7);
+    padding: 1px 5px;
+    border-radius: 999px;
+    font-size: 9.5px;
+  }
+  .wb-status .pending {
+    color: #b45309;
+    font-weight: 500;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    background: #111827;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    z-index: 200;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* ---------- Metrics tab ---------- */
+  .metrics-filter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .tile-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .tile {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 14px;
+    border-top: 3px solid #2563eb;
+    position: relative;
+  }
+  .tile.weekly     { border-top-color: #22c55e; }
+  .tile.assessment { border-top-color: #a855f7; }
+  .tile.meal-exp   { border-top-color: #f59e0b; }
+  .tile.monthly    { border-top-color: #3b82f6; }
+  .tile.other      { border-top-color: #6b7280; }
+  .tile .lbl { font-size: 11px; color: #6b7280; font-weight: 500; }
+  .tile .num { font-size: 22px; font-weight: 700; color: #111827; margin-top: 2px; }
+  .tile .caret { position: absolute; top: 12px; right: 10px; color: #9ca3af; }
+
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .kpi {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .kpi-icon {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    background: #eef4ff;
+    color: #2563eb;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .kpi.missed .kpi-icon { background: #fef2f2; color: #b91c1c; }
+  .kpi.resch  .kpi-icon { background: #fffbeb; color: #b45309; }
+  .kpi.meal   .kpi-icon { background: #ecfdf5; color: #047857; }
+  .kpi-meta { flex: 1; min-width: 0; }
+  .kpi-meta .lbl { font-size: 11px; color: #6b7280; font-weight: 500; }
+  .kpi-meta .num { font-size: 20px; font-weight: 700; color: #111827; line-height: 1.1; }
+  .kpi.missed .num, .kpi.resch .num { color: #b91c1c; }
+  .kpi-sub { font-size: 11px; color: #6b7280; margin-top: 2px; }
+
+  .section-h {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 18px 0 10px;
+  }
+  .section-h .title { font-size: 14px; font-weight: 600; color: #111827; }
+  .section-h .meta { font-size: 11.5px; color: #6b7280; }
+
+  .all-calls-bar {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 7px 10px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  .all-calls-bar .chip {
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    border-radius: 6px;
+    padding: 5px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #374151;
+    cursor: pointer;
+  }
+  .all-calls-bar .chip:hover { background: #f3f4f6; }
+  .all-calls-bar .total { margin-left: auto; color: #6b7280; }
+
+  .call-list {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .call-row {
+    display: grid;
+    grid-template-columns: 36px 1fr auto auto auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid #f0f0f1;
+  }
+  .call-row:last-child { border-bottom: none; }
+  .cr-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #d1fae5;
+    color: #16a34a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cr-avatar.miss  { background: #fee2e2; color: #b91c1c; }
+  .cr-avatar.resch { background: #fef3c7; color: #b45309; }
+  .cr-avatar.sched { background: #e5e7eb; color: #6b7280; }
+  .cr-meta { min-width: 0; }
+  .cr-meta .nm { font-size: 13px; color: #111827; font-weight: 500; }
+  .cr-meta .sub { font-size: 11px; color: #6b7280; margin-top: 2px; display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .type-pill {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+  }
+  .type-pill.t-weekly     { background: #d1fae5; color: #15803d; }
+  .type-pill.t-assessment { background: #ede9fe; color: #6d28d9; }
+  .type-pill.t-meal       { background: #fef3c7; color: #b45309; }
+  .type-pill.t-reass      { background: #fce7f3; color: #be185d; }
+  .type-pill.t-monthly    { background: #dbeafe; color: #1e40af; }
+  .type-pill.t-other      { background: #f3f4f6; color: #4b5563; }
+  .cr-time { text-align: right; font-size: 11.5px; color: #6b7280; line-height: 1.3; }
+  .cr-time .d { color: #374151; font-weight: 500; }
+  .cr-badge {
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #d1fae5;
+    color: #15803d;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+  .cr-badge.miss  { background: #fee2e2; color: #b91c1c; }
+  .cr-badge.resch { background: #fef3c7; color: #b45309; }
+  .cr-badge.sched { background: #e0e7ff; color: #3730a3; }
+  .cr-phone {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    background: transparent;
+    color: #16a34a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+  }
+  .cr-phone:hover { background: #f0fdf4; }
+  .cr-extras {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 5px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .cr-extras .rfp {
+    background: #fff7ed;
+    color: #b45309;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 500;
+    border: 1px solid #fed7aa;
+  }
+  .cr-extras .pending-pill {
+    background: #fffbeb;
+    color: #92400e;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 500;
+    border: 1px solid #fde68a;
+  }
+  .cr-extras .play-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    border-radius: 999px;
+    padding: 3px 9px;
+    cursor: pointer;
+    color: #374151;
+    font: inherit;
+    font-size: 11px;
+  }
+  .cr-extras .play-btn:hover { background: #f9fafb; }
+  .cr-extras .reason { font-style: italic; }
+
+  /* Pending request list (metrics) */
+  .pending-empty {
+    padding: 18px;
+    font-size: 13px;
+    color: #6b7280;
+    text-align: center;
+    border: 1px dashed #e5e7eb;
+    border-radius: 8px;
+    background: #fafafa;
+  }
+  .pending-row {
+    display: grid;
+    grid-template-columns: 32px 1fr auto auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid #f0f0f1;
+    background: #fff;
+  }
+  .pending-row:last-child { border-bottom: none; }
+  .pending-list {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .pending-row .pname { font-weight: 600; color: #111827; font-size: 13px; }
+  .pending-row .pmeta { color: #6b7280; margin-top: 2px; font-size: 11.5px; }
+  .pending-row .pstatus {
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #fef3c7;
+    color: #b45309;
+    white-space: nowrap;
+  }
+  .pending-row .pwhen { font-size: 11px; color: #6b7280; white-space: nowrap; }
+  .pending-row { grid-template-columns: 32px 1fr auto auto auto; }
+  .pending-row .pavatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #fef3c7;
+    color: #b45309;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .modal select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 13px;
+    color: #111827;
+    outline: none;
+    background: #fff;
+  }
+  .modal select:focus { border-color: #2563eb; }
+  .modal input[type="time"] {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 13px;
+    color: #111827;
+    outline: none;
+  }
+  .modal input[type="time"]:focus { border-color: #2563eb; }
+  .modal-row.dual { display: flex; gap: 10px; }
+  .modal-row.dual > div { flex: 1; }
+
+  /* Daily updates block */
+  .daily-block {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #fff;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .daily-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .daily-head .title { font-size: 14px; font-weight: 600; color: #111827; }
+  .daily-head .date {
+    font-size: 12px;
+    color: #374151;
+    background: #f3f4f6;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-weight: 500;
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .stat-grid.two { grid-template-columns: 1fr 1fr; }
+  .stat {
+    background: #f9fafb;
+    border-radius: 6px;
+    padding: 10px 12px;
+    border: 1px solid #f0f0f1;
+  }
+  .stat .lbl { font-size: 11px; color: #6b7280; }
+  .stat .num { font-size: 20px; font-weight: 700; color: #111827; line-height: 1.2; margin-top: 2px; }
+  .stat.green .num { color: #15803d; }
+  .stat.red .num { color: #b91c1c; }
+  .stat.purple .num { color: #6d28d9; }
+
+  .sub-h {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 14px 0 8px;
+  }
+  .feedback-list {
+    border: 1px solid #f0f0f1;
+    border-radius: 6px;
+  }
+  .fb-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid #f0f0f1;
+    gap: 10px;
+    font-size: 12.5px;
+  }
+  .fb-row:last-child { border-bottom: none; }
+  .fb-num { color: #9ca3af; font-size: 12px; min-width: 18px; }
+  .fb-name { flex: 1; color: #111827; font-weight: 500; }
+  .fb-resp {
+    font-size: 10.5px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+  .fb-resp.followed { background: #d1fae5; color: #15803d; }
+  .fb-resp.dnr      { background: #fee2e2; color: #b91c1c; }
+
+  /* Connected/not-connected badge for rescheduled-into-today list */
+  .conn-pill {
+    font-size: 10.5px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 600;
+    border: 1px solid transparent;
+  }
+  .conn-pill.yes { background: #d1fae5; color: #15803d; border-color: #a7f3d0; }
+  .conn-pill.no  { background: #f3f4f6; color: #4b5563; border-color: #e5e7eb; }
+
+  /* Meal logs strip (metrics) */
+  .log-row {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+  }
+  .log-row::-webkit-scrollbar { height: 6px; }
+  .log-row::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 3px; }
+  .log-card {
+    flex: 0 0 240px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .log-card .av {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #d1fae5;
+    color: #15803d;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .log-card .info { flex: 1; min-width: 0; }
+  .log-card .nm {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #111827;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .log-card .meta {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 2px;
+  }
+  .log-card .mini-dots { display: inline-flex; gap: 2px; flex-shrink: 0; }
+  .log-card .mini-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .log-card .mini-dot.g3  { background: #16a34a; }
+  .log-card .mini-dot.g2  { background: #86efac; }
+  .log-card .mini-dot.amb { background: #fbbf24; }
+  .log-card .mini-dot.red { background: #ef4444; }
+
+  /* Nutritionist client cards */
+  .nut-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+  }
+  .nut-summary .lhs { font-size: 13px; color: #374151; }
+  .nut-summary .lhs b { color: #111827; font-size: 15px; }
+  .nut-summary .pill-count {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: #d1fae5;
+    color: #15803d;
+  }
+  .nut-section-h {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 18px 0 10px;
+  }
+  .nut-section-h .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+  .nut-section-h .dot.green { background: #16a34a; }
+  .nut-section-h .dot.red   { background: #ef4444; }
+  .nut-section-h .title { font-size: 14px; font-weight: 600; color: #111827; }
+  .nut-section-h .count { font-size: 12px; color: #6b7280; }
+
+  .client-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .cc-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 14px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cc-card-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .cc-card-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: #e6efff;
+    color: #2563eb;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .cc-card-name { font-size: 14px; font-weight: 600; color: #111827; line-height: 1.2; }
+  .cc-card-sub { font-size: 12px; color: #6b7280; margin-top: 2px; }
+  .cc-card-week {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: #eef4ff;
+    color: #1e40af;
+    flex-shrink: 0;
+  }
+  .cc-card-tags {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .pill-monthly {
+    background: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #fed7aa;
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+
+  .nut-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .nut-filter .lbl {
+    font-size: 12px;
+    color: #6b7280;
+  }
+  .cc-card-cond {
+    background: #f7f8fa;
+    border-radius: 6px;
+    padding: 9px 10px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .cc-card-cond .icon {
+    width: 22px; height: 22px;
+    background: #fff;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #2563eb;
+    flex-shrink: 0;
+  }
+  .cc-card-cond-label {
+    font-size: 9.5px;
+    color: #9ca3af;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+  }
+  .cc-card-cond-text {
+    font-size: 12.5px;
+    color: #111827;
+    font-weight: 500;
+    margin-top: 1px;
+  }
+  .cc-log-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cc-log-row .lbl {
+    font-size: 11.5px;
+    color: #374151;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .cc-log-dots {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+  }
+  .cc-log-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+  }
+  .cc-log-dot.g3  { background: #16a34a; }
+  .cc-log-dot.g2  { background: #86efac; }
+  .cc-log-dot.amb { background: #fbbf24; }
+  .cc-log-dot.red { background: #ef4444; }
+  .cc-card-cta {
+    width: 100%;
+    background: #2563eb;
+    color: #fff;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .cc-card-cta:hover { background: #1d4ed8; }
+  .cc-card-link {
+    background: transparent;
+    border: none;
+    color: #2563eb;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin: -4px auto;
+  }
+  .cc-card-link:hover { text-decoration: underline; }
+
+  /* ---------- Client form (sidebar Clients page) ---------- */
+  .client-form { max-width: 960px; margin: 0 auto; }
+  .cf-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 20px;
+    margin-bottom: 20px;
+  }
+  .cf-field { display: flex; flex-direction: column; gap: 5px; }
+  .cf-field.full { grid-column: span 2; }
+  .cf-label {
+    font-size: 12px;
+    color: #374151;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .cf-label .ico { color: #6b7280; display: inline-flex; }
+  .cf-input, .cf-select {
+    height: 38px;
+    padding: 0 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 13px;
+    outline: none;
+    background: #fff;
+    color: #111827;
+    width: 100%;
+  }
+  .cf-input::placeholder { color: #9ca3af; }
+  .cf-input:focus, .cf-select:focus { border-color: #2563eb; }
+  .cf-input[disabled], .cf-select[disabled] { background: #f9fafb; color: #6b7280; }
+  .cf-hint { font-size: 11px; color: #6b7280; }
+  .cf-dob-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .cf-input-wrap { position: relative; }
+  .cf-input-wrap .cf-input { padding-right: 38px; padding-left: 36px; }
+  .cf-input-wrap .ico-lead {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #9ca3af;
+  }
+  .cf-input-wrap .ico-trail {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #9ca3af;
+  }
+  .cf-btn-add {
+    background: transparent;
+    border: none;
+    color: #2563eb;
+    font-size: 12.5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 0;
+    font-weight: 500;
+    margin-top: 4px;
+    align-self: flex-start;
+  }
+  .cf-btn-add:hover { text-decoration: underline; }
+  .cf-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+  }
+  .cf-radio-row {
+    display: flex;
+    gap: 16px;
+    padding: 6px 0;
+  }
+  .cf-radio {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #374151;
+    cursor: pointer;
+    padding: 4px 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+  }
+  .cf-radio input { margin: 0; cursor: pointer; accent-color: #2563eb; }
+  .cf-radio.is-on { border-color: #2563eb; background: #eff6ff; color: #1e40af; }
+
+  /* Meal plan documents (metrics) */
+  .doc-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .doc-tile {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .doc-tile .doc-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .doc-tile.pending .doc-icon { background: #eef4ff; color: #1e40af; }
+  .doc-tile.crossed .doc-icon { background: #fffbeb; color: #b45309; }
+  .doc-tile.missing .doc-icon { background: #fef2f2; color: #b91c1c; }
+  .doc-tile .lbl { font-size: 11px; color: #6b7280; font-weight: 500; }
+  .doc-tile .num { font-size: 20px; font-weight: 700; color: #111827; line-height: 1.1; }
+  .doc-tile.crossed .num { color: #b45309; }
+  .doc-tile.missing .num { color: #b91c1c; }
+
+  .doc-list { border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; overflow: hidden; }
+  .doc-list-row {
+    display: grid;
+    grid-template-columns: 32px 1fr auto auto auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid #f0f0f1;
+    font-size: 13px;
+  }
+  .doc-list-row:last-child { border-bottom: none; }
+  .doc-list-row .av {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    color: #4b5563;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .doc-list-row .cl { font-weight: 600; color: #111827; }
+  .doc-list-row .sub { font-size: 11.5px; color: #6b7280; margin-top: 2px; }
+  .doc-status {
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .doc-status.pending { background: #eef4ff; color: #1e40af; }
+  .doc-status.crossed { background: #fffbeb; color: #b45309; }
+  .doc-status.missing { background: #fef2f2; color: #b91c1c; }
+  .doc-when { font-size: 11px; color: #6b7280; white-space: nowrap; }
+  .doc-cta {
+    font-size: 11.5px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    color: #2563eb;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .doc-cta:hover { background: #eff6ff; border-color: #93c5fd; }
+
+  /* Tab placeholder pane */
+  .tab-placeholder {
+    border: 1px dashed #e5e7eb;
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    color: #6b7280;
+    font-size: 13px;
+    background: #fafafa;
+  }
+  .c1 { background: #fde2e4; }
+  .c2 { background: #ffe5b4; }
+  .c3 { background: #fef3c7; }
+  .c4 { background: #d1fae5; }
+  .c5 { background: #cffafe; }
+  .c6 { background: #dbeafe; }
+  .c7 { background: #ede9fe; }
+  .c8 { background: #fbcfe8; }
+
+  .wblock.kind-new            { background: #c7f0e2 !important; box-shadow: inset 3px 0 0 #10b981; }
+  .wblock.kind-reassessment   { background: #e9d5ff !important; box-shadow: inset 3px 0 0 #7c3aed; }
+  .wblock.kind-added-from-app { background: #cffafe !important; box-shadow: inset 3px 0 0 #0891b2; }
+
+  /* Calendar color legend */
+  .cal-legend {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    background: #fff;
+    font-size: 12px;
+    color: #374151;
+    flex-wrap: wrap;
+  }
+  .cal-legend .lbl { color: #6b7280; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; font-size: 10.5px; }
+  .cal-legend .lg-item { display: inline-flex; align-items: center; gap: 6px; }
+  .cal-legend .sw {
+    width: 16px; height: 16px;
+    border-radius: 3px;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .cal-legend .sw.regular { background: #f3f4f6; border: 1px solid #e5e7eb; }
+  .cal-legend .sw.new     { background: #c7f0e2; box-shadow: inset 3px 0 0 #10b981; }
+  .cal-legend .sw.reass   { background: #e9d5ff; box-shadow: inset 3px 0 0 #7c3aed; }
+  .cal-legend .sw.app     { background: #cffafe; box-shadow: inset 3px 0 0 #0891b2; }
+
+  /* Day view */
+  .day-pane {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 16px;
+    background: #fff;
+  }
+  .day-pane h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 10px;
+  }
+  .day-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  /* SVG icons baseline */
+  svg { display: block; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Logo cell -->
+  <div class="logo-cell">
+    <div class="logo-mark">AC</div>
+    <div class="logo-text">
+      <div class="name">Kinetic Age</div>
+      <div class="sub">Admin Panel</div>
+    </div>
+  </div>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <button class="icon-btn" aria-label="Toggle sidebar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
+    </button>
+    <div class="search">
+      <span class="search-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      </span>
+      <input type="text" placeholder="Search clients, trainers, sessions...">
+    </div>
+    <div class="topbar-right">
+      <div class="user-chip">
+        <div class="avatar">AD</div>
+        <div class="user-meta">
+          <div class="nm">Riddhi</div>
+          <div class="rl">Admin</div>
+        </div>
+      </div>
+      <button class="icon-btn" aria-label="Download">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="nav-heading">Navigation</div>
+    <ul class="nav-list">
+      <li class="nav-item" data-sidebar-page="dashboard"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 12 3l9 9"/><path d="M5 10v10h14V10"/></svg></span>Dashboard</li>
+      <li class="nav-item" data-sidebar-page="analytics"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>Analytics</li>
+      <li class="nav-item" data-sidebar-page="clients"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Clients</li>
+      <li class="nav-item" data-sidebar-page="trainers"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/></svg></span>Trainers</li>
+      <li class="nav-item active" data-sidebar-page="nutrition"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1.5 0 3 1 3 3 0 .5-.2 1-.5 1.4 2 .6 3.5 2.5 3.5 4.6 0 4-3.5 9-6 9s-6-5-6-9c0-2.1 1.5-4 3.5-4.6A2.4 2.4 0 0 1 9 6c0-2 1.5-3 3-3z"/></svg></span>Nutrition</li>
+      <li class="nav-item" data-sidebar-page="sessions"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>Sessions</li>
+      <li class="nav-item" data-sidebar-page="pending-plans"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 14h6M9 18h6"/></svg></span>Pending Exercise Plans</li>
+      <li class="nav-item" data-sidebar-page="leaves"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></span>Leaves</li>
+      <li class="nav-item" data-sidebar-page="reports"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><rect x="7" y="13" width="3" height="5"/><rect x="12" y="9" width="3" height="9"/><rect x="17" y="6" width="3" height="12"/></svg></span>Reports</li>
+      <li class="nav-item" data-sidebar-page="trials"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/></svg></span>Trials</li>
+      <li class="nav-item" data-sidebar-page="audits"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg></span>Audits</li>
+      <li class="nav-item" data-sidebar-page="reviews"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></svg></span>Reviews</li>
+      <li class="nav-item" data-sidebar-page="crm"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20v-1a5 5 0 0 1 10 0v1"/><path d="M14 20v-1a4 4 0 0 1 8 0v1"/></svg></span>CRM</li>
+      <li class="nav-item" data-sidebar-page="call-analysis"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V21a1 1 0 0 1-1.08 1 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 3.22 4.08 1 1 0 0 1 4.21 3h4.09a1 1 0 0 1 1 .75 12.34 12.34 0 0 0 .68 2.69 1 1 0 0 1-.23 1L8.09 9.05a16 16 0 0 0 6 6l1.61-1.66a1 1 0 0 1 1-.23 12.34 12.34 0 0 0 2.69.68 1 1 0 0 1 .75 1z"/></svg></span>Call Analysis</li>
+      <li class="nav-item" data-sidebar-page="universal-otp"><span class="icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>Universal OTP</li>
+    </ul>
+  </aside>
+
+  <!-- Main content -->
+  <main class="main">
+    <!-- Nutrition sidebar page -->
+    <div data-sidebar-page="nutrition">
+    <h1 class="page-title">Nutrition</h1>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="calendar">Calendar</div>
+      <div class="tab" data-tab="metrics">Metrics</div>
+      <div class="tab" data-tab="clients">Clients</div>
+      <div class="tab" data-tab="nutritionist">Nutritionist</div>
+    </div>
+
+    <!-- Calendar tab pane -->
+    <div data-tab-pane="calendar">
+
+    <!-- New clients added -->
+    <section class="new-clients">
+      <div class="nc-header">
+        <div>
+          <div class="nc-title">New clients &amp; reassessments</div>
+          <div class="nc-sub">Sorted by earliest upcoming call</div>
+        </div>
+        <div class="nc-actions">
+          <button class="btn-sm-primary" id="openSchedule">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Schedule a call
+          </button>
+        </div>
+      </div>
+      <div class="nc-row">
+
+        <!-- Card 1 — soonest (Fresh client) -->
+        <article class="client-card">
+          <div class="cc-head">
+            <div class="cc-avatar fresh">DJ</div>
+            <div class="cc-name-wrap">
+              <div class="cc-name">Dc Jain</div>
+              <div class="cc-age">73 yrs</div>
+              <div class="cc-assigned">Assigned by Zaiba</div>
+            </div>
+            <div class="cc-tags">
+              <span class="pill pill-fresh">Fresh client</span>
+              <span class="pill pill-comp">Complimentary</span>
+            </div>
+          </div>
+          <div class="cc-call">
+            <div class="cc-call-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V21a1 1 0 0 1-1.08 1 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 3.22 4.08 1 1 0 0 1 4.21 3h4.09a1 1 0 0 1 1 .75 12.34 12.34 0 0 0 .68 2.69 1 1 0 0 1-.23 1L8.09 9.05a16 16 0 0 0 6 6l1.61-1.66a1 1 0 0 1 1-.23 12.34 12.34 0 0 0 2.69.68 1 1 0 0 1 .75 1z"/></svg>
+            </div>
+            <div class="cc-call-meta">
+              <div class="cc-call-label">Call scheduled</div>
+              <div class="cc-call-time">Today, 6:30 PM</div>
+            </div>
+          </div>
+          <button class="btn-view-client" data-view-client="Dc Jain">View client →</button>
+        </article>
+
+        <!-- Card 2 — Fresh client -->
+        <article class="client-card">
+          <div class="cc-head">
+            <div class="cc-avatar fresh">AS</div>
+            <div class="cc-name-wrap">
+              <div class="cc-name">Anita Sharma</div>
+              <div class="cc-age">42 yrs</div>
+            </div>
+            <div class="cc-tags">
+              <span class="pill pill-fresh">Fresh client</span>
+              <span class="pill pill-reg">Regular</span>
+            </div>
+          </div>
+          <div class="cc-call">
+            <div class="cc-call-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V21a1 1 0 0 1-1.08 1 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 3.22 4.08 1 1 0 0 1 4.21 3h4.09a1 1 0 0 1 1 .75 12.34 12.34 0 0 0 .68 2.69 1 1 0 0 1-.23 1L8.09 9.05a16 16 0 0 0 6 6l1.61-1.66a1 1 0 0 1 1-.23 12.34 12.34 0 0 0 2.69.68 1 1 0 0 1 .75 1z"/></svg>
+            </div>
+            <div class="cc-call-meta">
+              <div class="cc-call-label">Call scheduled</div>
+              <div class="cc-call-time">Tomorrow, 10:00 AM</div>
+            </div>
+          </div>
+          <button class="btn-view-client" data-view-client="Anita Sharma">View client →</button>
+        </article>
+
+        <!-- Card 3 — Reassessment (System assigned) -->
+        <article class="client-card">
+          <div class="cc-head">
+            <div class="cc-avatar reassess">VM</div>
+            <div class="cc-name-wrap">
+              <div class="cc-name">Vikram Mehta</div>
+              <div class="cc-age">58 yrs</div>
+              <div class="cc-assigned system">System assigned</div>
+            </div>
+            <div class="cc-tags">
+              <span class="pill pill-week">Week 3</span>
+              <span class="pill pill-reassess">Reassessment</span>
+              <span class="pill pill-reg">Regular</span>
+            </div>
+          </div>
+          <div class="cc-call">
+            <div class="cc-call-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V21a1 1 0 0 1-1.08 1 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 3.22 4.08 1 1 0 0 1 4.21 3h4.09a1 1 0 0 1 1 .75 12.34 12.34 0 0 0 .68 2.69 1 1 0 0 1-.23 1L8.09 9.05a16 16 0 0 0 6 6l1.61-1.66a1 1 0 0 1 1-.23 12.34 12.34 0 0 0 2.69.68 1 1 0 0 1 .75 1z"/></svg>
+            </div>
+            <div class="cc-call-meta">
+              <div class="cc-call-label">Call scheduled</div>
+              <div class="cc-call-time">Tomorrow, 2:00 PM</div>
+            </div>
+          </div>
+          <button class="btn-view-client" data-view-client="Vikram Mehta">View client →</button>
+        </article>
+
+        <!-- Card 4 — Reassessment (System assigned) -->
+        <article class="client-card">
+          <div class="cc-head">
+            <div class="cc-avatar reassess">PR</div>
+            <div class="cc-name-wrap">
+              <div class="cc-name">Priya Reddy</div>
+              <div class="cc-age">35 yrs</div>
+              <div class="cc-assigned system">System assigned</div>
+            </div>
+            <div class="cc-tags">
+              <span class="pill pill-week">Week 3</span>
+              <span class="pill pill-reassess">Reassessment</span>
+              <span class="pill pill-reg">Regular</span>
+            </div>
+          </div>
+          <div class="cc-call">
+            <div class="cc-call-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V21a1 1 0 0 1-1.08 1 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 3.22 4.08 1 1 0 0 1 4.21 3h4.09a1 1 0 0 1 1 .75 12.34 12.34 0 0 0 .68 2.69 1 1 0 0 1-.23 1L8.09 9.05a16 16 0 0 0 6 6l1.61-1.66a1 1 0 0 1 1-.23 12.34 12.34 0 0 0 2.69.68 1 1 0 0 1 .75 1z"/></svg>
+            </div>
+            <div class="cc-call-meta">
+              <div class="cc-call-label">Call scheduled</div>
+              <div class="cc-call-time">22 May, 11:30 AM</div>
+            </div>
+          </div>
+          <button class="btn-view-client" data-view-client="Priya Reddy">View client →</button>
+        </article>
+
+        <!-- Card 5 — Fresh client -->
+        <article class="client-card">
+          <div class="cc-head">
+            <div class="cc-avatar fresh">RK</div>
+            <div class="cc-name-wrap">
+              <div class="cc-name">Rohan Kapoor</div>
+              <div class="cc-age">47 yrs</div>
+            </div>
+            <div class="cc-tags">
+              <span class="pill pill-fresh">Fresh client</span>
+              <span class="pill pill-comp">Complimentary</span>
+            </div>
+          </div>
+          <div class="cc-call">
+            <div class="cc-call-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V21a1 1 0 0 1-1.08 1 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 3.22 4.08 1 1 0 0 1 4.21 3h4.09a1 1 0 0 1 1 .75 12.34 12.34 0 0 0 .68 2.69 1 1 0 0 1-.23 1L8.09 9.05a16 16 0 0 0 6 6l1.61-1.66a1 1 0 0 1 1-.23 12.34 12.34 0 0 0 2.69.68 1 1 0 0 1 .75 1z"/></svg>
+            </div>
+            <div class="cc-call-meta">
+              <div class="cc-call-label">Call scheduled</div>
+              <div class="cc-call-time">23 May, 4:00 PM</div>
+            </div>
+          </div>
+          <button class="btn-view-client" data-view-client="Rohan Kapoor">View client →</button>
+        </article>
+
+      </div>
+    </section>
+
+    <div class="cal-controls">
+      <div class="seg">
+        <button class="active" data-view="week">Week</button>
+        <button data-view="day">Day</button>
+        <button data-view="month">Month</button>
+      </div>
+      <div class="nav-center">
+        <button class="arrow" aria-label="Previous">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="month-label">May 2026</div>
+        <button class="arrow" aria-label="Next">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <button class="today-btn">Today</button>
+      <div class="nut-select">
+        All Nutritionists
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+
+    <!-- Color legend -->
+    <div class="cal-legend">
+      <span class="lbl">Legend</span>
+      <span class="lg-item"><span class="sw regular"></span>Regular client</span>
+      <span class="lg-item"><span class="sw new"></span>New client</span>
+      <span class="lg-item"><span class="sw reass"></span>Reassessment</span>
+      <span class="lg-item"><span class="sw app"></span>Added from her phone app</span>
+    </div>
+
+    <!-- Week view (default) -->
+    <div data-view-pane="week" class="week-grid">
+      <div class="week-col"><div class="week-col-head"><div class="dow">Sun</div><div class="dnum">17</div></div><div class="wcol-list" data-day="17"></div></div>
+      <div class="week-col"><div class="week-col-head"><div class="dow">Mon</div><div class="dnum">18</div></div><div class="wcol-list" data-day="18"></div></div>
+      <div class="week-col"><div class="week-col-head"><div class="dow">Tue</div><div class="dnum">19</div></div><div class="wcol-list" data-day="19"></div></div>
+      <div class="week-col"><div class="week-col-head"><div class="dow">Wed</div><div class="dnum today">20</div></div><div class="wcol-list" data-day="20"></div></div>
+      <div class="week-col"><div class="week-col-head"><div class="dow">Thu</div><div class="dnum">21</div></div><div class="wcol-list" data-day="21"></div></div>
+      <div class="week-col"><div class="week-col-head"><div class="dow">Fri</div><div class="dnum">22</div></div><div class="wcol-list" data-day="22"></div></div>
+      <div class="week-col"><div class="week-col-head"><div class="dow">Sat</div><div class="dnum">23</div></div><div class="wcol-list" data-day="23"></div></div>
+    </div>
+
+    <!-- Day view -->
+    <div data-view-pane="day" class="day-pane" style="display:none;">
+      <h3>Wednesday, 20 May 2026 — Today</h3>
+      <div class="day-list" data-day-pane="20"></div>
+    </div>
+
+    <!-- Month view -->
+    <div data-view-pane="month" class="cal-wrap" style="display:none;">
+      <div class="cal-head">
+        <div class="col">Sun</div>
+        <div class="col">Mon</div>
+        <div class="col">Tue</div>
+        <div class="col">Wed</div>
+        <div class="col">Thu</div>
+        <div class="col">Fri</div>
+        <div class="col">Sat</div>
+      </div>
+
+      <!-- Week 1 -->
+      <div class="cal-row">
+        <div class="cell out"><div class="day-num">26</div></div>
+        <div class="cell out"><div class="day-num">27</div></div>
+        <div class="cell out"><div class="day-num">28</div></div>
+        <div class="cell out"><div class="day-num">29</div></div>
+        <div class="cell out"><div class="day-num">30</div></div>
+        <div class="cell"><div class="day-num">1</div></div>
+        <div class="cell"><div class="day-num">2</div></div>
+      </div>
+
+      <!-- Week 2 -->
+      <div class="cal-row">
+        <div class="cell"><div class="day-num">3</div></div>
+        <div class="cell"><div class="day-num">4</div></div>
+        <div class="cell"><div class="day-num">5</div></div>
+        <div class="cell"><div class="day-num">6</div></div>
+        <div class="cell"><div class="day-num">7</div></div>
+        <div class="cell"><div class="day-num">8</div></div>
+        <div class="cell"><div class="day-num">9</div></div>
+      </div>
+
+      <!-- Week 3 -->
+      <div class="cal-row">
+        <div class="cell"><div class="day-num">10</div></div>
+        <div class="cell"><div class="day-num">11</div></div>
+        <div class="cell"><div class="day-num">12</div></div>
+        <div class="cell"><div class="day-num">13</div></div>
+        <div class="cell">
+          <div class="day-num">14</div>
+          <div class="entry">Shadhikala (Sannidhi)</div>
+          <div class="entry">Akshat Saxena</div>
+        </div>
+        <div class="cell">
+          <div class="day-num">15</div>
+          <div class="entry">Nita Podar</div>
+          <div class="entry">Jayalakshmi</div>
+          <div class="entry">Shivashankar</div>
+          <div class="more">+2 more</div>
+        </div>
+        <div class="cell">
+          <div class="day-num">16</div>
+          <div class="entry">Sampath G</div>
+          <div class="entry">Nayan surekha | Rekha Devi Su...</div>
+          <div class="entry">PREMODE</div>
+          <div class="more">+6 more</div>
+        </div>
+      </div>
+
+      <!-- Week 4 -->
+      <div class="cal-row">
+        <div class="cell"><div class="day-num">17</div></div>
+        <div class="cell">
+          <div class="day-num">18</div>
+          <div class="entry">Suresh Randadath</div>
+          <div class="entry">Rajul Garg</div>
+        </div>
+        <div class="cell">
+          <div class="day-num">19</div>
+          <div class="entry">Sony</div>
+          <div class="entry">Sony</div>
+          <div class="entry">Neelam Monga</div>
+          <div class="more">+6 more</div>
+        </div>
+        <div class="cell">
+          <div class="day-num today">20</div>
+        </div>
+        <div class="cell">
+          <div class="day-num">21</div>
+          <div class="entry">Selma</div>
+          <div class="entry">Selma</div>
+          <div class="entry">Neelam Monga</div>
+          <div class="more">+4 more</div>
+        </div>
+        <div class="cell">
+          <div class="day-num">22</div>
+          <div class="entry">Gayathri Reddy</div>
+        </div>
+        <div class="cell"><div class="day-num">23</div></div>
+      </div>
+
+      <!-- Week 5 -->
+      <div class="cal-row">
+        <div class="cell"><div class="day-num">24</div></div>
+        <div class="cell"><div class="day-num">25</div></div>
+        <div class="cell"><div class="day-num">26</div></div>
+        <div class="cell"><div class="day-num">27</div></div>
+        <div class="cell"><div class="day-num">28</div></div>
+        <div class="cell"><div class="day-num">29</div></div>
+        <div class="cell"><div class="day-num">30</div></div>
+      </div>
+    </div>
+
+    </div><!-- /calendar tab pane -->
+
+    <!-- Metrics tab pane -->
+    <div data-tab-pane="metrics" style="display:none;">
+
+      <div class="metrics-filter">
+        <div class="nut-select">
+          All Nutritionists
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="seg" data-seg="metricsrange" style="margin-left:auto;">
+          <button data-range="day">Day</button>
+          <button class="active" data-range="week">Week</button>
+          <button data-range="month">Month</button>
+        </div>
+      </div>
+
+      <div class="tile-row">
+        <div class="tile weekly"><div class="lbl">Weekly</div><div class="num">25</div></div>
+        <div class="tile assessment"><div class="lbl">Assessment</div><div class="num">8</div></div>
+        <div class="tile meal-exp"><div class="lbl">Meal Explanation</div><div class="num">0</div></div>
+        <div class="tile monthly"><div class="lbl">Monthly</div><div class="num">0</div></div>
+        <div class="tile other"><div class="lbl">Other</div><div class="num">3</div><span class="caret"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span></div>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi">
+          <div class="kpi-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V21a1 1 0 0 1-1.08 1 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 3.22 4.08 1 1 0 0 1 4.21 3h4.09a1 1 0 0 1 1 .75 12.34 12.34 0 0 0 .68 2.69 1 1 0 0 1-.23 1L8.09 9.05a16 16 0 0 0 6 6l1.61-1.66a1 1 0 0 1 1-.23 12.34 12.34 0 0 0 2.69.68 1 1 0 0 1 .75 1z"/></svg></div>
+          <div class="kpi-meta"><div class="lbl">Total Scheduled Calls</div><div class="num">36</div></div>
+        </div>
+        <div class="kpi missed">
+          <div class="kpi-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></div>
+          <div class="kpi-meta"><div class="lbl">Missed Calls</div><div class="num" id="missedCount">1</div><div class="kpi-sub" id="missedSub">1 today</div></div>
+        </div>
+        <div class="kpi resch">
+          <div class="kpi-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg></div>
+          <div class="kpi-meta"><div class="lbl">Rescheduled Calls</div><div class="num" id="reschCount">0</div><div class="kpi-sub" id="reschSub">No rescheduled calls</div></div>
+        </div>
+        <div class="kpi meal">
+          <div class="kpi-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h12"/></svg></div>
+          <div class="kpi-meta"><div class="lbl">Meal Plans Made</div><div class="num">12</div></div>
+        </div>
+      </div>
+
+      <!-- Meal plan documents pending (post-assessment) -->
+      <div class="section-h">
+        <div class="title">Meal plan documents</div>
+        <div class="meta" id="docsMeta">2-day SLA after Assessment call done</div>
+      </div>
+      <div class="doc-row">
+        <div class="doc-tile pending">
+          <div class="doc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg></div>
+          <div><div class="lbl">Pending</div><div class="num" id="docPending">0</div></div>
+        </div>
+        <div class="doc-tile crossed">
+          <div class="doc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div><div class="lbl">Crossed timeline</div><div class="num" id="docCrossed">0</div></div>
+        </div>
+        <div class="doc-tile missing">
+          <div class="doc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></div>
+          <div><div class="lbl">Missing</div><div class="num" id="docMissing">0</div></div>
+        </div>
+      </div>
+      <div class="doc-list" id="docList"></div>
+
+      <!-- Meal logs today -->
+      <div class="section-h">
+        <div class="title">Meal logs today</div>
+        <div class="meta" id="mealLogsMeta">—</div>
+      </div>
+      <div class="log-row" id="mealLogs"></div>
+
+      <!-- All today's calls (color-coded by type) -->
+      <div class="section-h">
+        <div class="title">Today's calls</div>
+        <div class="meta" id="connectedTodayMeta">—</div>
+      </div>
+      <div class="call-list" id="connectedToday"></div>
+
+      <!-- Pending status requests to Vighnesh -->
+      <div class="section-h">
+        <div class="title">Pending requests to Vighnesh</div>
+        <div class="meta" id="pendingMeta">—</div>
+      </div>
+      <div id="pendingRequests"></div>
+
+      <!-- All Calls -->
+      <div class="section-h">
+        <div class="title">All Calls</div>
+        <div class="meta" id="allCallsMeta">—</div>
+      </div>
+      <div class="all-calls-bar">
+        <div class="chip">All Nutritionists <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="chip">All Statuses <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>May 17 – May 23, 2026</div>
+        <div class="total" id="allCallsTotal">— calls total</div>
+      </div>
+      <div class="call-list" id="allCalls"></div>
+
+    </div><!-- /metrics tab pane -->
+
+    <!-- Clients tab pane -->
+    <div data-tab-pane="clients" style="display:none;">
+      <div class="tab-placeholder">Clients tab — coming soon</div>
+    </div>
+
+    <!-- Nutritionist tab pane -->
+    <div data-tab-pane="nutritionist" style="display:none;">
+
+      <div class="nut-summary" id="nutSummaryAnchor">
+        <div class="lhs">Client logging activity — <b id="nutDateLabel">20 May 2026</b></div>
+        <div class="pill-count" id="nutGreenCount">0 marked green today</div>
+      </div>
+
+      <div class="nut-filter">
+        <span class="lbl">Filter:</span>
+        <div class="seg" data-seg="nutfilter">
+          <button class="active" data-filter="all">All clients</button>
+          <button data-filter="daily">Daily / Weekly</button>
+          <button data-filter="monthly">Monthly tracking</button>
+        </div>
+      </div>
+
+      <div data-nut-section="green">
+        <div class="nut-section-h">
+          <span class="dot green"></span>
+          <span class="title">Logged today</span>
+          <span class="count" id="nutGreenCountSub">(0)</span>
+        </div>
+        <div class="client-grid" id="nutGreenGrid"></div>
+      </div>
+
+      <div data-nut-section="red">
+        <div class="nut-section-h">
+          <span class="dot red"></span>
+          <span class="title">Did not log today</span>
+          <span class="count" id="nutRedCountSub">(0)</span>
+        </div>
+        <div class="client-grid" id="nutRedGrid"></div>
+      </div>
+
+      <div data-nut-section="monthly">
+        <div class="nut-section-h">
+          <span class="dot" style="background:#c2410c;"></span>
+          <span class="title">Monthly tracking</span>
+          <span class="count" id="nutMonthlyCountSub">(0)</span>
+        </div>
+        <div class="client-grid" id="nutMonthlyGrid"></div>
+      </div>
+
+    </div>
+
+    </div><!-- /nutrition sidebar page -->
+
+    <!-- Clients sidebar page -->
+    <div data-sidebar-page="clients" style="display:none;">
+      <h1 class="page-title">Add new client</h1>
+
+      <div class="client-form">
+        <div class="cf-grid">
+
+          <div class="cf-field">
+            <label class="cf-label"><span class="ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/></svg></span>First Name</label>
+            <input type="text" class="cf-input" value="Shalini">
+          </div>
+          <div class="cf-field">
+            <label class="cf-label"><span class="ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/></svg></span>Last Name</label>
+            <input type="text" class="cf-input" value="Burman">
+          </div>
+
+          <div class="cf-field">
+            <label class="cf-label"><span class="ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>Email</label>
+            <input type="email" class="cf-input" placeholder="Enter email address">
+          </div>
+          <div class="cf-field">
+            <label class="cf-label"><span class="ico"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V21a1 1 0 0 1-1.08 1 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 3.22 4.08 1 1 0 0 1 4.21 3h4.09a1 1 0 0 1 1 .75 12.34 12.34 0 0 0 .68 2.69 1 1 0 0 1-.23 1L8.09 9.05a16 16 0 0 0 6 6l1.61-1.66a1 1 0 0 1 1-.23 12.34 12.34 0 0 0 2.69.68 1 1 0 0 1 .75 1z"/></svg></span>Phone Number</label>
+            <input type="tel" class="cf-input" value="+919818047104">
+          </div>
+
+          <div class="cf-field full">
+            <label class="cf-label">Address</label>
+            <div class="cf-input-wrap">
+              <span class="ico-lead"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+              <input type="text" class="cf-input" placeholder="Type to search location in Bangalore...">
+            </div>
+          </div>
+
+          <div class="cf-field">
+            <label class="cf-label">Area</label>
+            <select class="cf-select">
+              <option>South-East — ORR Tech Belt</option>
+              <option>North — Hebbal</option>
+              <option>West — Rajajinagar</option>
+              <option>Central — MG Road</option>
+              <option>South — Jayanagar</option>
+            </select>
+          </div>
+          <div class="cf-field">
+            <label class="cf-label">Status</label>
+            <select class="cf-select">
+              <option>Pending</option>
+              <option>Active</option>
+              <option>Inactive</option>
+              <option>Paused</option>
+            </select>
+          </div>
+
+          <!-- Nutrition selection block -->
+          <div class="cf-field full">
+            <label class="cf-label">Nutrition selected?</label>
+            <div class="cf-radio-row" id="nutSelRow">
+              <label class="cf-radio"><input type="radio" name="nutSel" value="yes"> Yes</label>
+              <label class="cf-radio"><input type="radio" name="nutSel" value="no" checked> No</label>
+            </div>
+          </div>
+
+          <div class="cf-field" id="nutPlanRow" style="display:none;">
+            <label class="cf-label">Plan type</label>
+            <div class="cf-radio-row">
+              <label class="cf-radio"><input type="radio" name="nutPlan" value="comp"> Complimentary</label>
+              <label class="cf-radio"><input type="radio" name="nutPlan" value="reg" checked> Regular</label>
+            </div>
+          </div>
+
+          <div class="cf-field" id="nutTimeRow" style="display:none;">
+            <label class="cf-label">Set call time</label>
+            <input type="datetime-local" class="cf-input">
+            <div class="cf-hint">This blocks the slot on the nutritionist's calendar.</div>
+          </div>
+
+          <div class="cf-field">
+            <label class="cf-label">Date of Birth</label>
+            <div class="cf-dob-grid">
+              <select class="cf-select">
+                <option>Month</option>
+                <option>January</option><option>February</option><option>March</option>
+                <option>April</option><option>May</option><option>June</option>
+                <option>July</option><option>August</option><option>September</option>
+                <option>October</option><option>November</option><option>December</option>
+              </select>
+              <select class="cf-select" id="cfDoBDay">
+                <option>Day</option>
+              </select>
+              <select class="cf-select">
+                <option>Year</option>
+                <option>1990</option><option>1985</option><option>1980</option><option>1975</option>
+              </select>
+            </div>
+            <div class="cf-hint">Select month and year first, then choose the day</div>
+          </div>
+          <div class="cf-field">
+            <label class="cf-label">Field Sales Executive (Optional)</label>
+            <select class="cf-select">
+              <option>Select field sales executive</option>
+              <option>Rakesh Kumar</option>
+              <option>Priya Iyer</option>
+            </select>
+          </div>
+
+          <div class="cf-field">
+            <label class="cf-label">Emergency Contact Name</label>
+            <input type="text" class="cf-input" placeholder="Enter emergency contact name">
+          </div>
+          <div class="cf-field">
+            <label class="cf-label">Emergency Contact Phone</label>
+            <input type="tel" class="cf-input" placeholder="Enter emergency contact phone">
+          </div>
+
+          <div class="cf-field full">
+            <label class="cf-label">Alternative Phone Numbers</label>
+            <input type="text" class="cf-input" placeholder="Comma separated, e.g. 9876543210,8765432109">
+          </div>
+
+          <div class="cf-field">
+            <label class="cf-label">Subscription Plan</label>
+            <select class="cf-select">
+              <option>Trial Plan (1 day)</option>
+              <option>Monthly Plan</option>
+              <option>Quarterly Plan</option>
+              <option>Annual Plan</option>
+            </select>
+          </div>
+          <div class="cf-field">
+            <label class="cf-label">Primary Trainer</label>
+            <select class="cf-select">
+              <option>ADHIL MOHAMMED ALI</option>
+              <option>Orika (Nutritionist)</option>
+              <option>Other</option>
+            </select>
+            <button class="cf-btn-add" type="button">+ Add Trainer</button>
+          </div>
+
+          <div class="cf-field">
+            <label class="cf-label">Subscription Start Date</label>
+            <div class="cf-input-wrap">
+              <input type="text" class="cf-input" value="May 21st, 2026">
+              <span class="ico-trail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+            </div>
+          </div>
+          <div class="cf-field">
+            <label class="cf-label">Subscription End Date</label>
+            <div class="cf-input-wrap">
+              <input type="text" class="cf-input" value="May 21st, 2026">
+              <span class="ico-trail"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cf-actions">
+          <button class="btn" type="button">Cancel</button>
+          <button class="btn btn-primary" type="button">Save client</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Generic placeholder for other sidebar items -->
+    <div data-sidebar-page="_placeholder" style="display:none;">
+      <h1 class="page-title" id="phTitle">Coming soon</h1>
+      <div class="tab-placeholder" id="phBody">This section is not built yet.</div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Reason modal (shared for Reschedule and Missed) -->
+<div class="modal-bk" id="reasonModal">
+  <div class="modal">
+    <h3 id="modalTitle">Reschedule call</h3>
+    <div class="sub" id="modalSub">Pick a new day and add a reason.</div>
+    <div class="modal-row" id="modalDateRow">
+      <label>New date</label>
+      <input type="date" id="modalDate">
+    </div>
+    <div class="modal-row">
+      <label>Rescheduled by</label>
+      <select id="modalBy">
+        <option>Self (Orika)</option>
+        <option>Client request</option>
+        <option>Zaiba</option>
+        <option>Vighnesh</option>
+        <option>Ops</option>
+      </select>
+    </div>
+    <div class="modal-row">
+      <label>Reason</label>
+      <textarea id="modalReason" placeholder="Reason..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="modalSave">Reschedule</button>
+    </div>
+  </div>
+</div>
+
+<!-- Schedule call modal -->
+<div class="modal-bk" id="scheduleModal">
+  <div class="modal">
+    <h3>Schedule a call</h3>
+    <div class="sub">Pick the client, type, time, and who is assigning this call.</div>
+    <div class="modal-row">
+      <label>Client</label>
+      <select id="schClient"></select>
+    </div>
+    <div class="modal-row">
+      <label>Call type</label>
+      <select id="schType">
+        <option>Weekly</option>
+        <option>Meal Plan</option>
+        <option>Meal Assessment</option>
+        <option>Re-assessment</option>
+        <option>Monthly</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="modal-row dual">
+      <div>
+        <label>Date</label>
+        <input type="date" id="schDate">
+      </div>
+      <div>
+        <label>Time</label>
+        <input type="time" id="schTime">
+      </div>
+    </div>
+    <div class="modal-row">
+      <label>Assigned by</label>
+      <select id="schBy">
+        <option>Self (Orika)</option>
+        <option>Zaiba</option>
+        <option>Vighnesh</option>
+        <option>Ops</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="schSave">Schedule call</button>
+    </div>
+  </div>
+</div>
+
+<!-- Request modal (for Pause / Inactive / Not tracking) -->
+<div class="modal-bk" id="requestModal">
+  <div class="modal">
+    <h3 id="reqTitle">Request: Pause client</h3>
+    <div class="sub">Add a reason. Your request will be sent to <b>Vighnesh</b> for approval.</div>
+    <div class="modal-row" id="reqUntilRow" style="display:none;">
+      <label>Pause until</label>
+      <input type="datetime-local" id="reqUntil">
+    </div>
+    <div class="modal-row">
+      <label>Reason</label>
+      <textarea id="reqReason" placeholder="Reason for the request..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="reqSend">Send request</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- Constants ----------
+  const TODAY_DAY = 20;
+  const COLORS = ['c1','c2','c3','c4','c5','c6','c7','c8'];
+  let _id = 0;
+
+  function mk(name, opts) {
+    opts = opts || {};
+    _id++;
+    return {
+      id: _id,
+      name,
+      color: COLORS[(_id - 1) % COLORS.length],
+      kind: opts.kind || 'regular',           // 'regular' | 'new' | 'reassessment'
+      assignedBy: opts.assignedBy || null,
+      nutritionist: opts.nutritionist || 'Orika',
+      callType: opts.callType || 'Weekly',
+      time: opts.time || '10:00 AM',
+      duration: opts.duration || '15min',
+      day: opts.day || 17,
+      call: opts.call || 'scheduled',
+      client: 'active',
+      tracking: 'tracking',
+      reason: opts.reason || '',
+      rescheduledFromDay: opts.rescheduledFromDay || null,
+      rescheduledToDate: null,
+      hasRecording: opts.call === 'done',
+    };
+  }
+
+  // ---------- Data ----------
+  const todayCalls = [
+    mk('christal & ruben',      { day: 20, callType: 'Weekly',     time: '11:00 AM', duration: '15min', call: 'done' }),
+    mk('A Pushpa Sri',          { day: 20, callType: 'Weekly',     time: '11:30 AM', duration: '15min', call: 'done' }),
+    mk('Rekha arun kumar',      { day: 20, callType: 'Assessment', time: '12:00 PM', duration: '30min', call: 'missed', reason: 'Client did not pick up after 3 tries' }),
+    mk('Basavaraj Walikar',     { day: 20, callType: 'Monthly',    time: '2:00 PM',  duration: '30min', call: 'scheduled', rescheduledFromDay: 19 }),
+    mk('vishal mathad - Suresh',{ day: 20, callType: 'Other',      time: '4:00 PM',  duration: '15min', call: 'scheduled' }),
+  ];
+
+  const weekData = {
+    17: [
+      mk('aleti sinha',        { day: 17, kind: 'new' }),
+      mk('Anvitha Chidanand',  { day: 17 }),
+      mk('Krishna bihari',     { day: 17, kind: 'reassessment', assignedBy: 'Zaiba' }),
+      mk('Rk parker',          { day: 17 }),
+    ],
+    18: [
+      mk('Amar Bahul Pasha',   { day: 18, kind: 'new' }),
+      mk('Gouri ranjan',       { day: 18 }),
+      mk('Anitha Sarkar',      { day: 18, kind: 'reassessment', assignedBy: 'Zaiba' }),
+      mk('P. K. Sowmyanaraya', { day: 18 }),
+      mk('Suresh Randadath',   { day: 18 }),
+      mk('Rajul Garg',         { day: 18 }),
+    ],
+    19: [
+      mk('Jayaram',                  { day: 19 }),
+      mk('Venugopal reddy',          { day: 19 }),
+      mk('Aleyamma Abraham',         { day: 19, kind: 'added-from-app' }),
+      mk('Poonam Singh / asha talwar', { day: 19 }),
+      mk('Sony',                     { day: 19 }),
+      mk('Sony',                     { day: 19 }),
+      mk('Neelam Monga',             { day: 19 }),
+    ],
+    20: todayCalls,
+    21: [
+      mk('G Sampath',           { day: 21, kind: 'reassessment', assignedBy: 'Zaiba' }),
+      mk('Shameen Banu',        { day: 21 }),
+      mk('Usha N',              { day: 21 }),
+      mk('Abdhul rahman sait',  { day: 21 }),
+      mk('Sunitha shetty',      { day: 21 }),
+      mk('Selma',               { day: 21 }),
+      mk('Selma',               { day: 21 }),
+      mk('Neelam Monga',        { day: 21 }),
+    ],
+    22: [
+      mk('PV rao',              { day: 22 }),
+      mk('shnakaran narayanna', { day: 22 }),
+      mk('Kalpana Gosh',        { day: 22, kind: 'added-from-app' }),
+      mk('Gayathri Reddy',      { day: 22 }),
+      mk('sayeda',              { day: 22 }),
+      mk('basavaraj',           { day: 22 }),
+    ],
+    23: [
+      mk('Dr. subhas Modi',           { day: 23 }),
+      mk('sarala reddy',              { day: 23, kind: 'new' }),
+      mk('Chanchla / shruti',         { day: 23 }),
+      mk('S Susheel amaa',            { day: 23 }),
+      mk('Gopal gowda',               { day: 23 }),
+      mk('Prabha ramachandran tater', { day: 23 }),
+    ],
+  };
+
+  // ---------- Meal plan document queue (post-assessment SLA) ----------
+  // SLA: 2 days from assessment-done to submit meal plan.
+  // status: 'pending' (within window), 'crossed' (>2 days, still possible), 'missing' (long overdue)
+  const mealPlanDocs = [
+    { client: 'Rekha arun kumar', assessmentDate: '20 May 2026', dueDate: '22 May 2026', hoursLeft: 38,  status: 'pending' },
+    { client: 'Sushma Rachharia', assessmentDate: '19 May 2026', dueDate: '21 May 2026', hoursLeft: 14,  status: 'pending' },
+    { client: 'Krishna bihari',   assessmentDate: '17 May 2026', dueDate: '19 May 2026', hoursLeft: -24, status: 'crossed' },
+    { client: 'Anitha Sarkar',    assessmentDate: '14 May 2026', dueDate: '16 May 2026', hoursLeft: -96, status: 'missing' },
+    { client: 'G Sampath',        assessmentDate: '12 May 2026', dueDate: '14 May 2026', hoursLeft: -144, status: 'missing' },
+  ];
+
+  // ---------- Nutritionist client logging data ----------
+  // dots: 7 values for last 7 days (oldest → today), each 0..3 = pictures received that day
+  const nutClients = [
+    { name: 'Dc Jain',                          age: 73, week: 35, condition: 'No condition as such',                                            dots: [3,3,2,3,3,3,3], nut: null,    cadence: 'daily' },
+    { name: 'Kalaivani',                        age: 61, week: 43, condition: 'OA knee, shoulder pain',                                          dots: [0,0,0,0,0,0,0], nut: null,    cadence: 'daily' },
+    { name: 'Rajul Garg',                       age: 58, week: 41, condition: 'Left knee pain, traveling pain in left leg',                     dots: [0,0,1,0,0,0,0], nut: 'Orika', cadence: 'daily' },
+    { name: 'Sujatha Gujjala',                  age: 49, week: 35, condition: 'Knee pain, ankle and foot pain',                                 dots: [0,0,0,0,0,0,0], nut: null,    cadence: 'daily' },
+    { name: 'Sushma Rachharia',                 age: 42, week: 34, condition: 'Lt hemiplegia (2021), third cranial nerve palsy — rt eyelid',   dots: [0,0,0,0,0,0,0], nut: null,    cadence: 'monthly' },
+    { name: 'Jyothi Shivanand (Shivanandaiah)', age: 74, week: 24, condition: 'Cerebellar ataxia',                                              dots: [0,0,0,0,0,0,0], nut: 'Orika', cadence: 'monthly' },
+    { name: 'Jayaram',                          age: 56, week: 18, condition: 'Diabetes · weight management',                                    dots: [3,2,3,3,3,3,3], nut: 'Orika', cadence: 'daily' },
+    { name: 'Suresh Randadath',                 age: 52, week: 12, condition: 'PCOS support · post-partum',                                      dots: [2,2,3,3,2,3,2], nut: 'Orika', cadence: 'daily' },
+    { name: 'Abdhul Rahman',                    age: 47, week: 22, condition: 'Hypertension',                                                    dots: [3,3,3,2,3,3,3], nut: 'Orika', cadence: 'daily' },
+    { name: 'Neelam Monga',                     age: 64, week: 28, condition: 'Cholesterol management',                                          dots: [1,0,0,1,0,0,0], nut: 'Orika', cadence: 'daily' },
+    { name: 'Sony',                             age: 38, week: 9,  condition: 'Thyroid · weight loss',                                           dots: [0,1,0,0,0,0,0], nut: 'Orika', cadence: 'daily' },
+    { name: 'Dr. Subhas Modi',                  age: 71, week: 33, condition: 'Recovery — knee replacement',                                     dots: [0,0,0,0,0,0,0], nut: 'Orika', cadence: 'monthly' },
+    { name: 'Selma',                            age: 44, week: 7,  condition: 'Anaemia · iron support',                                          dots: [2,3,2,3,2,3,2], nut: 'Orika', cadence: 'daily' },
+    { name: 'Gayathri Reddy',                   age: 39, week: 5,  condition: 'PCOS · insulin resistance',                                        dots: [3,2,3,3,3,2,3], nut: 'Orika', cadence: 'daily' },
+    { name: 'Kalpana Gosh',                     age: 55, week: 14, condition: 'Diabetes type 2',                                                  dots: [0,0,0,0,0,0,0], nut: 'Orika', cadence: 'monthly' },
+  ];
+
+  // ---------- Per-client state ----------
+  const clientState = {};
+  function getC(name) {
+    if (!clientState[name]) clientState[name] = { rescheduleStreak: 0, pendingRequest: null };
+    return clientState[name];
+  }
+  // Seed a couple of streaks for realism
+  getC('Neelam Monga').rescheduleStreak = 2;
+  getC('Sony').rescheduleStreak = 1;
+
+  // ---------- Helpers ----------
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function findById(id) {
+    for (const day in weekData) {
+      const d = weekData[day].find(x => x.id === id);
+      if (d) return d;
+    }
+    return null;
+  }
+  function pendingLabel(req) {
+    if (!req) return '';
+    const m = { paused: 'Pause', inactive: 'Inactive', 'not-tracking': 'Not tracking' };
+    return `Pending: ${m[req.status]} requested`;
+  }
+  function formatUntil(iso) {
+    const d = new Date(iso);
+    if (isNaN(d)) return iso;
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const pad = n => String(n).padStart(2,'0');
+    return `${d.getDate()} ${months[d.getMonth()]}, ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+  function initials(name) {
+    return name.split(/[\s\/]+/).filter(Boolean).slice(0, 2).map(s => s[0]).join('').toUpperCase();
+  }
+
+  // ---------- Icons ----------
+  const ICON_MORE  = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>';
+  const ICON_DONE  = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"/></svg>';
+  const ICON_RESCH = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>';
+  const ICON_MISS  = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>';
+  const ICON_CHECK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 10 18 20 6"/></svg>';
+  const ICON_CLOCK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 16 14"/></svg>';
+  const ICON_PHONE = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V21a1 1 0 0 1-1.08 1 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 3.22 4.08 1 1 0 0 1 4.21 3h4.09a1 1 0 0 1 1 .75 12.34 12.34 0 0 0 .68 2.69 1 1 0 0 1-.23 1L8.09 9.05a16 16 0 0 0 6 6l1.61-1.66a1 1 0 0 1 1-.23 12.34 12.34 0 0 0 2.69.68 1 1 0 0 1 .75 1z"/></svg>';
+  const ICON_PLAY  = '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20"/></svg>';
+
+  // ---------- Block rendering ----------
+  function statusLabel(d) {
+    const parts = [];
+    if (d.client === 'paused') {
+      const u = getC(d.name).pauseUntil;
+      parts.push(u ? `Paused until ${formatUntil(u)}` : 'Paused');
+    }
+    if (d.client === 'inactive')     parts.push('Inactive');
+    if (d.tracking === 'not-tracking') parts.push('Not tracking');
+    return parts.join(' · ');
+  }
+
+  function blockHTML(d) {
+    const c = getC(d.name);
+    const cls = ['wblock', 'call-' + d.call, 'client-' + d.client, 'kind-' + d.kind, d.tracking === 'not-tracking' ? 'not-tracking' : 'tracking'].join(' ');
+    const streak = c.rescheduleStreak;
+    const pending = c.pendingRequest;
+    const status = statusLabel(d);
+    const showStatus = status || streak > 0 || pending;
+    return `
+      <div class="${cls}" data-id="${d.id}">
+        <div class="wb-row1">
+          <div class="wb-name">${escapeHtml(d.name)}</div>
+          <button class="wb-menu-btn" data-act="menu" title="More options">${ICON_MORE}</button>
+        </div>
+        <div class="wb-type ${typePillClass(d.callType)}" title="${escapeHtml(d.callType)} call">${escapeHtml(d.callType)}</div>
+        ${showStatus ? `<div class="wb-status">
+          ${status ? `<span class="dot"></span>${escapeHtml(status)}` : ''}
+          ${streak > 0 ? `<span class="streak" title="${streak} consecutive reschedules without a connect">↻${streak}</span>` : ''}
+          ${pending ? `<span class="pending">${status ? '· ' : ''}${escapeHtml(pendingLabel(pending))}</span>` : ''}
+        </div>` : ''}
+        <div class="wb-actions">
+          <button class="wb-action resch" data-act="resch" title="Reschedule (pick new day + reason)">${ICON_RESCH}</button>
+        </div>
+        <div class="wb-popup" data-popup>
+          <div class="wb-popup-label">Client status</div>
+          <div class="wb-popup-item ${d.client==='active'?'is-on':''}"   data-set="client:active"><span class="check">${ICON_CHECK}</span>Active</div>
+          <div class="wb-popup-item ${d.client==='inactive'?'is-on':''}" data-set="client:inactive"><span class="check">${ICON_CHECK}</span>Inactive…</div>
+          <div class="wb-popup-item ${d.client==='paused'?'is-on':''}"   data-set="client:paused"><span class="check">${ICON_CHECK}</span>Paused…</div>
+          <div class="wb-popup-sep"></div>
+          <div class="wb-popup-label">Tracking</div>
+          <div class="wb-popup-item ${d.tracking==='tracking'?'is-on':''}"     data-set="tracking:tracking"><span class="check">${ICON_CHECK}</span>Tracking</div>
+          <div class="wb-popup-item ${d.tracking==='not-tracking'?'is-on':''}" data-set="tracking:not-tracking"><span class="check">${ICON_CHECK}</span>Not tracking…</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderWeek() {
+    Object.keys(weekData).forEach(day => {
+      const host = document.querySelector(`.wcol-list[data-day="${day}"]`);
+      if (host) host.innerHTML = weekData[day].map(blockHTML).join('');
+    });
+    const dayHost = document.querySelector('.day-list[data-day-pane="20"]');
+    if (dayHost) dayHost.innerHTML = (weekData[20] || []).map(blockHTML).join('');
+  }
+
+  function updateBlock(id) {
+    const d = findById(id);
+    if (!d) return;
+    document.querySelectorAll(`.wblock[data-id="${id}"]`).forEach(el => {
+      el.outerHTML = blockHTML(d);
+    });
+    renderMetrics();
+  }
+  function updateBlocksForClient(name) {
+    for (const day in weekData) {
+      weekData[day].filter(d => d.name === name).forEach(d => updateBlock(d.id));
+    }
+    renderMetrics();
+  }
+
+  // ---------- Reason / Reschedule modal ----------
+  const modalBk = document.getElementById('reasonModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalSub = document.getElementById('modalSub');
+  const modalReason = document.getElementById('modalReason');
+  const modalDate = document.getElementById('modalDate');
+  const modalDateRow = document.getElementById('modalDateRow');
+  const modalBy = document.getElementById('modalBy');
+  const modalSave = document.getElementById('modalSave');
+  let modalCtx = null;
+
+  function openModal(action, id) {
+    modalCtx = { action, id };
+    modalTitle.textContent = 'Reschedule call';
+    modalSub.textContent = 'Pick a new day and add a reason.';
+    modalDateRow.style.display = '';
+    const t = new Date(); t.setDate(t.getDate() + 1);
+    modalDate.value = t.toISOString().slice(0, 10);
+    modalBy.value = 'Self (Orika)';
+    modalSave.textContent = 'Reschedule';
+    modalReason.value = '';
+    modalBk.classList.add('open');
+    setTimeout(() => modalReason.focus(), 0);
+  }
+  function closeModal() { modalBk.classList.remove('open'); modalCtx = null; }
+  modalBk.addEventListener('click', (e) => { if (e.target === modalBk) closeModal(); });
+  modalSave.addEventListener('click', () => {
+    if (!modalCtx) return;
+    const d = findById(modalCtx.id);
+    if (!d) return closeModal();
+    const reason = modalReason.value.trim();
+    d.call = 'rescheduled';
+    d.reason = reason || '—';
+    d.rescheduledToDate = modalDate.value || null;
+    d.rescheduledBy = modalBy.value;
+    getC(d.name).rescheduleStreak += 1;
+    toast(`Rescheduled by ${modalBy.value} — streak now ${getC(d.name).rescheduleStreak} for ${d.name}`);
+    updateBlock(d.id);
+    closeModal();
+  });
+
+  // ---------- Request modal (Pause / Inactive / Not tracking) ----------
+  const reqBk = document.getElementById('requestModal');
+  const reqTitle = document.getElementById('reqTitle');
+  const reqReason = document.getElementById('reqReason');
+  const reqUntilRow = document.getElementById('reqUntilRow');
+  const reqUntil = document.getElementById('reqUntil');
+  const reqSend = document.getElementById('reqSend');
+  let reqCtx = null;
+
+  function openReqModal(field, value, id) {
+    reqCtx = { field, value, id };
+    const labels = { paused: 'Pause client', inactive: 'Mark client Inactive', 'not-tracking': 'Mark Not Tracking' };
+    reqTitle.textContent = `Request: ${labels[value]}`;
+    reqReason.value = '';
+    // Only show until-field for paused
+    if (value === 'paused') {
+      reqUntilRow.style.display = '';
+      const def = new Date(Date.now() + 7 * 86400000);
+      const pad = n => String(n).padStart(2, '0');
+      reqUntil.value = `${def.getFullYear()}-${pad(def.getMonth()+1)}-${pad(def.getDate())}T${pad(def.getHours())}:${pad(def.getMinutes())}`;
+    } else {
+      reqUntilRow.style.display = 'none';
+    }
+    reqBk.classList.add('open');
+    setTimeout(() => reqReason.focus(), 0);
+  }
+  function closeReqModal() { reqBk.classList.remove('open'); reqCtx = null; }
+  reqBk.addEventListener('click', (e) => { if (e.target === reqBk) closeReqModal(); });
+  reqSend.addEventListener('click', () => {
+    if (!reqCtx) return;
+    const d = findById(reqCtx.id);
+    if (!d) return closeReqModal();
+    getC(d.name).pendingRequest = {
+      status: reqCtx.value,
+      field: reqCtx.field,
+      reason: reqReason.value.trim() || '—',
+      requestedAt: 'Today, 2:30 PM',
+      requestedBy: d.nutritionist,
+      pauseUntil: reqCtx.value === 'paused' ? reqUntil.value : null,
+    };
+    updateBlocksForClient(d.name);
+    toast(`Request sent to Vighnesh for ${d.name}`);
+    closeReqModal();
+  });
+
+  // ---------- Approve request (simulate Vighnesh) ----------
+  function approveRequest(name) {
+    const c = getC(name);
+    if (!c.pendingRequest) return;
+    const req = c.pendingRequest;
+    // Apply to every call for this client
+    for (const day in weekData) {
+      weekData[day].filter(d => d.name === name).forEach(d => { d[req.field] = req.status; });
+    }
+    if (req.status === 'paused' && req.pauseUntil) {
+      c.pauseUntil = req.pauseUntil;
+    }
+    c.pendingRequest = null;
+    updateBlocksForClient(name);
+    toast(`Approved by Vighnesh: ${name}`);
+  }
+
+  // ---------- Auto-revert expired pauses ----------
+  setInterval(() => {
+    const now = Date.now();
+    let changed = false;
+    for (const name in clientState) {
+      const c = clientState[name];
+      if (c.pauseUntil && new Date(c.pauseUntil).getTime() <= now) {
+        for (const day in weekData) {
+          weekData[day].filter(d => d.name === name).forEach(d => { if (d.client === 'paused') d.client = 'active'; });
+        }
+        c.pauseUntil = null;
+        changed = true;
+        toast(`Pause expired — ${name} is back to Active`);
+      }
+    }
+    if (changed) {
+      // Re-render every block to reflect
+      document.querySelectorAll('.wblock').forEach(el => {
+        const d = findById(+el.dataset.id);
+        if (d) el.outerHTML = blockHTML(d);
+      });
+      renderMetrics();
+    }
+  }, 5000);
+
+  // ---------- Schedule call modal ----------
+  const schBk     = document.getElementById('scheduleModal');
+  const schClient = document.getElementById('schClient');
+  const schType   = document.getElementById('schType');
+  const schDate   = document.getElementById('schDate');
+  const schTime   = document.getElementById('schTime');
+  const schBy     = document.getElementById('schBy');
+  const schSave   = document.getElementById('schSave');
+
+  function populateClientOptions() {
+    const names = new Set();
+    for (const day in weekData) weekData[day].forEach(c => names.add(c.name));
+    // Include the new-clients-strip names too
+    ['Dc Jain','Anita Sharma','Vikram Mehta','Priya Reddy','Rohan Kapoor'].forEach(n => names.add(n));
+    schClient.innerHTML = Array.from(names).sort().map(n => `<option>${escapeHtml(n)}</option>`).join('');
+  }
+  function openSchedule() {
+    populateClientOptions();
+    schType.value = 'Weekly';
+    const t = new Date(); t.setDate(t.getDate() + 1);
+    schDate.value = t.toISOString().slice(0, 10);
+    schTime.value = '10:00';
+    schBy.value = 'Self (Orika)';
+    schBk.classList.add('open');
+  }
+  function closeSchedule() { schBk.classList.remove('open'); }
+  document.getElementById('openSchedule').addEventListener('click', openSchedule);
+  schBk.addEventListener('click', (e) => { if (e.target === schBk) closeSchedule(); });
+  schSave.addEventListener('click', () => {
+    const name = schClient.value;
+    const type = schType.value;
+    const dateStr = schDate.value; // YYYY-MM-DD
+    const timeStr = schTime.value; // HH:MM
+    const by = schBy.value;
+    // Parse day from date (only for May 2026 days that we render)
+    let dayNum = null;
+    if (dateStr) {
+      const dt = new Date(dateStr);
+      if (dt.getUTCFullYear() === 2026 && dt.getUTCMonth() === 4) dayNum = dt.getUTCDate();
+    }
+    const kind = type === 'Re-assessment'
+      ? 'reassessment'
+      : by.startsWith('Self') ? 'added-from-app' : 'regular';
+    const newCall = mk(name, {
+      day: dayNum || TODAY_DAY,
+      callType: type === 'Re-assessment' ? 'Re-assessment' : type,
+      time: timeStr ? formatTime12(timeStr) : '10:00 AM',
+      duration: '15min',
+      kind,
+      assignedBy: by.startsWith('Self') ? null : by,
+    });
+    if (!weekData[newCall.day]) weekData[newCall.day] = [];
+    weekData[newCall.day].push(newCall);
+    renderWeek();
+    renderMetrics();
+    toast(`Call scheduled for ${name} on ${dateStr || 'today'} at ${timeStr || '10:00'}`);
+    closeSchedule();
+  });
+  function formatTime12(hhmm) {
+    const [h, m] = hhmm.split(':').map(Number);
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const h12 = ((h + 11) % 12) + 1;
+    return `${h12}:${String(m).padStart(2,'0')} ${ampm}`;
+  }
+
+  // ---------- Toast ----------
+  let _toastTimer = null;
+  function toast(msg) {
+    let el = document.getElementById('toast');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'toast';
+      el.className = 'toast';
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(_toastTimer);
+    _toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+  }
+
+  // ---------- Click delegation ----------
+  document.addEventListener('click', (e) => {
+    // Recording play
+    const recBtn = e.target.closest('[data-recording]');
+    if (recBtn) {
+      toast('Playing call recording (placeholder)');
+      return;
+    }
+    // View client (new-clients strip)
+    const viewBtn = e.target.closest('[data-view-client]');
+    if (viewBtn) {
+      toast(`Opening client profile: ${viewBtn.dataset.viewClient}`);
+      return;
+    }
+    // Approve pending request (simulate Vighnesh)
+    const apBtn = e.target.closest('[data-approve]');
+    if (apBtn) {
+      approveRequest(apBtn.dataset.approve);
+      return;
+    }
+    // Upload meal plan (placeholder)
+    const upBtn = e.target.closest('[data-doc-upload]');
+    if (upBtn) {
+      toast(`Upload meal plan for ${upBtn.dataset.docUpload} (placeholder)`);
+      return;
+    }
+    const block = e.target.closest('.wblock');
+    const inPopup = e.target.closest('.wb-popup');
+    if (!block && !inPopup) {
+      document.querySelectorAll('.wb-popup.open').forEach(p => p.classList.remove('open'));
+      return;
+    }
+    if (block) {
+      const id = +block.dataset.id;
+      const actBtn = e.target.closest('[data-act]');
+      const setBtn = e.target.closest('[data-set]');
+      if (actBtn) {
+        const act = actBtn.dataset.act;
+        if (act === 'menu') {
+          const pop = block.querySelector('.wb-popup');
+          const wasOpen = pop.classList.contains('open');
+          document.querySelectorAll('.wb-popup.open').forEach(p => p.classList.remove('open'));
+          if (!wasOpen) pop.classList.add('open');
+          e.stopPropagation();
+          return;
+        }
+        if (act === 'resch') { openModal('resch', id); return; }
+      }
+      if (setBtn) {
+        const [field, value] = setBtn.dataset.set.split(':');
+        const d = findById(id);
+        if (!d) return;
+        // Active / Tracking are immediate (and clear matching pending)
+        if ((field === 'client' && value === 'active') || (field === 'tracking' && value === 'tracking')) {
+          d[field] = value;
+          const c = getC(d.name);
+          if (c.pendingRequest && c.pendingRequest.field === field) c.pendingRequest = null;
+          updateBlocksForClient(d.name);
+          e.stopPropagation();
+          return;
+        }
+        // Pause / Inactive / Not tracking → request flow
+        document.querySelectorAll('.wb-popup.open').forEach(p => p.classList.remove('open'));
+        openReqModal(field, value, id);
+        e.stopPropagation();
+        return;
+      }
+    }
+  });
+
+  // ---------- View switching (Week/Day/Month) ----------
+  document.querySelectorAll('.seg button[data-view]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const view = btn.dataset.view;
+      document.querySelectorAll('.seg button[data-view]').forEach(b => b.classList.toggle('active', b === btn));
+      document.querySelectorAll('[data-view-pane]').forEach(p => {
+        p.style.display = p.dataset.viewPane === view ? '' : 'none';
+      });
+    });
+  });
+
+  // Metrics day/week/month seg — just toggles active state for now
+  document.querySelectorAll('.seg[data-seg="metricsrange"] button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.seg[data-seg="metricsrange"] button').forEach(b => b.classList.toggle('active', b === btn));
+    });
+  });
+
+  // ---------- Sidebar page navigation ----------
+  const sidebarLabel = {
+    dashboard: 'Dashboard', analytics: 'Analytics', clients: 'Clients', trainers: 'Trainers',
+    nutrition: 'Nutrition', sessions: 'Sessions', 'pending-plans': 'Pending Exercise Plans',
+    leaves: 'Leaves', reports: 'Reports', trials: 'Trials', audits: 'Audits',
+    reviews: 'Reviews', crm: 'CRM', 'call-analysis': 'Call Analysis', 'universal-otp': 'Universal OTP'
+  };
+  document.querySelectorAll('.nav-item[data-sidebar-page]').forEach(item => {
+    item.addEventListener('click', () => {
+      const page = item.dataset.sidebarPage;
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n === item));
+      document.querySelectorAll('[data-sidebar-page]').forEach(p => p.style.display = 'none');
+      const target = document.querySelector(`[data-sidebar-page="${page}"]`);
+      if (target) {
+        target.style.display = '';
+      } else {
+        const ph = document.querySelector('[data-sidebar-page="_placeholder"]');
+        ph.style.display = '';
+        document.getElementById('phTitle').textContent = sidebarLabel[page] || page;
+        document.getElementById('phBody').textContent  = `${sidebarLabel[page] || page} — coming soon`;
+      }
+    });
+  });
+
+  // ---------- Tab switching ----------
+  document.querySelectorAll('.tab[data-tab]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const t = tab.dataset.tab;
+      document.querySelectorAll('.tab[data-tab]').forEach(x => x.classList.toggle('active', x === tab));
+      document.querySelectorAll('[data-tab-pane]').forEach(p => {
+        p.style.display = p.dataset.tabPane === t ? '' : 'none';
+      });
+      if (t === 'metrics') renderMetrics();
+      if (t === 'nutritionist') renderNutritionist();
+    });
+  });
+
+  // ---------- Metrics rendering ----------
+  function typePillClass(t) {
+    const k = String(t).toLowerCase();
+    if (k.startsWith('weekly'))     return 't-weekly';
+    if (k.startsWith('assessment')) return 't-assessment';
+    if (k.startsWith('meal'))       return 't-meal';
+    if (k.startsWith('re-'))        return 't-reass';
+    if (k.startsWith('monthly'))    return 't-monthly';
+    return 't-other';
+  }
+
+  function callRowHTML(d, leadExtras) {
+    const c = getC(d.name);
+    const map = {
+      done:       { avatarCls: '',      badgeCls: '',      label: 'DONE',      icon: ICON_DONE },
+      missed:     { avatarCls: 'miss',  badgeCls: 'miss',  label: 'MISSED',    icon: ICON_MISS },
+      rescheduled:{ avatarCls: 'resch', badgeCls: 'resch', label: 'RESCHEDULED', icon: ICON_RESCH },
+      scheduled:  { avatarCls: 'sched', badgeCls: 'sched', label: 'SCHEDULED', icon: ICON_CLOCK },
+    };
+    const m = map[d.call];
+    const extras = [];
+    if (leadExtras) extras.push(leadExtras);
+    if (d.rescheduledFromDay) extras.push(`<span class="rfp">↺ Rescheduled from ${d.rescheduledFromDay} May</span>`);
+    if (d.rescheduledBy)       extras.push(`<span class="rfp">Rescheduled by ${escapeHtml(d.rescheduledBy)}</span>`);
+    if (d.hasRecording)        extras.push(`<button class="play-btn" data-recording="${d.id}">${ICON_PLAY} Play recording</button>`);
+    if (d.reason)              extras.push(`<span class="reason">Reason: ${escapeHtml(d.reason)}</span>`);
+    if (c.pendingRequest)      extras.push(`<span class="pending-pill">${escapeHtml(pendingLabel(c.pendingRequest))}</span>`);
+    if (d.assignedBy)          extras.push(`<span class="pending-pill" style="background:#fce7f3; color:#be185d; border-color:#fbcfe8;">Assigned by ${escapeHtml(d.assignedBy)}</span>`);
+    return `
+      <div class="call-row">
+        <div class="cr-avatar ${m.avatarCls}">${m.icon}</div>
+        <div class="cr-meta">
+          <div class="nm">${escapeHtml(d.name)}</div>
+          <div class="sub">
+            ${escapeHtml(d.nutritionist)}
+            <span class="type-pill ${typePillClass(d.callType)}">${escapeHtml(d.callType)}</span>
+          </div>
+          ${extras.length ? `<div class="cr-extras">${extras.join('')}</div>` : ''}
+        </div>
+        <div class="cr-time">
+          <div class="d">${d.day} May 2026</div>
+          <div>${escapeHtml(d.time)} · ${escapeHtml(d.duration)}</div>
+        </div>
+        <div class="cr-badge ${m.badgeCls}">${m.label}</div>
+        <button class="cr-phone" title="Call client">${ICON_PHONE}</button>
+      </div>
+    `;
+  }
+
+  function renderMetrics() {
+    const today = weekData[TODAY_DAY] || [];
+
+    // Meal plan documents (post-assessment SLA)
+    const pendingDocs = mealPlanDocs.filter(d => d.status === 'pending');
+    const crossedDocs = mealPlanDocs.filter(d => d.status === 'crossed');
+    const missingDocs = mealPlanDocs.filter(d => d.status === 'missing');
+    document.getElementById('docPending').textContent = pendingDocs.length;
+    document.getElementById('docCrossed').textContent = crossedDocs.length;
+    document.getElementById('docMissing').textContent = missingDocs.length;
+    const docHost = document.getElementById('docList');
+    const ordered = [...crossedDocs, ...missingDocs, ...pendingDocs];
+    if (docHost) {
+      docHost.innerHTML = ordered.length ? ordered.map(d => {
+        const overdueTxt = d.hoursLeft >= 0
+          ? `${d.hoursLeft}h left`
+          : `${Math.abs(d.hoursLeft)}h overdue`;
+        return `
+          <div class="doc-list-row">
+            <div class="av">${escapeHtml(initials(d.client))}</div>
+            <div>
+              <div class="cl">${escapeHtml(d.client)}</div>
+              <div class="sub">Assessment done ${escapeHtml(d.assessmentDate)} · meal plan due ${escapeHtml(d.dueDate)}</div>
+            </div>
+            <div class="doc-when">${overdueTxt}</div>
+            <div class="doc-status ${d.status}">${d.status === 'pending' ? 'Pending' : d.status === 'crossed' ? 'Crossed' : 'Missing'}</div>
+            <button class="doc-cta" data-doc-upload="${escapeHtml(d.client)}">Upload</button>
+          </div>`;
+      }).join('') : '<div class="pending-empty">No meal plans pending.</div>';
+    }
+
+    // Meal logs today (clients green-today from nutClients)
+    const greenToday = nutClients.filter(isGreenToday);
+    const mealHost = document.getElementById('mealLogs');
+    const mealMeta = document.getElementById('mealLogsMeta');
+    if (mealHost) {
+      mealHost.innerHTML = greenToday.length
+        ? greenToday.map(c => {
+            const today = c.dots[c.dots.length - 1];
+            return `<div class="log-card">
+              <div class="av">${escapeHtml(initials(c.name))}</div>
+              <div class="info">
+                <div class="nm">${escapeHtml(c.name)}</div>
+                <div class="meta">${today}/3 pictures today</div>
+              </div>
+              <div class="mini-dots">${c.dots.map(v => `<span class="mini-dot ${dotClass(v)}"></span>`).join('')}</div>
+            </div>`;
+          }).join('')
+        : '<div class="pending-empty">No clients have logged meals today.</div>';
+    }
+    if (mealMeta) mealMeta.textContent = `${greenToday.length} of ${nutClients.length} clients logged`;
+
+    // ALL today's calls, sorted by time, color-coded by type
+    const sortedToday = [...today].sort((a, b) => (a.time > b.time ? 1 : -1));
+    const ctHost = document.getElementById('connectedToday');
+    const ctMeta = document.getElementById('connectedTodayMeta');
+    if (ctHost) {
+      ctHost.innerHTML = sortedToday.length
+        ? sortedToday.map(d => {
+            const leads = [];
+            // For calls rescheduled into today: prepend Connected/Not-yet pill
+            if (d.rescheduledFromDay) {
+              leads.push(d.call === 'done'
+                ? '<span class="conn-pill yes">✓ Connected today</span>'
+                : '<span class="conn-pill no">○ Not yet connected</span>');
+            }
+            // Any call not done today auto-rolls to tomorrow
+            if (d.call !== 'done') {
+              leads.push('<span class="conn-pill" style="background:#fff7ed; color:#c2410c; border-color:#fed7aa;">↪ Reassigned for tomorrow</span>');
+            }
+            return callRowHTML(d, leads.join(''));
+          }).join('')
+        : '<div class="pending-empty">No calls scheduled for today.</div>';
+    }
+    if (ctMeta) {
+      const done = today.filter(c => c.call === 'done').length;
+      const missed = today.filter(c => c.call === 'missed').length;
+      const resch = today.filter(c => c.call === 'rescheduled').length;
+      const sched = today.filter(c => c.call === 'scheduled').length;
+      ctMeta.textContent = `${today.length} total · ${done} done · ${missed} missed · ${resch} rescheduled · ${sched} upcoming`;
+    }
+
+    // Pending status requests
+    const pendings = [];
+    for (const name in clientState) {
+      if (clientState[name].pendingRequest) pendings.push({ name, ...clientState[name].pendingRequest });
+    }
+    const pHost = document.getElementById('pendingRequests');
+    const pMeta = document.getElementById('pendingMeta');
+    if (pHost) pHost.innerHTML = pendings.length
+      ? `<div class="pending-list">${pendings.map(p => {
+          const untilTxt = p.pauseUntil ? ` · until ${formatUntil(p.pauseUntil)}` : '';
+          return `
+          <div class="pending-row">
+            <div class="pavatar">${escapeHtml(initials(p.name))}</div>
+            <div>
+              <div class="pname">${escapeHtml(p.name)}</div>
+              <div class="pmeta">Reason: ${escapeHtml(p.reason)} · sent to Vighnesh by ${escapeHtml(p.requestedBy)}${untilTxt}</div>
+            </div>
+            <div class="pstatus">${escapeHtml(pendingLabel(p))}</div>
+            <div class="pwhen">${escapeHtml(p.requestedAt)}</div>
+            <button class="btn btn-primary" style="padding:5px 12px; font-size:11.5px;" data-approve="${escapeHtml(p.name)}">Approve as Vighnesh</button>
+          </div>`;
+        }).join('')}</div>`
+      : '<div class="pending-empty">No pending status requests.</div>';
+    if (pMeta) pMeta.textContent = `${pendings.length} pending`;
+
+    // KPIs derived counters
+    let missed = 0, resch = 0;
+    for (const d in weekData) {
+      weekData[d].forEach(c => {
+        if (c.call === 'missed') missed++;
+        if (c.call === 'rescheduled') resch++;
+      });
+    }
+    const mEl = document.getElementById('missedCount');
+    const mSub = document.getElementById('missedSub');
+    const rEl = document.getElementById('reschCount');
+    const rSub = document.getElementById('reschSub');
+    if (mEl) mEl.textContent = missed;
+    if (mSub) mSub.textContent = missed ? `${missed} this week` : 'No missed calls';
+    if (rEl) rEl.textContent = resch;
+    if (rSub) rSub.textContent = resch ? `${resch} this week` : 'No rescheduled calls';
+
+    // All Calls (this week, newest first)
+    const all = [];
+    for (const d in weekData) weekData[d].forEach(c => all.push(c));
+    all.sort((a, b) => b.day - a.day || (a.time > b.time ? -1 : 1));
+    const aHost = document.getElementById('allCalls');
+    const aTotal = document.getElementById('allCallsTotal');
+    const aMeta = document.getElementById('allCallsMeta');
+    if (aHost) aHost.innerHTML = all.map(callRowHTML).join('');
+    if (aTotal) aTotal.textContent = `${all.length} calls total`;
+    if (aMeta) aMeta.textContent = `${all.length} calls`;
+  }
+
+  // ---------- Nutritionist (Clients logging) rendering ----------
+  function dotClass(v) {
+    if (v >= 3) return 'g3';
+    if (v === 2) return 'g2';
+    if (v === 1) return 'amb';
+    return 'red';
+  }
+  function isGreenToday(c) {
+    return c.dots[c.dots.length - 1] >= 2;
+  }
+  function nutCardHTML(c) {
+    const tags = c.cadence === 'monthly'
+      ? `<div class="cc-card-tags">
+           <span class="cc-card-week">Week ${c.week}</span>
+           <span class="pill-monthly">Monthly tracking</span>
+         </div>`
+      : `<div class="cc-card-week">Week ${c.week}</div>`;
+    return `
+      <div class="cc-card">
+        <div class="cc-card-head">
+          <div class="cc-card-avatar">${escapeHtml(initials(c.name))}</div>
+          <div>
+            <div class="cc-card-name">${escapeHtml(c.name)}</div>
+            <div class="cc-card-sub">${c.age} yrs${c.nut ? ' · ' + escapeHtml(c.nut) : ''}</div>
+          </div>
+          ${tags}
+        </div>
+        <div class="cc-card-cond">
+          <div class="icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 12 7 12 10 5 14 19 17 12 21 12"/></svg></div>
+          <div>
+            <div class="cc-card-cond-label">HEALTH FOCUS / CONDITION</div>
+            <div class="cc-card-cond-text">${escapeHtml(c.condition)}</div>
+          </div>
+        </div>
+        <div class="cc-log-row">
+          <div class="lbl">7-Day Log Activity</div>
+          <div class="cc-log-dots">
+            ${c.dots.map(v => `<span class="cc-log-dot ${dotClass(v)}"></span>`).join('')}
+          </div>
+        </div>
+        <button class="cc-card-cta">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Schedule Call
+        </button>
+        <button class="cc-card-link">View Meal Logs →</button>
+      </div>
+    `;
+  }
+  function renderNutritionist() {
+    const filterBtn = document.querySelector('.seg[data-seg="nutfilter"] button.active');
+    const filter = filterBtn ? filterBtn.dataset.filter : 'all';
+
+    const daily   = nutClients.filter(c => c.cadence !== 'monthly');
+    const monthly = nutClients.filter(c => c.cadence === 'monthly');
+    const green = daily.filter(isGreenToday);
+    const red   = daily.filter(c => !isGreenToday(c));
+
+    // Section visibility based on filter
+    document.querySelector('[data-nut-section="green"]').style.display   = (filter === 'monthly') ? 'none' : '';
+    document.querySelector('[data-nut-section="red"]').style.display     = (filter === 'monthly') ? 'none' : '';
+    document.querySelector('[data-nut-section="monthly"]').style.display = (filter === 'daily')   ? 'none' : '';
+
+    const gHost = document.getElementById('nutGreenGrid');
+    const rHost = document.getElementById('nutRedGrid');
+    const mHost = document.getElementById('nutMonthlyGrid');
+    if (gHost) gHost.innerHTML = green.length
+      ? green.map(nutCardHTML).join('')
+      : '<div class="pending-empty" style="grid-column:1/-1;">No clients have logged today.</div>';
+    if (rHost) rHost.innerHTML = red.length
+      ? red.map(nutCardHTML).join('')
+      : '<div class="pending-empty" style="grid-column:1/-1;">Everyone has logged today.</div>';
+    if (mHost) mHost.innerHTML = monthly.length
+      ? monthly.map(nutCardHTML).join('')
+      : '<div class="pending-empty" style="grid-column:1/-1;">No clients on monthly tracking.</div>';
+
+    document.getElementById('nutGreenCount').textContent      = `${green.length} of ${daily.length} marked green today`;
+    document.getElementById('nutGreenCountSub').textContent   = `(${green.length})`;
+    document.getElementById('nutRedCountSub').textContent     = `(${red.length})`;
+    document.getElementById('nutMonthlyCountSub').textContent = `(${monthly.length})`;
+  }
+
+  // Filter handler
+  document.querySelectorAll('.seg[data-seg="nutfilter"] button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.seg[data-seg="nutfilter"] button').forEach(b => b.classList.toggle('active', b === btn));
+      renderNutritionist();
+    });
+  });
+
+  // ---------- Client form: Nutrition selected toggle ----------
+  document.querySelectorAll('input[name="nutSel"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const yes = document.querySelector('input[name="nutSel"][value="yes"]').checked;
+      document.getElementById('nutPlanRow').style.display = yes ? '' : 'none';
+      document.getElementById('nutTimeRow').style.display = yes ? '' : 'none';
+      document.querySelectorAll('#nutSelRow .cf-radio').forEach(lbl => {
+        const input = lbl.querySelector('input');
+        lbl.classList.toggle('is-on', !!input && input.checked);
+      });
+    });
+  });
+
+  // ---------- Init ----------
+  renderWeek();
+  renderMetrics();
+  renderNutritionist();
+</script>
+</body>
+</html>
