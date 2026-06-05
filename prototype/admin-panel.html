@@ -763,6 +763,25 @@
   .wb-type.t-monthly    { color: #1e40af; background: rgba(59, 130, 246, 0.18); }
   .wb-type.t-other      { color: #4b5563; background: rgba(107, 114, 128, 0.18); }
   .wb-type.t-fresh      { color: #0369a1; background: rgba(14, 165, 233, 0.16); }
+  /* Status chips under the type pill (active / call only / complementary / dead / text only) */
+  .wb-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .wb-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 999px;
+  }
+  .wb-label.lbl-active        { color: #15803d; background: rgba(22, 163, 74, 0.16); }
+  .wb-label.lbl-call-only     { color: #b45309; background: rgba(245, 158, 11, 0.20); }
+  .wb-label.lbl-complementary { color: #c2410c; background: rgba(249, 115, 22, 0.18); }
+  .wb-label.lbl-text-only     { color: #1e40af; background: rgba(59, 130, 246, 0.16); }
+  .wb-label.lbl-dead          { color: #b91c1c; background: rgba(239, 68, 68, 0.16); }
   /* Plain sub-text line under the name (e.g. "Added from app", make-up hint) */
   .wb-sub {
     font-size: 11.5px;
@@ -1304,6 +1323,63 @@
   .ct-banner.solo .ct-caret { position: static; }
   .ct-mini.two, .ct-mini.three { display: flex; gap: 10px; }
   .ct-mini.two .m, .ct-mini.three .m { min-width: 96px; }
+  .ct-mini.four { grid-template-columns: repeat(4, 1fr); }
+  /* Extra tinted mini-box colours for the tracking breakdown */
+  .ct-mini .m.info    { background: #eff6ff; border-color: #dbeafe; }
+  .ct-mini .m.info .v { color: #1d4ed8; }
+  .ct-mini .m.warn    { background: #fffbeb; border-color: #fef3c7; }
+  .ct-mini .m.warn .v { color: #b45309; }
+  .ct-mini .m.neutral    { background: #f3f4f6; border-color: #e5e7eb; }
+  .ct-mini .m.neutral .v { color: #4b5563; }
+  .ct-group.info    { border-left: 3px solid #3b82f6; }
+  .ct-group.warn    { border-left: 3px solid #f59e0b; }
+  .ct-group.neutral { border-left: 3px solid #9ca3af; }
+  .ct-group.info .cnt    { background: #dbeafe; color: #1d4ed8; }
+  .ct-group.warn .cnt    { background: #fef3c7; color: #b45309; }
+  .ct-group.neutral .cnt { background: #e5e7eb; color: #4b5563; }
+
+  /* KPI summary cards (Tracking & plan health) */
+  .th-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .th-kpi {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 1px 2px rgba(16,24,40,0.04);
+    border-top: 4px solid var(--k, #6b7280);
+  }
+  .th-kpi-top { display: flex; align-items: baseline; gap: 8px; }
+  .th-kpi-num { font-size: 30px; font-weight: 800; color: #111827; line-height: 1; }
+  .th-kpi-pct {
+    font-size: 12.5px; font-weight: 700; color: var(--k, #6b7280);
+    background: color-mix(in srgb, var(--k, #6b7280) 14%, #fff);
+    padding: 2px 9px; border-radius: 999px;
+  }
+  .th-kpi-label { font-size: 13px; font-weight: 600; color: #374151; margin-top: 10px; }
+  .th-kpi-sub { font-size: 11.5px; color: #6b7280; margin-top: 3px; }
+
+  /* Segmented proportion bar */
+  .th-segbar {
+    display: flex;
+    height: 12px;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 16px;
+    background: #f3f4f6;
+  }
+  .th-segbar > span { display: block; height: 100%; }
+  .th-seg-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; }
+  .th-seg-key { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #4b5563; font-weight: 600; }
+  .th-seg-key i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex-shrink: 0; }
+  @media (max-width: 920px) {
+    .th-kpis { grid-template-columns: repeat(2, 1fr); }
+    .ct-mini.four { grid-template-columns: repeat(2, 1fr); }
+  }
 
   .section-h {
     display: flex;
@@ -1956,6 +2032,125 @@
   }
   .cc-card-link:hover { text-decoration: underline; }
 
+  /* ---------- Revamped client card pieces ---------- */
+  .cc-card.is-paused { background: #f9fafb; border-color: #e5e7eb; }
+  .cc-card.is-paused .cc-card-avatar { background: #e5e7eb; color: #6b7280; }
+  .cc-card.is-paused .cc-card-name { color: #4b5563; }
+
+  /* right-column stack: week pill + status label */
+  .cc-card-meta { margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
+  .cc-status { font-size: 9.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; }
+  .cc-status.active    { background: #dcfce7; color: #15803d; }
+  .cc-status.call-only { background: #dbeafe; color: #1d4ed8; }
+  .cc-status.text-only { background: #ede9fe; color: #6d28d9; }
+  .cc-status.dead      { background: #fee2e2; color: #b91c1c; }
+  .cc-status.paused    { background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; }
+  .cc-status.comp      { background: #faf5ff; color: #7c3aed; border: 1px solid #e9d5ff; }
+  .cc-subtag { font-size: 9.5px; font-weight: 600; color: #9ca3af; white-space: nowrap; }
+  .cc-comp-note { font-size: 11.5px; color: #92722a; background: #fefce8; border: 1px solid #fde68a; border-radius: 8px; padding: 8px 10px; line-height: 1.4; }
+
+  /* two tracking blocks (meal / call) */
+  .cc-track-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cc-track { border-radius: 8px; padding: 8px 10px; display: flex; align-items: center; gap: 7px; border: 1px solid; }
+  .cc-track .ic { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cc-track .tl { font-size: 11px; font-weight: 600; line-height: 1.1; }
+  .cc-track .ts { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; margin-left: auto; }
+  .cc-track.on  { background: #f0fdf4; border-color: #bbf7d0; color: #15803d; }
+  .cc-track.on .ic { background: #16a34a; }
+  .cc-track.off { background: #f9fafb; border-color: #e5e7eb; color: #9ca3af; }
+  .cc-track.off .ic { background: #cbd5e1; }
+
+  /* 4-week report cells */
+  .cc-rep-row { display: flex; align-items: center; gap: 8px; }
+  .cc-rep-row .lbl { font-size: 11px; color: #374151; font-weight: 500; }
+  .cc-rep-cells { display: flex; gap: 5px; margin-left: auto; }
+  .cc-rep-cell { width: 27px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; border: 1px solid; }
+  .cc-rep-cell.sent { background: #dcfce7; border-color: #86efac; color: #15803d; cursor: pointer; }
+  .cc-rep-cell.sent:hover { background: #bbf7d0; }
+  .cc-rep-cell.future { background: #f3f4f6; border-color: #e5e7eb; color: #cbd5e1; }
+
+  /* assessment + meal plan flags */
+  .cc-flags { display: flex; gap: 8px; }
+  .cc-flag { flex: 1; display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; padding: 6px 9px; border-radius: 8px; border: 1px solid; }
+  .cc-flag.done { background: #f0fdf4; border-color: #bbf7d0; color: #15803d; }
+  .cc-flag.todo { background: #fff7ed; border-color: #fed7aa; color: #b45309; }
+  .cc-flag .fi { display: inline-flex; flex-shrink: 0; }
+
+  /* paused timeline label */
+  .cc-paused-label { display: flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: #6b7280; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 8px; padding: 7px 10px; }
+
+  /* bottom actions row: View Meal Logs | Metrics */
+  .cc-actions-row { display: flex; gap: 8px; }
+  .cc-actions-row .cc-card-link { flex: 1; margin: 0; border: 1px solid #e5e7eb; border-radius: 6px; padding: 7px 0; }
+  .cc-actions-row .cc-card-link:hover { text-decoration: none; background: #f8fafc; }
+  .cc-actions-row .cc-card-link.metrics { background: #eff6ff; border-color: #bfdbfe; }
+  .cc-actions-row .cc-card-link.metrics:hover { background: #dbeafe; }
+
+  /* ---------- Metrics modal ---------- */
+  .metrics-modal { width: 780px; }
+  .mx-section { margin-bottom: 22px; }
+  .mx-section:last-child { margin-bottom: 0; }
+  .mx-h { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7280; margin-bottom: 11px; display: flex; align-items: center; gap: 8px; }
+  .mx-grid2 { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 16px; }
+  /* calendar */
+  .mx-cal { border: 1px solid #e5e7eb; border-radius: 10px; padding: 12px; }
+  .mx-cal-head { font-size: 13px; font-weight: 700; color: #111827; margin-bottom: 9px; }
+  .mx-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .mx-dow { font-size: 8.5px; font-weight: 700; color: #9ca3af; text-align: center; text-transform: uppercase; padding-bottom: 2px; }
+  .mx-day { aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; cursor: pointer; border: 1px solid transparent; color: #374151; }
+  .mx-day.empty { cursor: default; }
+  .mx-day.full   { background: #16a34a; color: #fff; }
+  .mx-day.part   { background: #bbf7d0; color: #15803d; }
+  .mx-day.miss   { background: #fee2e2; color: #b91c1c; }
+  .mx-day.future { background: #f3f4f6; color: #cbd5e1; cursor: default; }
+  .mx-day.sel    { outline: 2px solid #2563eb; outline-offset: 1px; }
+  .mx-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 9px; font-size: 10px; color: #6b7280; }
+  .mx-legend span { display: inline-flex; align-items: center; gap: 4px; }
+  .mx-legend i { width: 9px; height: 9px; border-radius: 3px; display: inline-block; }
+  /* day detail */
+  .mx-detail { border: 1px solid #e5e7eb; border-radius: 10px; padding: 14px; }
+  .mx-detail .dd-date { font-size: 13px; font-weight: 700; color: #111827; margin-bottom: 10px; }
+  .mx-meal { display: flex; gap: 10px; margin-bottom: 11px; }
+  .mx-meal .ph { width: 52px; height: 52px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #fff; }
+  .mx-meal .mt { font-size: 8.5px; text-transform: uppercase; letter-spacing: 0.4px; color: #9ca3af; font-weight: 700; }
+  .mx-meal .mc { font-size: 12.5px; color: #111827; margin-top: 2px; line-height: 1.35; }
+  .mx-empty { font-size: 12.5px; color: #9ca3af; padding: 20px 0; text-align: center; }
+  /* report + doc links */
+  .mx-reps, .mx-docs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .mx-rep { display: flex; align-items: center; gap: 10px; border: 1px solid #e5e7eb; border-radius: 9px; padding: 11px 12px; text-decoration: none; color: inherit; }
+  .mx-rep.future { opacity: 0.5; pointer-events: none; }
+  .mx-rep:hover { border-color: #bfdbfe; background: #f8fbff; }
+  .mx-rep .ri { width: 34px; height: 34px; border-radius: 8px; background: #eff6ff; color: #2563eb; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .mx-rep .rn { font-size: 12.5px; font-weight: 600; color: #111827; }
+  .mx-rep .rs { font-size: 10.5px; color: #6b7280; margin-top: 1px; }
+  /* call recordings */
+  .mx-recs { display: flex; flex-direction: column; gap: 8px; }
+  .mx-rec { display: flex; align-items: center; gap: 11px; border: 1px solid #e5e7eb; border-radius: 9px; padding: 9px 12px; }
+  .mx-rec-play { width: 32px; height: 32px; border-radius: 50%; border: none; background: #2563eb; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding-left: 2px; }
+  .mx-rec-play:hover { background: #1d4ed8; }
+  .mx-rec.playing .mx-rec-play { background: #16a34a; box-shadow: 0 0 0 3px #bbf7d0; }
+  .mx-rec-info { min-width: 0; }
+  .mx-rec-info .rn { font-size: 12.5px; font-weight: 600; color: #111827; }
+  .mx-rec-info .rs { font-size: 10.5px; color: #6b7280; margin-top: 1px; }
+  .mx-rec-wave { margin-left: auto; color: #cbd5e1; display: flex; align-items: center; }
+  .mx-rec.playing .mx-rec-wave { color: #16a34a; }
+  .mx-rec-dur { font-size: 11.5px; font-weight: 600; color: #6b7280; font-variant-numeric: tabular-nums; }
+  /* label change request */
+  .mx-labelreq { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .lr-form { display: flex; flex-direction: column; gap: 8px; }
+  .lr-l { font-size: 11.5px; font-weight: 600; color: #374151; }
+  .lr-select { height: 36px; padding: 0 10px; border: 1px solid #e5e7eb; border-radius: 7px; font: inherit; font-size: 13px; color: #111827; background: #fff; }
+  .lr-reason { min-height: 72px; padding: 8px 10px; border: 1px solid #e5e7eb; border-radius: 7px; font: inherit; font-size: 12.5px; resize: vertical; color: #111827; }
+  .lr-reason:focus, .lr-select:focus { outline: none; border-color: #2563eb; }
+  .lr-submit { align-self: flex-start; }
+  .lr-eh { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: #9ca3af; margin-bottom: 8px; }
+  .mx-req-list { display: flex; flex-direction: column; gap: 8px; }
+  .mx-req-item { display: flex; gap: 10px; align-items: flex-start; border: 1px solid #e5e7eb; border-radius: 8px; padding: 9px 11px; background: #f9fafb; }
+  .mx-req-item .ri-t { font-size: 12.5px; color: #111827; }
+  .mx-req-item .ri-from { color: #9ca3af; font-size: 11px; }
+  .mx-req-item .ri-r { font-size: 11.5px; color: #6b7280; margin-top: 3px; }
+  .mx-req-item .ri-s { margin-left: auto; font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: #b45309; background: #fef3c7; border-radius: 999px; padding: 3px 8px; white-space: nowrap; align-self: center; }
+
   /* ---------- Client form (sidebar Clients page) ---------- */
   .client-form { max-width: 960px; margin: 0 auto; }
   .cf-grid {
@@ -2488,6 +2683,13 @@
       <span class="lbl">Slots</span>
       <span class="lg-item"><span class="sw solid"></span>Permanent (Weekly / Monthly)</span>
       <span class="lg-item"><span class="sw yellow"></span>Temporary (one-off)</span>
+      <span class="lg-sep"></span>
+      <span class="lbl">Status</span>
+      <span class="lg-item"><span class="wb-label lbl-active">Active</span></span>
+      <span class="lg-item"><span class="wb-label lbl-call-only">Call only</span></span>
+      <span class="lg-item"><span class="wb-label lbl-complementary">Complementary</span></span>
+      <span class="lg-item"><span class="wb-label lbl-text-only">Text only</span></span>
+      <span class="lg-item"><span class="wb-label lbl-dead">Dead</span></span>
     </div>
 
     <!-- Week view (default) -->
@@ -2637,6 +2839,13 @@
       <div class="ct-summary" id="ctSummary"></div>
       <div class="ct-banners" id="ctBanners"></div>
 
+      <!-- Tracking & plan health -->
+      <div class="section-h" style="margin-top:14px;">
+        <div class="title" style="font-size:17px;">Tracking &amp; plan health</div>
+        <div class="meta">tracking mix · plan &amp; assessment coverage · reports sent · paused clients</div>
+      </div>
+      <div id="trackingHealth"></div>
+
       <!-- Meal plans (post-assessment SLA) -->
       <div class="section-h" style="margin-top:8px;">
         <div class="title" style="font-size:17px;">Meal plans</div>
@@ -2691,59 +2900,24 @@
     <div data-tab-pane="nutritionist" style="display:none;">
 
       <div class="nut-summary" id="nutSummaryAnchor">
-        <div class="lhs">Client logging activity — <b id="nutDateLabel">20 May 2026</b></div>
-        <div class="pill-count" id="nutGreenCount">0 marked green today</div>
+        <div class="lhs">Client roster — <b id="nutDateLabel">20 May 2026</b></div>
+        <div class="pill-count" id="nutRosterSummary">—</div>
       </div>
 
       <div class="nut-filter">
         <span class="lbl">Filter:</span>
         <div class="seg" data-seg="nutfilter">
-          <button class="active" data-filter="all">All clients</button>
-          <button data-filter="daily">Daily / Weekly</button>
-          <button data-filter="monthly">Monthly tracking</button>
+          <button class="active" data-filter="all">All</button>
+          <button data-filter="active">Active</button>
+          <button data-filter="call-only">Call-only</button>
+          <button data-filter="text-only">Text-only</button>
+          <button data-filter="dead">Dead</button>
+          <button data-filter="paused">Paused</button>
+          <button data-filter="comp">Complimentary</button>
         </div>
       </div>
 
-      <!-- Paused clients -->
-      <div class="section-h" style="margin-top:8px;">
-        <div class="title" style="font-size:17px;">Paused clients</div>
-        <div class="meta" style="font-size:13px;" id="pausedMeta">—</div>
-      </div>
-      <div id="pausedBanner"></div>
-
-      <!-- Complimentary clients -->
-      <div class="section-h" style="margin-top:8px;">
-        <div class="title" style="font-size:17px;">Complimentary clients</div>
-        <div class="meta" style="font-size:13px;" id="compMeta">—</div>
-      </div>
-      <div id="compBanner"></div>
-
-      <div data-nut-section="green">
-        <div class="nut-section-h">
-          <span class="dot green"></span>
-          <span class="title">Logged today</span>
-          <span class="count" id="nutGreenCountSub">(0)</span>
-        </div>
-        <div class="client-grid" id="nutGreenGrid"></div>
-      </div>
-
-      <div data-nut-section="red">
-        <div class="nut-section-h">
-          <span class="dot red"></span>
-          <span class="title">Did not log today</span>
-          <span class="count" id="nutRedCountSub">(0)</span>
-        </div>
-        <div class="client-grid" id="nutRedGrid"></div>
-      </div>
-
-      <div data-nut-section="monthly">
-        <div class="nut-section-h">
-          <span class="dot" style="background:#c2410c;"></span>
-          <span class="title">Monthly tracking</span>
-          <span class="count" id="nutMonthlyCountSub">(0)</span>
-        </div>
-        <div class="client-grid" id="nutMonthlyGrid"></div>
-      </div>
+      <div class="client-grid" id="nutGrid"></div>
 
     </div>
 
@@ -2922,6 +3096,26 @@
       </div><!-- /cf-modal -->
     </div><!-- /clientModal -->
 
+    <!-- Metrics modal — per-client meal-log calendar, weekly reports, assessment & meal plan -->
+    <div class="cf-modal-bk" id="metricsModal">
+      <div class="cf-modal metrics-modal" role="dialog" aria-modal="true">
+        <div class="cf-modal-head">
+          <div>
+            <div class="t" id="metricsTitle">Client metrics</div>
+            <div class="s" id="metricsSub">Meal logs, weekly reports &amp; assessments</div>
+          </div>
+          <button class="cf-modal-x" id="metricsClose" type="button" title="Close">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="cf-modal-body" id="metricsBody"></div>
+        <div class="cf-actions">
+          <button class="btn" type="button" id="metricsCloseBtn">Close</button>
+          <button class="btn btn-primary" type="button" id="metricsViewClient">View client →</button>
+        </div>
+      </div>
+    </div><!-- /metricsModal -->
+
     <!-- Generic placeholder for other sidebar items -->
     <div data-sidebar-page="_placeholder" style="display:none;">
       <h1 class="page-title" id="phTitle">Coming soon</h1>
@@ -3056,6 +3250,7 @@
       temporary: opts.temporary || false, // make-up card auto-created after a missed call
       makeupOf: opts.makeupOf || null,    // source day a temporary make-up covers
       auto: opts.auto || false,           // auto-scheduled (e.g. meal explanation)
+      statusLabel: opts.statusLabel || null, // explicit chip override (e.g. reassessment 'dead' / 'text only')
     };
   }
 
@@ -3071,7 +3266,7 @@
     18: [
       mk('Amar Bahul Pasha',   { day: 18, kind: 'new', call: 'done', aiFlag: 'correct' }),
       mk('Gouri ranjan',       { day: 18, call: 'done', aiFlag: 'correct' }),
-      mk('Anitha Sarkar',      { day: 18, kind: 'reassessment', assignedBy: 'Zaiba', call: 'done', aiFlag: 'wrong', aiNote: 'Diet plan was not explained to the client.' }),
+      mk('Anitha Sarkar',      { day: 18, kind: 'reassessment', assignedBy: 'Zaiba', call: 'done', aiFlag: 'wrong', aiNote: 'Diet plan was not explained to the client.', statusLabel: 'dead' }),
       mk('P. K. Sowmyanaraya', { day: 18, call: 'missed', reason: 'Phone switched off' }),
       mk('Suresh Randadath',   { day: 18, call: 'done', aiFlag: 'correct' }),
       mk('Rajul Garg',         { day: 18, call: 'done', aiFlag: 'correct' }),
@@ -3087,7 +3282,7 @@
     ],
     20: todayCalls,
     21: [
-      mk('G Sampath',           { day: 21, kind: 'reassessment', assignedBy: 'Zaiba' }),
+      mk('G Sampath',           { day: 21, kind: 'reassessment', assignedBy: 'Zaiba', statusLabel: 'text only' }),
       mk('Shameen Banu',        { day: 21 }),
       mk('Usha N',              { day: 21 }),
       mk('Abdhul rahman sait',  { day: 21 }),
@@ -3139,22 +3334,32 @@
   // shared: true marks a client who has sent ≥1 picture or text EVER (beyond the 7-day window),
   //         even if their recent dots are all 0. Clients with any dot ≥1 count as shared automatically.
   // csat: customer-satisfaction rating (out of 5) the client gave this nutritionist.
+  // meal/call: whether meal tracking and call tracking are currently active (drives the
+  //   status label — both on = Active, call-only, text-only, or dead).
+  // reports: 4 monthly weekly-report slots, each 'sent' (green tick → PDF) or 'future' (grey, week not reached).
+  // assess / mealPlan: whether the initial assessment and meal-plan assessment are done.
+  // pausedSince: if present, the membership is paused (greyed card with a paused-timeline label).
   const nutClients = [
-    { name: 'Dc Jain',                          age: 73, week: 35, condition: 'No condition as such',                                            dots: [3,3,2,3,3,3,3], nut: null,    cadence: 'daily',   csat: 4.8 },
-    { name: 'Kalaivani',                        age: 61, week: 43, condition: 'OA knee, shoulder pain',                                          dots: [0,0,0,0,0,0,0], nut: null,    cadence: 'daily',   shared: true, csat: 4.2 },
-    { name: 'Rajul Garg',                       age: 58, week: 41, condition: 'Left knee pain, traveling pain in left leg',                     dots: [0,0,1,0,0,0,0], nut: 'Orika', cadence: 'daily',   csat: 4.6 },
-    { name: 'Sujatha Gujjala',                  age: 49, week: 35, condition: 'Knee pain, ankle and foot pain',                                 dots: [0,0,0,0,0,0,0], nut: null,    cadence: 'daily',   csat: 3.9 },
-    { name: 'Sushma Rachharia',                 age: 42, week: 34, condition: 'Lt hemiplegia (2021), third cranial nerve palsy — rt eyelid',   dots: [0,0,0,0,0,0,0], nut: null,    cadence: 'monthly', shared: true, csat: 4.5 },
-    { name: 'Jyothi Shivanand (Shivanandaiah)', age: 74, week: 24, condition: 'Cerebellar ataxia',                                              dots: [0,0,0,0,0,0,0], nut: 'Orika', cadence: 'monthly', shared: true, csat: 4.7 },
-    { name: 'Jayaram',                          age: 56, week: 18, condition: 'Diabetes · weight management',                                    dots: [3,2,3,3,3,3,3], nut: 'Orika', cadence: 'daily',   csat: 5.0 },
-    { name: 'Suresh Randadath',                 age: 52, week: 12, condition: 'PCOS support · post-partum',                                      dots: [2,2,3,3,2,3,2], nut: 'Orika', cadence: 'daily',   csat: 4.9 },
-    { name: 'Abdhul Rahman',                    age: 47, week: 22, condition: 'Hypertension',                                                    dots: [3,3,3,2,3,3,3], nut: 'Orika', cadence: 'daily',   csat: 4.4 },
-    { name: 'Neelam Monga',                     age: 64, week: 28, condition: 'Cholesterol management',                                          dots: [1,0,0,1,0,0,0], nut: 'Orika', cadence: 'daily',   csat: 4.1 },
-    { name: 'Sony',                             age: 38, week: 9,  condition: 'Thyroid · weight loss',                                           dots: [0,1,0,0,0,0,0], nut: 'Orika', cadence: 'daily', plan: 'comp', csat: 4.3 },
-    { name: 'Dr. Subhas Modi',                  age: 71, week: 33, condition: 'Recovery — knee replacement',                                     dots: [0,0,0,0,0,0,0], nut: 'Orika', cadence: 'monthly', csat: 3.7 },
-    { name: 'Selma',                            age: 44, week: 7,  condition: 'Anaemia · iron support',                                          dots: [2,3,2,3,2,3,2], nut: 'Orika', cadence: 'daily', plan: 'comp', csat: 4.8 },
-    { name: 'Gayathri Reddy',                   age: 39, week: 5,  condition: 'PCOS · insulin resistance',                                        dots: [3,2,3,3,3,2,3], nut: 'Orika', cadence: 'daily', plan: 'comp', csat: 4.6 },
-    { name: 'Kalpana Gosh',                     age: 55, week: 14, condition: 'Diabetes type 2',                                                  dots: [0,0,0,0,0,0,0], nut: 'Orika', cadence: 'monthly', csat: 4.0 },
+    { name: 'Dc Jain',                          age: 73, week: 35, condition: 'No condition as such',                                            dots: [3,3,2,3,3,3,3], nut: null,    cadence: 'daily',   csat: 4.8, meal: true,  call: true,  reports: ['sent','sent','sent','sent'],     assess: true,  mealPlan: true  },
+    { name: 'Kalaivani',                        age: 61, week: 43, condition: 'OA knee, shoulder pain',                                          dots: [0,0,0,0,0,0,0], nut: null,    cadence: 'daily',   shared: true, csat: 4.2, meal: false, call: true,  reports: ['sent','sent','sent','future'],   assess: true,  mealPlan: true  },
+    { name: 'Rajul Garg',                       age: 58, week: 41, condition: 'Left knee pain, traveling pain in left leg',                     dots: [0,0,1,0,0,0,0], nut: 'Orika', cadence: 'daily',   csat: 4.6, meal: false, call: true,  reports: ['sent','sent','future','future'], assess: true,  mealPlan: false },
+    { name: 'Sujatha Gujjala',                  age: 49, week: 35, condition: 'Knee pain, ankle and foot pain',                                 dots: [0,0,0,0,0,0,0], nut: null,    cadence: 'daily',   csat: 3.9, meal: false, call: false, reports: ['sent','future','future','future'], assess: true,  mealPlan: false },
+    { name: 'Sushma Rachharia',                 age: 42, week: 34, condition: 'Lt hemiplegia (2021), third cranial nerve palsy — rt eyelid',   dots: [0,0,0,0,0,0,0], nut: null,    cadence: 'monthly', shared: true, csat: 4.5, meal: true,  call: false, reports: ['sent','sent','sent','sent'],     assess: true,  mealPlan: true  },
+    { name: 'Jyothi Shivanand (Shivanandaiah)', age: 74, week: 24, condition: 'Cerebellar ataxia',                                              dots: [0,0,0,0,0,0,0], nut: 'Orika', cadence: 'monthly', shared: true, csat: 4.7, meal: true,  call: false, reports: ['sent','sent','future','future'], assess: true,  mealPlan: true  },
+    { name: 'Jayaram',                          age: 56, week: 18, condition: 'Diabetes · weight management',                                    dots: [3,2,3,3,3,3,3], nut: 'Orika', cadence: 'daily',   csat: 5.0, meal: true,  call: true,  reports: ['sent','sent','sent','sent'],     assess: true,  mealPlan: true  },
+    { name: 'Suresh Randadath',                 age: 52, week: 12, condition: 'PCOS support · post-partum',                                      dots: [2,2,3,3,2,3,2], nut: 'Orika', cadence: 'daily',   csat: 4.9, meal: true,  call: true,  reports: ['sent','sent','sent','future'],   assess: true,  mealPlan: true  },
+    { name: 'Abdhul Rahman',                    age: 47, week: 22, condition: 'Hypertension',                                                    dots: [3,3,3,2,3,3,3], nut: 'Orika', cadence: 'daily',   csat: 4.4, meal: true,  call: true,  reports: ['sent','sent','sent','sent'],     assess: true,  mealPlan: true  },
+    { name: 'Neelam Monga',                     age: 64, week: 28, condition: 'Cholesterol management',                                          dots: [1,0,0,1,0,0,0], nut: 'Orika', cadence: 'daily',   csat: 4.1, meal: false, call: true,  reports: ['sent','sent','future','future'], assess: true,  mealPlan: false },
+    { name: 'Sony',                             age: 38, week: 9,  condition: 'Thyroid · weight loss',                                           dots: [0,1,0,0,0,0,0], nut: 'Orika', cadence: 'daily', plan: 'comp', csat: 4.3, meal: true,  call: false, reports: ['sent','future','future','future'], assess: true, mealPlan: false },
+    { name: 'Dr. Subhas Modi',                  age: 71, week: 33, condition: 'Recovery — knee replacement',                                     dots: [0,0,0,0,0,0,0], nut: 'Orika', cadence: 'monthly', csat: 3.7, meal: false, call: false, reports: ['sent','future','future','future'], assess: true, mealPlan: false, pausedSince: '28 May 2026' },
+    { name: 'Selma',                            age: 44, week: 7,  condition: 'Anaemia · iron support',                                          dots: [2,3,2,3,2,3,2], nut: 'Orika', cadence: 'daily', plan: 'comp', csat: 4.8, meal: true,  call: true,  reports: ['sent','future','future','future'], assess: true, mealPlan: true  },
+    { name: 'Gayathri Reddy',                   age: 39, week: 5,  condition: 'PCOS · insulin resistance',                                        dots: [3,2,3,3,3,2,3], nut: 'Orika', cadence: 'daily', plan: 'comp', csat: 4.6, meal: true,  call: true,  reports: ['sent','future','future','future'], assess: true, mealPlan: true  },
+    { name: 'Kalpana Gosh',                     age: 55, week: 14, condition: 'Diabetes type 2',                                                  dots: [0,0,0,0,0,0,0], nut: 'Orika', cadence: 'monthly', csat: 4.0, meal: false, call: false, reports: ['sent','sent','future','future'], assess: true, mealPlan: false, pausedSince: '12 May 2026' },
+    // Complimentary clients (free trials) — only an assessment + a meal plan, no ongoing tracking/reports.
+    { name: 'Anjali Verma', age: 41, week: 1, condition: 'Trial — referred by Dr. Rao',  nut: 'Orika', cadence: 'daily', csat: 4.4, comp: true, compSince: '02 May 2026', dots: [0,0,0,0,0,0,0], reports: ['future','future','future','future'], meal: false, call: false, assess: true,  mealPlan: true  },
+    { name: 'Vikram Nair',  age: 36, week: 1, condition: 'Trial — corporate wellness',   nut: 'Orika', cadence: 'daily', csat: 4.1, comp: true, compSince: '28 Apr 2026', dots: [0,0,0,0,0,0,0], reports: ['future','future','future','future'], meal: false, call: false, assess: true,  mealPlan: false },
+    { name: 'Sneha Kapoor', age: 29, week: 1, condition: 'Trial — influencer collab',    nut: 'Orika', cadence: 'daily', csat: 4.7, comp: true, compSince: '05 May 2026', dots: [0,0,0,0,0,0,0], reports: ['future','future','future','future'], meal: false, call: false, assess: false, mealPlan: false },
+    { name: 'Imran Shaikh', age: 52, week: 1, condition: 'Trial — referred by Selma',     nut: 'Orika', cadence: 'daily', csat: 4.3, comp: true, compSince: '09 May 2026', dots: [0,0,0,0,0,0,0], reports: ['future','future','future','future'], meal: false, call: false, assess: true,  mealPlan: true  },
   ];
 
   // ---------- Per-client state ----------
@@ -3174,20 +3379,6 @@
       requestedAt: 'Today, 9:40 AM',
     },
   };
-
-  // ---------- Client roster (paused + complimentary) ----------
-  // type: 'paused' (membership on hold, with paused date) | 'complimentary' (free trial)
-  const clientRoster = [
-    { name: 'Meera Joshi',  type: 'paused',        date: '14 May 2026', sub: 'Knee rehab · Regular plan' },
-    { name: 'Ramesh Iyer',  type: 'paused',        date: '18 May 2026', sub: 'Diabetes · Regular plan' },
-    { name: 'Farida Begum', type: 'paused',        date: '11 May 2026', sub: 'Thyroid · Regular plan' },
-    { name: 'Anjali Verma', type: 'complimentary', date: '02 May 2026', sub: 'Trial — referred by Dr. Rao' },
-    { name: 'Vikram Nair',  type: 'complimentary', date: '28 Apr 2026', sub: 'Trial — corporate wellness' },
-    { name: 'Sneha Kapoor', type: 'complimentary', date: '05 May 2026', sub: 'Trial — influencer collab' },
-    { name: 'Imran Shaikh', type: 'complimentary', date: '09 May 2026', sub: 'Trial — referred by Selma' },
-  ];
-  // per-client request flags: { removalRequested, convertRequested }
-  const rosterState = {};
 
   // ---------- Captured inactive clients (churn) ----------
   // Clients the nutritionist has marked Inactive — i.e. churned out of active tracking.
@@ -3304,9 +3495,9 @@
         <div class="wb-row1">
           <div class="wb-name">${escapeHtml(d.name)}</div>
           ${outcome}
-          <button class="wb-menu-btn" data-act="menu" title="More options">${ICON_MORE}</button>
         </div>
         <div class="wb-type ${lbl.cls}" title="${escapeHtml(lbl.text)} call">${escapeHtml(lbl.text)}</div>
+        ${(() => { const ls = extraLabels(d); return ls.length ? `<div class="wb-labels">${ls.map(extraLabelChip).join('')}</div>` : ''; })()}
         ${d.kind === 'added-from-app' ? `<div class="wb-sub">Added from app</div>` : ''}
         ${d.temporary ? `<div class="wb-sub temp">Make-up call · dt ${d.makeupOf} May</div>` : ''}
         ${d.auto ? `<div class="wb-sub auto">Auto-scheduled · 2 days after assessment</div>` : ''}
@@ -3314,16 +3505,6 @@
           ${status ? `<span class="dot"></span>${escapeHtml(status)}` : ''}
           ${pending ? `<span class="pending">${status ? '· ' : ''}${escapeHtml(pendingLabel(pending))}</span>` : ''}
         </div>` : ''}
-        <div class="wb-popup" data-popup>
-          <div class="wb-popup-label">Client status</div>
-          <div class="wb-popup-item ${d.client==='active'?'is-on':''}"   data-set="client:active"><span class="check">${ICON_CHECK}</span>Active</div>
-          <div class="wb-popup-item ${d.client==='inactive'?'is-on':''}" data-set="client:inactive"><span class="check">${ICON_CHECK}</span>Inactive…</div>
-          <div class="wb-popup-item ${d.client==='paused'?'is-on':''}"   data-set="client:paused"><span class="check">${ICON_CHECK}</span>Paused…</div>
-          <div class="wb-popup-sep"></div>
-          <div class="wb-popup-label">Tracking</div>
-          <div class="wb-popup-item ${d.tracking==='tracking'?'is-on':''}"     data-set="tracking:tracking"><span class="check">${ICON_CHECK}</span>Tracking</div>
-          <div class="wb-popup-item ${d.tracking==='not-tracking'?'is-on':''}" data-set="tracking:not-tracking"><span class="check">${ICON_CHECK}</span>Not tracking…</div>
-        </div>
       </div>
     `;
   }
@@ -3778,36 +3959,16 @@
       renderShareBanner();
     });
   }
-  // Client roster banners — expand/collapse + per-client requests to Vighnesh
-  function rosterClick(e) {
-    const conv = e.target.closest('[data-roster-convert]');
-    if (conv) {
-      const name = conv.getAttribute('data-roster-convert');
-      rosterState[name] = { ...(rosterState[name] || {}), convertRequested: true };
-      getC(name).convertRequest = { requestedBy: 'Orika', requestedAt: 'Just now' };
-      renderRosterBanners();
-      renderMetrics();
-      toast(`Convert-to-regular request for ${name} sent to Vighnesh`);
-      return;
-    }
-    const rem = e.target.closest('[data-roster-remove]');
-    if (rem) {
-      const name = rem.getAttribute('data-roster-remove');
-      rosterState[name] = { ...(rosterState[name] || {}), removalRequested: true };
-      getC(name).pendingRequest = { status: 'removal', reason: 'Client to be removed', requestedBy: 'Orika', requestedAt: 'Just now' };
-      renderRosterBanners();
-      renderMetrics();
-      toast(`Removal request for ${name} sent to Vighnesh`);
-      return;
-    }
-    if (e.target.closest('[data-paused-toggle]')) { pausedOpen = !pausedOpen; renderRosterBanners(); return; }
-    if (e.target.closest('[data-comp-toggle]'))   { compOpen = !compOpen;   renderRosterBanners(); return; }
+  // Tracking & plan health banners (two banners share one host)
+  const trackingHealthHost = document.getElementById('trackingHealth');
+  if (trackingHealthHost) {
+    trackingHealthHost.addEventListener('click', e => {
+      // Let native <details> name-lists toggle without re-rendering the whole banner
+      if (e.target.closest('summary')) return;
+      if (e.target.closest('[data-thtrack-toggle]')) { thTrackOpen = !thTrackOpen; renderTrackingHealth(); return; }
+      if (e.target.closest('[data-thplan-toggle]'))  { thPlanOpen  = !thPlanOpen;  renderTrackingHealth(); return; }
+    });
   }
-  const pausedBannerHost = document.getElementById('pausedBanner');
-  if (pausedBannerHost) pausedBannerHost.addEventListener('click', rosterClick);
-  const compBannerHost = document.getElementById('compBanner');
-  if (compBannerHost) compBannerHost.addEventListener('click', rosterClick);
-
   // ---------- Sidebar page navigation ----------
   const sidebarLabel = {
     dashboard: 'Dashboard', analytics: 'Analytics', clients: 'Clients', trainers: 'Trainers',
@@ -3864,6 +4025,29 @@
     if (d.kind === 'reassessment')     return { text: 'Reassessment',     cls: 't-reass' };
     if (d.kind === 'meal-explanation') return { text: 'Meal explanation', cls: 't-meal'  };
     return { text: d.callType, cls: typePillClass(d.callType) };
+  }
+
+  // Status chips shown under the type pill on each calendar card.
+  //  - Weekly calls: ~80% "active", ~20% "call only" (deterministic by id so it's stable).
+  //  - Reassessment: explicit data override ("dead" / "text only").
+  //  - Assessment & Meal explanation: "active", "complementary" in some cases.
+  function extraLabels(d) {
+    if (d.statusLabel) return [d.statusLabel];
+    const bucket = ctBucketKey(d);
+    if (bucket === 'weekly') {
+      return (d.id % 5 === 0) ? ['call only'] : ['active'];
+    }
+    if (bucket === 'assessment' || bucket === 'mealexp') {
+      const labels = ['active'];
+      if (d.id % 3 === 0) labels.push('complementary'); // some cases
+      return labels;
+    }
+    return [];
+  }
+
+  function extraLabelChip(label) {
+    const cls = 'lbl-' + label.replace(/\s+/g, '-');
+    return `<span class="wb-label ${cls}">${escapeHtml(label)}</span>`;
   }
 
   // Only recurring-cadence calls (Weekly / Monthly) hold a permanent slot.
@@ -4282,77 +4466,150 @@
       </div>`;
   }
 
-  // ---------- Client roster banners (Paused + Complimentary) ----------
-  let pausedOpen = true, compOpen = true;
-  const ROSTER_CARET = '<div class="ct-caret"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>';
 
-  function rosterRow(c) {
-    const st = rosterState[c.name] || {};
-    const dateLabel = c.type === 'paused' ? `Paused on ${c.date}` : `Complimentary since ${c.date}`;
-    const actions = [];
-    if (c.type === 'complimentary') {
-      actions.push(st.convertRequested
-        ? `<span class="roster-btn done">✓ Convert requested</span>`
-        : `<button class="roster-btn convert" data-roster-convert="${escapeHtml(c.name)}">Convert to regular</button>`);
-    }
-    actions.push(st.removalRequested
-      ? `<span class="roster-btn done">✓ Removal requested</span>`
-      : `<button class="roster-btn remove" data-roster-remove="${escapeHtml(c.name)}">Request removal</button>`);
-    return `
-      <div class="roster-row">
-        <div class="roster-av ${c.type}">${escapeHtml(initials(c.name))}</div>
-        <div class="roster-info">
-          <div class="roster-name">${escapeHtml(c.name)}</div>
-          <div class="roster-sub">${escapeHtml(c.sub)}</div>
-        </div>
-        <div class="roster-date ${c.type}">${escapeHtml(dateLabel)}</div>
-        <div class="roster-actions">${actions.join('')}</div>
-      </div>`;
+  // ---------- Tracking & plan health ----------
+  let thTrackOpen = true;  // tracking-breakdown banner expanded by default
+  let thPlanOpen  = false; // plans & assessments banner collapsed by default
+
+  function thChips(arr, cls) {
+    return arr.length
+      ? `<div class="ct-names">${arr.map(c =>
+          `<span class="ct-chip ${cls || ''}"><span class="ci">${escapeHtml(initials(c.name))}</span>${escapeHtml(c.name)}</span>`
+        ).join('')}</div>`
+      : '<div class="ct-empty">None</div>';
   }
 
-  function renderRosterBanners() {
-    const paused = clientRoster.filter(c => c.type === 'paused');
-    const comp   = clientRoster.filter(c => c.type === 'complimentary');
-    const reqd = c => { const s = rosterState[c.name] || {}; return s.convertRequested || s.removalRequested; };
-    const pausedRemoval = paused.filter(c => (rosterState[c.name] || {}).removalRequested).length;
-    const compReq = comp.filter(reqd).length;
+  function renderTrackingHealth() {
+    const host = document.getElementById('trackingHealth');
+    if (!host) return;
+    const all   = nutClients;
+    const total = all.length || 1;
+    const pct   = n => Math.round((n / total) * 100);
 
-    const pb = document.getElementById('pausedBanner');
-    if (pb) pb.innerHTML = `
-      <div class="ct-banner solo ${pausedOpen ? 'open' : ''}" style="--ct:#f59e0b">
-        <div class="ct-head" data-paused-toggle>
-          <div class="ct-num">${paused.length}</div>
-          <div class="ct-name">Paused clients<span class="ct-sub">memberships on hold — paused date shown</span></div>
-          <div class="ct-mini two">
-            <div class="m up"><div class="v">${paused.length - pausedRemoval}</div><div class="k">On hold</div></div>
-            <div class="m miss"><div class="v">${pausedRemoval}</div><div class="k">Removal sent</div></div>
-          </div>
-          ${ROSTER_CARET}
+    // 4-way mutually exclusive tracking mix
+    const both     = all.filter(c => c.call && c.meal);
+    const callOnly = all.filter(c => c.call && !c.meal);
+    const mealOnly = all.filter(c => !c.call && c.meal);
+    const noneT    = all.filter(c => !c.call && !c.meal);
+
+    // Plans & assessments
+    const mealPlan = all.filter(c => c.mealPlan);
+    const assess   = all.filter(c => c.assess);
+    const neither  = all.filter(c => !c.mealPlan && !c.assess);
+
+    // Reports & paused
+    const reportsSent = all.filter(c => (c.reports || []).includes('sent'));
+    const paused      = all.filter(c => c.pausedSince);
+
+    // --- KPI summary cards ---
+    const kpis = `
+      <div class="th-kpis">
+        <div class="th-kpi" style="--k:#16a34a">
+          <div class="th-kpi-top"><span class="th-kpi-num">${mealPlan.length}</span><span class="th-kpi-pct">${pct(mealPlan.length)}%</span></div>
+          <div class="th-kpi-label">Have a meal plan</div>
+          <div class="th-kpi-sub">of ${total} clients</div>
         </div>
-        <div class="ct-body"><div class="roster-list">${paused.map(rosterRow).join('')}</div></div>
+        <div class="th-kpi" style="--k:#7c3aed">
+          <div class="th-kpi-top"><span class="th-kpi-num">${assess.length}</span><span class="th-kpi-pct">${pct(assess.length)}%</span></div>
+          <div class="th-kpi-label">Assessment done</div>
+          <div class="th-kpi-sub">${neither.length} have neither (${pct(neither.length)}%)</div>
+        </div>
+        <div class="th-kpi" style="--k:#2563eb">
+          <div class="th-kpi-top"><span class="th-kpi-num">${reportsSent.length}</span><span class="th-kpi-pct">${pct(reportsSent.length)}%</span></div>
+          <div class="th-kpi-label">Weekly report sent</div>
+          <div class="th-kpi-sub">at least one report shared</div>
+        </div>
+        <div class="th-kpi" style="--k:#d97706">
+          <div class="th-kpi-top"><span class="th-kpi-num">${paused.length}</span><span class="th-kpi-pct">${pct(paused.length)}%</span></div>
+          <div class="th-kpi-label">Paused clients</div>
+          <div class="th-kpi-sub">${paused.map(c => escapeHtml(c.name.split(' ')[0])).join(', ') || '—'}</div>
+        </div>
       </div>`;
 
-    const cb = document.getElementById('compBanner');
-    if (cb) cb.innerHTML = `
-      <div class="ct-banner solo ${compOpen ? 'open' : ''}" style="--ct:#8b5cf6">
-        <div class="ct-head" data-comp-toggle>
-          <div class="ct-num">${comp.length}</div>
-          <div class="ct-name">Complimentary clients<span class="ct-sub">free trials — convert to regular or request removal</span></div>
-          <div class="ct-mini two">
-            <div class="m up"><div class="v">${comp.length - compReq}</div><div class="k">On trial</div></div>
-            <div class="m done"><div class="v">${compReq}</div><div class="k">Requests sent</div></div>
+    // --- Tracking breakdown banner (4-way) ---
+    const seg = (arr, color) => `<span style="width:${pct(arr.length)}%;background:${color}"></span>`;
+    const segKey = (color, label, n) => `<span class="th-seg-key"><i style="background:${color}"></i>${label} · ${n} (${pct(n)}%)</span>`;
+    const trackBanner = `
+      <div class="ct-banner ${thTrackOpen ? 'open' : ''}" style="--ct:#16a34a">
+        <div class="ct-head" data-thtrack-toggle>
+          <div class="ct-num">${pct(both.length)}%</div>
+          <div class="ct-name">Tracking mix — both channels on
+            <span class="ct-sub">how clients split across call &amp; meal tracking (${total} clients)</span>
           </div>
-          ${ROSTER_CARET}
+          <div class="th-segbar">
+            ${seg(both, '#16a34a')}${seg(callOnly, '#3b82f6')}${seg(mealOnly, '#f59e0b')}${seg(noneT, '#9ca3af')}
+          </div>
+          <div class="th-seg-legend">
+            ${segKey('#16a34a', 'Both on', both.length)}
+            ${segKey('#3b82f6', 'Call only', callOnly.length)}
+            ${segKey('#f59e0b', 'Meal only', mealOnly.length)}
+            ${segKey('#9ca3af', 'Both off', noneT.length)}
+          </div>
+          <div class="ct-mini four">
+            <div class="m done"><div class="v">${both.length}</div><div class="k">Both on</div></div>
+            <div class="m info"><div class="v">${callOnly.length}</div><div class="k">Call only</div></div>
+            <div class="m warn"><div class="v">${mealOnly.length}</div><div class="k">Meal only</div></div>
+            <div class="m neutral"><div class="v">${noneT.length}</div><div class="k">Both off</div></div>
+          </div>
+          <div class="ct-caret"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
         </div>
-        <div class="ct-body"><div class="roster-list">${comp.map(rosterRow).join('')}</div></div>
+        <div class="ct-body">
+          <details class="ct-group done" open>
+            <summary class="ct-group-h">Call + meal both on <span class="cnt">${both.length} · ${pct(both.length)}%</span>${CT_CARET}</summary>
+            ${thChips(both)}
+          </details>
+          <details class="ct-group info">
+            <summary class="ct-group-h">Call tracking only <span class="cnt">${callOnly.length} · ${pct(callOnly.length)}%</span>${CT_CARET}</summary>
+            ${thChips(callOnly)}
+          </details>
+          <details class="ct-group warn">
+            <summary class="ct-group-h">Meal tracking only <span class="cnt">${mealOnly.length} · ${pct(mealOnly.length)}%</span>${CT_CARET}</summary>
+            ${thChips(mealOnly)}
+          </details>
+          <details class="ct-group neutral">
+            <summary class="ct-group-h">Both off <span class="cnt">${noneT.length} · ${pct(noneT.length)}%</span>${CT_CARET}</summary>
+            ${thChips(noneT, 'miss')}
+          </details>
+        </div>
       </div>`;
 
-    const pm = document.getElementById('pausedMeta'); if (pm) pm.textContent = `${paused.length} on hold`;
-    const cm = document.getElementById('compMeta');   if (cm) cm.textContent = `${comp.length} complimentary`;
+    // --- Plans & assessments banner ---
+    const planBanner = `
+      <div class="ct-banner ${thPlanOpen ? 'open' : ''}" style="--ct:#7c3aed; margin-top:10px;">
+        <div class="ct-head" data-thplan-toggle>
+          <div class="ct-num">${pct(mealPlan.length)}%</div>
+          <div class="ct-name">Plans &amp; assessments
+            <span class="ct-sub">meal-plan and assessment coverage across all clients</span>
+          </div>
+          <div class="ct-mini three">
+            <div class="m done"><div class="v">${mealPlan.length}</div><div class="k">Meal plan · ${pct(mealPlan.length)}%</div></div>
+            <div class="m up"><div class="v">${assess.length}</div><div class="k">Assessment · ${pct(assess.length)}%</div></div>
+            <div class="m neutral"><div class="v">${neither.length}</div><div class="k">Neither · ${pct(neither.length)}%</div></div>
+          </div>
+          <div class="ct-caret"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+        </div>
+        <div class="ct-body">
+          <details class="ct-group done" open>
+            <summary class="ct-group-h">Have a meal plan <span class="cnt">${mealPlan.length} · ${pct(mealPlan.length)}%</span>${CT_CARET}</summary>
+            ${thChips(mealPlan)}
+          </details>
+          <details class="ct-group up">
+            <summary class="ct-group-h">Assessment done <span class="cnt">${assess.length} · ${pct(assess.length)}%</span>${CT_CARET}</summary>
+            ${thChips(assess)}
+          </details>
+          <details class="ct-group neutral">
+            <summary class="ct-group-h">Neither plan nor assessment <span class="cnt">${neither.length} · ${pct(neither.length)}%</span>${CT_CARET}</summary>
+            ${thChips(neither, 'miss')}
+          </details>
+        </div>
+      </div>`;
+
+    host.innerHTML = kpis + trackBanner + planBanner;
   }
 
   function renderMetrics() {
     renderCallTypeMetrics();
+    renderTrackingHealth();
     renderMealPlanBanner();
     renderChurnBanner();
     renderShareBanner();
@@ -4397,7 +4654,17 @@
             <div class="pstatus">Pending: Convert to Regular</div>
             <div class="pwhen">${escapeHtml(p.requestedAt)}</div>
           </div>`);
-    const allRows = statusRows.concat(convertRows);
+    const labelRows = labelRequests.map(p => `
+          <div class="pending-row">
+            <div class="pavatar">${escapeHtml(initials(p.client))}</div>
+            <div>
+              <div class="pname">${escapeHtml(p.client)}</div>
+              <div class="pmeta">Label change: ${escapeHtml(p.from)} → ${escapeHtml(p.to)} · Reason: ${escapeHtml(p.reason)} · sent to Vighnesh by ${escapeHtml(p.requestedBy)}</div>
+            </div>
+            <div class="pstatus">Pending: Label change</div>
+            <div class="pwhen">${escapeHtml(p.requestedAt)}</div>
+          </div>`);
+    const allRows = statusRows.concat(convertRows).concat(labelRows);
     if (pHost) pHost.innerHTML = allRows.length
       ? `<div class="pending-list">${allRows.join('')}</div>`
       : '<div class="pending-empty">No pending status requests.</div>';
@@ -4462,15 +4729,42 @@
         <span class="cc-csat-tag">CSAT</span>
       </div>`;
   }
+  // Small inline glyphs used across the revamped card
+  const NUT_TICK  = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  const NUT_CROSS = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  const NUT_PAUSE = '<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="3.5" height="14" rx="1"/><rect x="14.5" y="5" width="3.5" height="14" rx="1"/></svg>';
+
+  // Status from the meal/call tracking blocks (paused overrides everything).
+  function clientStatus(c) {
+    if (c.comp)             return { key: 'comp',      label: 'Complimentary' };
+    if (c.pausedSince)      return { key: 'paused',    label: 'Paused' };
+    if (c.meal && c.call)   return { key: 'active',    label: 'Active' };
+    if (!c.meal && c.call)  return { key: 'call-only', label: 'Call-only' };
+    if (c.meal && !c.call)  return { key: 'text-only', label: 'Text-only' };
+    return { key: 'dead', label: 'Dead' };
+  }
+
   function nutCardHTML(c) {
-    const tags = c.cadence === 'monthly'
-      ? `<div class="cc-card-tags">
-           <span class="cc-card-week">Week ${c.week}</span>
-           <span class="pill-monthly">Monthly tracking</span>
-         </div>`
-      : `<div class="cc-card-week">Week ${c.week}</div>`;
-    return `
-      <div class="cc-card">
+    const st = clientStatus(c);
+    const paused = !!c.pausedSince;
+    const statusIcon = st.key === 'active' ? NUT_TICK : st.key === 'paused' ? NUT_PAUSE : '';
+    const trackBox = (label, on) => `
+        <div class="cc-track ${on ? 'on' : 'off'}">
+          <span class="ic"></span>
+          <span class="tl">${label}</span>
+          <span class="ts">${on ? 'On' : 'Off'}</span>
+        </div>`;
+    const repCells = c.reports.map((r, i) => r === 'sent'
+      ? `<span class="cc-rep-cell sent" data-report-week="${i + 1}" data-report-client="${escapeHtml(c.name)}" title="Week ${i + 1} report — view PDF">${NUT_TICK}</span>`
+      : `<span class="cc-rep-cell future" title="Week ${i + 1} — not due yet">W${i + 1}</span>`
+    ).join('');
+    const flag = (label, done) => `
+        <div class="cc-flag ${done ? 'done' : 'todo'}"><span class="fi">${done ? NUT_TICK : NUT_CROSS}</span>${label}</div>`;
+
+    // Complimentary (free trial) — slim card: only the assessment + meal-plan deliverables.
+    if (c.comp) {
+      return `
+      <div class="cc-card is-comp" data-client-card="${escapeHtml(c.name)}">
         <div class="cc-card-head">
           <div class="cc-card-avatar">${escapeHtml(initials(c.name))}</div>
           <div>
@@ -4478,14 +4772,41 @@
             <div class="cc-card-sub">${c.age} yrs${c.nut ? ' · ' + escapeHtml(c.nut) : ''}</div>
             ${csatStars(c.csat)}
           </div>
-          ${tags}
-        </div>
-        <div class="cc-card-cond">
-          <div class="icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 12 7 12 10 5 14 19 17 12 21 12"/></svg></div>
-          <div>
-            <div class="cc-card-cond-label">HEALTH FOCUS / CONDITION</div>
-            <div class="cc-card-cond-text">${escapeHtml(c.condition)}</div>
+          <div class="cc-card-meta">
+            <span class="cc-status comp">${st.label}</span>
+            <span class="cc-subtag">Trial${c.compSince ? ' · since ' + escapeHtml(c.compSince) : ''}</span>
           </div>
+        </div>
+        <div class="cc-comp-note">Free trial — only the initial assessment and meal plan apply. No ongoing meal/call tracking or weekly reports.</div>
+        <div class="cc-flags">
+          ${flag('Assessment', c.assess)}
+          ${flag('Meal plan', c.mealPlan)}
+        </div>
+        <div class="cc-actions-row">
+          <button class="cc-card-link" data-meallogs-client="${escapeHtml(c.name)}">View Meal Logs →</button>
+          <button class="cc-card-link metrics" data-metrics-client="${escapeHtml(c.name)}">Metrics</button>
+        </div>
+      </div>`;
+    }
+
+    return `
+      <div class="cc-card ${paused ? 'is-paused' : ''}" data-client-card="${escapeHtml(c.name)}">
+        <div class="cc-card-head">
+          <div class="cc-card-avatar">${escapeHtml(initials(c.name))}</div>
+          <div>
+            <div class="cc-card-name">${escapeHtml(c.name)}</div>
+            <div class="cc-card-sub">${c.age} yrs${c.nut ? ' · ' + escapeHtml(c.nut) : ''}</div>
+            ${csatStars(c.csat)}
+          </div>
+          <div class="cc-card-meta">
+            <span class="cc-card-week">Week ${c.week}</span>
+            <span class="cc-status ${st.key}">${statusIcon}${st.label}</span>
+          </div>
+        </div>
+        ${paused ? `<div class="cc-paused-label">${NUT_PAUSE} Paused · since ${escapeHtml(c.pausedSince)}</div>` : ''}
+        <div class="cc-track-row">
+          ${trackBox('Meal tracking', c.meal)}
+          ${trackBox('Call tracking', c.call)}
         </div>
         <div class="cc-log-row">
           <div class="lbl">7-Day Log Activity</div>
@@ -4493,46 +4814,42 @@
             ${c.dots.map(v => `<span class="cc-log-dot ${dotClass(v)}"></span>`).join('')}
           </div>
         </div>
-        <button class="cc-card-cta">
+        <div class="cc-rep-row">
+          <div class="lbl">4-Week Reports</div>
+          <div class="cc-rep-cells">${repCells}</div>
+        </div>
+        <div class="cc-flags">
+          ${flag('Assessment', c.assess)}
+          ${flag('Meal plan', c.mealPlan)}
+        </div>
+        <button class="cc-card-cta" data-schedule-client="${escapeHtml(c.name)}">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
           Schedule Call
         </button>
-        <button class="cc-card-link">View Meal Logs →</button>
+        <div class="cc-actions-row">
+          <button class="cc-card-link" data-meallogs-client="${escapeHtml(c.name)}">View Meal Logs →</button>
+          <button class="cc-card-link metrics" data-metrics-client="${escapeHtml(c.name)}">Metrics</button>
+        </div>
       </div>
     `;
   }
   function renderNutritionist() {
-    renderRosterBanners();
     const filterBtn = document.querySelector('.seg[data-seg="nutfilter"] button.active');
     const filter = filterBtn ? filterBtn.dataset.filter : 'all';
 
-    const daily   = nutClients.filter(c => c.cadence !== 'monthly');
-    const monthly = nutClients.filter(c => c.cadence === 'monthly');
-    const green = daily.filter(isGreenToday);
-    const red   = daily.filter(c => !isGreenToday(c));
+    const withStatus = nutClients.map(c => ({ c, st: clientStatus(c) }));
+    const shown = filter === 'all' ? withStatus : withStatus.filter(x => x.st.key === filter);
 
-    // Section visibility based on filter
-    document.querySelector('[data-nut-section="green"]').style.display   = (filter === 'monthly') ? 'none' : '';
-    document.querySelector('[data-nut-section="red"]').style.display     = (filter === 'monthly') ? 'none' : '';
-    document.querySelector('[data-nut-section="monthly"]').style.display = (filter === 'daily')   ? 'none' : '';
+    const host = document.getElementById('nutGrid');
+    if (host) host.innerHTML = shown.length
+      ? shown.map(x => nutCardHTML(x.c)).join('')
+      : '<div class="pending-empty" style="grid-column:1/-1;">No clients in this view.</div>';
 
-    const gHost = document.getElementById('nutGreenGrid');
-    const rHost = document.getElementById('nutRedGrid');
-    const mHost = document.getElementById('nutMonthlyGrid');
-    if (gHost) gHost.innerHTML = green.length
-      ? green.map(nutCardHTML).join('')
-      : '<div class="pending-empty" style="grid-column:1/-1;">No clients have logged today.</div>';
-    if (rHost) rHost.innerHTML = red.length
-      ? red.map(nutCardHTML).join('')
-      : '<div class="pending-empty" style="grid-column:1/-1;">Everyone has logged today.</div>';
-    if (mHost) mHost.innerHTML = monthly.length
-      ? monthly.map(nutCardHTML).join('')
-      : '<div class="pending-empty" style="grid-column:1/-1;">No clients on monthly tracking.</div>';
-
-    document.getElementById('nutGreenCount').textContent      = `${green.length} of ${daily.length} marked green today`;
-    document.getElementById('nutGreenCountSub').textContent   = `(${green.length})`;
-    document.getElementById('nutRedCountSub').textContent     = `(${red.length})`;
-    document.getElementById('nutMonthlyCountSub').textContent = `(${monthly.length})`;
+    const counts = { active: 0, 'call-only': 0, 'text-only': 0, dead: 0, paused: 0, comp: 0 };
+    withStatus.forEach(x => counts[x.st.key]++);
+    const sumEl = document.getElementById('nutRosterSummary');
+    if (sumEl) sumEl.textContent =
+      `${counts.active} Active · ${counts['call-only']} Call-only · ${counts['text-only']} Text-only · ${counts.dead} Dead · ${counts.paused} Paused · ${counts.comp} Complimentary`;
   }
 
   // Filter handler
@@ -4541,6 +4858,261 @@
       document.querySelectorAll('.seg[data-seg="nutfilter"] button').forEach(b => b.classList.toggle('active', b === btn));
       renderNutritionist();
     });
+  });
+
+  // ---------- Metrics modal (per-client meal logs, reports, assessment & meal plan) ----------
+  const MX_TODAY = 20; // prototype "today" within May 2026
+  const MX_FILE = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>';
+  const MX_UTENSILS = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7a3 3 0 0 0 3 3v10M9 2v20M7 2v6M5 2v6M17 2c-1.5 1-2.5 3-2.5 6 0 2 .8 3 2.5 3v11"/></svg>';
+  const MX_BREAKFAST = ['Veg poha + sprouts + curd', 'Oats with banana & almonds', '2 idli + sambar', 'Besan chilla + mint chutney', 'Upma with vegetables'];
+  const MX_LUNCH     = ['2 roti + dal + bhindi + salad', 'Brown rice + rajma + curd', 'Quinoa khichdi + raita', 'Roti + palak paneer + salad', 'Curd rice + cucumber'];
+  const MX_DINNER    = ['Tofu stir-fry + soup', 'Grilled paneer bowl + veg', 'Moong dal soup + 1 roti', 'Vegetable daliya', 'Mixed veg + 1 phulka'];
+
+  function mxHash(s){ let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
+  function mxDayStatus(c, day){
+    if (day > MX_TODAY) return 'future';
+    const r = (mxHash(c.name + ':' + day) % 100) / 100;
+    const bias = c.meal ? 0.78 : 0.30;
+    if (r < bias * 0.6) return 'full';
+    if (r < bias)       return 'part';
+    return 'miss';
+  }
+  function mxDayDetail(c, day){
+    const status = mxDayStatus(c, day);
+    if (status === 'future') return null;
+    if (status === 'miss')   return { status, meals: [] };
+    const slots = [['Breakfast', MX_BREAKFAST], ['Lunch', MX_LUNCH], ['Dinner', MX_DINNER]];
+    const meals = [];
+    slots.forEach(([slot, arr], idx) => {
+      if (status === 'part' && idx === 2 && mxHash(c.name + day + slot) % 2 === 0) return; // partial day skips dinner sometimes
+      const h = mxHash(c.name + day + slot);
+      meals.push({ slot, text: arr[h % arr.length], photo: h % 3 !== 0 });
+    });
+    return { status, meals };
+  }
+  function mxCalendar(c, selDay){
+    const first = new Date(2026, 4, 1).getDay(); // 0=Sun
+    const dow = ['S','M','T','W','T','F','S'].map(d => `<div class="mx-dow">${d}</div>`).join('');
+    let cells = '';
+    for (let i = 0; i < first; i++) cells += '<div class="mx-day empty"></div>';
+    for (let d = 1; d <= 31; d++){
+      const s = mxDayStatus(c, d);
+      const sel = d === selDay ? ' sel' : '';
+      const click = s !== 'future' ? `data-cal-day="${d}"` : '';
+      cells += `<div class="mx-day ${s}${sel}" ${click}>${d}</div>`;
+    }
+    return `
+      <div class="mx-cal">
+        <div class="mx-cal-head">May 2026</div>
+        <div class="mx-cal-grid">${dow}${cells}</div>
+        <div class="mx-legend">
+          <span><i style="background:#16a34a"></i>All meals</span>
+          <span><i style="background:#bbf7d0"></i>Partial</span>
+          <span><i style="background:#fee2e2"></i>Missed</span>
+          <span><i style="background:#f3f4f6"></i>Upcoming</span>
+        </div>
+      </div>`;
+  }
+  function mxDayDetailHTML(c, day){
+    const det = mxDayDetail(c, day);
+    const dateLabel = `${day} May 2026`;
+    if (!det) return '<div class="mx-empty">Select a logged day to see its meals.</div>';
+    if (det.status === 'miss' || !det.meals.length)
+      return `<div class="dd-date">${dateLabel}</div><div class="mx-empty">No meals logged this day.</div>`;
+    return `<div class="dd-date">${dateLabel}</div>` + det.meals.map(m => `
+      <div class="mx-meal">
+        ${m.photo
+          ? `<div class="ph" style="background:linear-gradient(135deg,#fbbf24,#f87171)">${MX_UTENSILS}</div>`
+          : `<div class="ph" style="background:#eef2ff;color:#6366f1;font-weight:800;font-size:17px;">T</div>`}
+        <div><div class="mt">${m.slot} · ${m.photo ? 'Photo' : 'Text note'}</div><div class="mc">${escapeHtml(m.text)}</div></div>
+      </div>`).join('');
+  }
+  function mxReportLink(c, n){
+    const sent = c.reports[n - 1] === 'sent';
+    return `<a class="mx-rep ${sent ? '' : 'future'}" ${sent ? `href="reports/week-${n}.pdf" target="_blank" rel="noopener"` : ''}>
+        <span class="ri">${MX_FILE}</span>
+        <span><div class="rn">Week ${n} report</div><div class="rs">${sent ? 'PDF · view' : 'Not due yet'}</div></span>
+      </a>`;
+  }
+  function mxDocLink(label, done, href){
+    return `<a class="mx-rep ${done ? '' : 'future'}" ${done ? `href="${href}" target="_blank" rel="noopener"` : ''}>
+        <span class="ri">${MX_FILE}</span>
+        <span><div class="rn">${label}</div><div class="rs">${done ? 'PDF · view' : 'Not available'}</div></span>
+      </a>`;
+  }
+
+  // ---- Call recordings (nutritionist ↔ client calls) ----
+  const MX_PLAY = '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+  const MX_WAVE = '<svg width="62" height="22" viewBox="0 0 62 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="8" x2="3" y2="14"/><line x1="9" y1="5" x2="9" y2="17"/><line x1="15" y1="3" x2="15" y2="19"/><line x1="21" y1="8" x2="21" y2="14"/><line x1="27" y1="5" x2="27" y2="17"/><line x1="33" y1="9" x2="33" y2="13"/><line x1="39" y1="4" x2="39" y2="18"/><line x1="45" y1="7" x2="45" y2="15"/><line x1="51" y1="6" x2="51" y2="16"/><line x1="57" y1="9" x2="57" y2="13"/></svg>';
+  const REC_TYPES = ['Weekly check-in', 'Meal explanation', 'Re-assessment', 'Follow-up', 'Diet review'];
+  function mxRecordings(c){
+    if (c.comp) {
+      // A complimentary client only ever had the one assessment call (if the assessment is done).
+      return c.assess ? [{ id: c.name + '-a', type: 'Assessment', date: `${c.compSince || '02 May 2026'}`, dur: '18:24', day: 2 }] : [];
+    }
+    const n = 2 + (mxHash(c.name) % 3); // 2..4 recordings
+    const recs = [];
+    for (let i = 0; i < n; i++){
+      const h = mxHash(c.name + '#rec' + i);
+      const day = Math.min(4 + (h % 24), MX_TODAY);
+      const mins = 8 + (h % 14), secs = h % 60;
+      recs.push({ id: c.name + '-' + i, type: REC_TYPES[h % REC_TYPES.length], date: `${day} May 2026`, dur: `${mins}:${String(secs).padStart(2,'0')}`, day });
+    }
+    return recs.sort((a, b) => b.day - a.day);
+  }
+  function mxRecHTML(c){
+    const recs = mxRecordings(c);
+    if (!recs.length) return '<div class="mx-empty" style="padding:14px 0;">No call recordings yet.</div>';
+    return `<div class="mx-recs">` + recs.map(r => `
+        <div class="mx-rec">
+          <button class="mx-rec-play" data-rec-play="${escapeHtml(r.id)}" type="button" title="Play recording">${MX_PLAY}</button>
+          <div class="mx-rec-info">
+            <div class="rn">${escapeHtml(r.type)} call</div>
+            <div class="rs">${escapeHtml(r.date)} · with ${escapeHtml(c.nut || 'Orika')}</div>
+          </div>
+          <div class="mx-rec-wave">${MX_WAVE}</div>
+          <div class="mx-rec-dur">${escapeHtml(r.dur)}</div>
+        </div>`).join('') + `</div>`;
+  }
+
+  // ---- Label-change requests (reflect in Metrics-tab pending list + on the client profile) ----
+  const labelRequests = [];
+  function mxLabelReqSection(c){
+    const from = clientStatus(c).label;
+    const opts = ['Active', 'Call-only', 'Text-only', 'Dead', 'Paused', 'Complimentary']
+      .map(l => `<option value="${l}"${l === from ? ' selected' : ''}>${l}</option>`).join('');
+    const reqs = labelRequests.filter(r => r.client === c.name);
+    const list = reqs.length
+      ? `<div class="mx-req-list">` + reqs.map(r => `
+          <div class="mx-req-item">
+            <div>
+              <div class="ri-t">Change to <b>${escapeHtml(r.to)}</b> <span class="ri-from">(from ${escapeHtml(r.from)})</span></div>
+              <div class="ri-r">Reason: ${escapeHtml(r.reason)}</div>
+            </div>
+            <div class="ri-s">${escapeHtml(r.status)}</div>
+          </div>`).join('') + `</div>`
+      : `<div class="mx-empty" style="padding:8px 0;">No label-change requests for this client yet.</div>`;
+    return `
+      <div class="mx-labelreq">
+        <div class="lr-form">
+          <label class="lr-l">Request label change to</label>
+          <select class="lr-select" id="lrSelect">${opts}</select>
+          <textarea class="lr-reason" id="lrReason" placeholder="Reason for the change request — sent to Vighnesh and shown on the client profile"></textarea>
+          <button class="btn btn-primary lr-submit" id="lrSubmit" type="button">Submit request</button>
+        </div>
+        <div class="lr-existing">
+          <div class="lr-eh">Requests on this client's profile</div>
+          ${list}
+        </div>
+      </div>`;
+  }
+  function submitLabelRequest(){
+    const c = nutClients.find(x => x.name === metricsClientName);
+    if (!c) return;
+    const to = document.getElementById('lrSelect').value;
+    const reason = (document.getElementById('lrReason').value || '').trim();
+    const from = clientStatus(c).label;
+    if (!reason) { toast('Add a reason for the label-change request.'); return; }
+    labelRequests.push({ client: c.name, from, to, reason, requestedBy: 'Orika', requestedAt: 'Just now', status: 'Pending' });
+    renderMetricsBody();   // refresh the per-client (profile) requests list
+    renderMetrics();       // reflect in the Metrics-tab pending requests
+    toast(`Label-change request sent to Vighnesh — ${c.name}: ${from} → ${to}`);
+  }
+
+  let metricsClientName = null, metricsSelDay = MX_TODAY;
+  const metricsModal = document.getElementById('metricsModal');
+  function renderMetricsBody(){
+    const c = nutClients.find(x => x.name === metricsClientName);
+    if (!c) return;
+    const weeklySection = c.comp ? '' : `
+      <div class="mx-section">
+        <div class="mx-h">Weekly reports</div>
+        <div class="mx-reps">${[1,2,3,4].map(n => mxReportLink(c, n)).join('')}</div>
+      </div>`;
+    document.getElementById('metricsBody').innerHTML = `
+      <div class="mx-section">
+        <div class="mx-h">Meal logs — May 2026</div>
+        <div class="mx-grid2">
+          <div>${mxCalendar(c, metricsSelDay)}</div>
+          <div class="mx-detail" id="mxDetail">${mxDayDetailHTML(c, metricsSelDay)}</div>
+        </div>
+      </div>
+      ${weeklySection}
+      <div class="mx-section">
+        <div class="mx-h">Assessment &amp; meal plan</div>
+        <div class="mx-docs">
+          ${mxDocLink('Assessment report', c.assess, 'reports/assessment.pdf')}
+          ${mxDocLink('Meal plan assessment', c.mealPlan, 'reports/meal-plan.pdf')}
+        </div>
+      </div>
+      <div class="mx-section">
+        <div class="mx-h">Call recordings</div>
+        ${mxRecHTML(c)}
+      </div>
+      <div class="mx-section">
+        <div class="mx-h">Change label request</div>
+        ${mxLabelReqSection(c)}
+      </div>`;
+  }
+  function openMetrics(name){
+    const c = nutClients.find(x => x.name === name);
+    if (!c) return;
+    metricsClientName = name;
+    metricsSelDay = MX_TODAY;
+    document.getElementById('metricsTitle').textContent = name;
+    document.getElementById('metricsSub').textContent = `Week ${c.week} · ${clientStatus(c).label} · ${c.nut ? c.nut : 'Unassigned'}`;
+    renderMetricsBody();
+    metricsModal.classList.add('open');
+  }
+  function closeMetrics(){ metricsModal.classList.remove('open'); }
+  document.getElementById('metricsClose').addEventListener('click', closeMetrics);
+  document.getElementById('metricsCloseBtn').addEventListener('click', closeMetrics);
+  metricsModal.addEventListener('click', e => { if (e.target === metricsModal) closeMetrics(); });
+  document.getElementById('metricsViewClient').addEventListener('click', () => {
+    toast(`Opening client profile — ${metricsClientName}`);
+    closeMetrics();
+  });
+  // interactions inside the metrics modal: calendar select / recording playback / label-request submit
+  document.getElementById('metricsBody').addEventListener('click', e => {
+    const day = e.target.closest('[data-cal-day]');
+    if (day) {
+      metricsSelDay = parseInt(day.dataset.calDay, 10);
+      const c = nutClients.find(x => x.name === metricsClientName);
+      document.querySelectorAll('#metricsBody .mx-day.sel').forEach(el => el.classList.remove('sel'));
+      day.classList.add('sel');
+      document.getElementById('mxDetail').innerHTML = mxDayDetailHTML(c, metricsSelDay);
+      return;
+    }
+    const play = e.target.closest('[data-rec-play]');
+    if (play) {
+      const rec = play.closest('.mx-rec');
+      document.querySelectorAll('#metricsBody .mx-rec.playing').forEach(el => { if (el !== rec) el.classList.remove('playing'); });
+      rec.classList.toggle('playing');
+      toast(rec.classList.contains('playing') ? `Playing recording — ${rec.querySelector('.rn').textContent}` : 'Recording paused');
+      return;
+    }
+    if (e.target.closest('#lrSubmit')) { submitLabelRequest(); return; }
+  });
+
+  // Open the schedule-call modal preselected to a client
+  function openScheduleFor(name){
+    openSchedule();
+    if (![...schClient.options].some(o => o.value === name)) {
+      const opt = document.createElement('option'); opt.textContent = name; schClient.appendChild(opt);
+    }
+    schClient.value = name;
+  }
+
+  // ---------- Card actions (Schedule Call / View Meal Logs / Metrics / weekly report cell) ----------
+  document.getElementById('nutGrid').addEventListener('click', e => {
+    const sched = e.target.closest('[data-schedule-client]');
+    if (sched) { openScheduleFor(sched.dataset.scheduleClient); return; }
+    const ml = e.target.closest('[data-meallogs-client]');
+    if (ml) { openMetrics(ml.dataset.meallogsClient); return; }
+    const mx = e.target.closest('[data-metrics-client]');
+    if (mx) { openMetrics(mx.dataset.metricsClient); return; }
+    const rep = e.target.closest('[data-report-week]');
+    if (rep) { window.open(`reports/week-${rep.dataset.reportWeek}.pdf`, '_blank', 'noopener'); return; }
   });
 
   // ---------- Client form: Nutrition selected toggle ----------
